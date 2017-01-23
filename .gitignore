@@ -3,3 +3,5 @@
 
 # node_modules
 *api/node_modules/
+*sys/node_modules/
+*web/node_modules/
