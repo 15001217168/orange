@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <%include ../shared/header.html%>
+</head>
+<body>
+    <div id="wrapper">
+        <%include ../shared/nav.html%>
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <%include ../shared/page_top.html%>
+            <%include ../shared/header_title.html%>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5><%=data.title%></h5>
+                            </div>
+                            <div class="ibox-content">
+                                <form method="post" action="/type/save" class="form-horizontal">
+                                    <input type="hidden" id="id" name="id" value="<%=(data.type?data.type._id:'')%>" />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">名称</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" id="name" name="name" value="<%=(data.type?data.type.name:'')%>" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">父类型</label>
+                                        <div class="col-sm-10">
+                                            <input type="hidden" id="parentname" value="父节点" name="parentname" />
+                                            <select class="form-control m-b" name="parentid" id="parentid">
+                                                <%if(data.type!=null&&data.type.parent_id=="#"){%>
+                                                <option selected="selected" value="#">父节点</option>
+                                                <%}else{%>
+                                                <option value="#">父节点</option>
+                                                <%}%>
+                                                <%data.parents.forEach(function(i){%>
+                                                <%if(data.type!=null&&data.type.parent_id==i._id){%>
+                                                <option value="<%=i._id%>" selected="selected"><%=i.name%></option>
+                                                <%}else{%>
+                                                <option value="<%=i._id%>"><%=i.name%></option>
+                                                <%}%>
+                                                <%})%>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <button class="btn btn-primary" type="submit">保存</button>
+                                            <button class="btn btn-white" onclick="javascript: window.location.href = '/type'" type="button">取消</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%include ../shared/footer.html%>
+        </div>
+    </div>
+    <%include ../shared/script.html%>
+    <script type="text/javascript">
+        $(function () {
+            $("#parentid").off().on("change", function () {
+                $("#parentname").val($("#parentid option:selected").text());
+            });
+        });
+    </script>
+</body>
+</html>

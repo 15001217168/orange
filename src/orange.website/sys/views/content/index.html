@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <%include ../shared/header.html%>
+</head>
+<body>
+    <div id="wrapper">
+        <%include ../shared/nav.html%>
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <%include ../shared/page_top.html%>
+            <%include ../shared/header_title.html%>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>内容列表</h5>
+                                <div class="ibox-tools">
+                                    <button type="button" onclick="javascript: window.location.href = '/content/add'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-sm-5 m-b-xs">
+                                        <select class="input-sm form-control input-s-sm inline">
+                                            <option value="0">请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 m-b-xs">
+                                        <div data-toggle="buttons" class="btn-group">
+                                            <label class="btn btn-sm btn-white">
+                                                <input type="radio" id="option1" name="options">天
+                                            </label>
+                                            <label class="btn btn-sm btn-white active">
+                                                <input type="radio" id="option2" name="options">周
+                                            </label>
+                                            <label class="btn btn-sm btn-white">
+                                                <input type="radio" id="option3" name="options">月
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+                                                <button type="button" class="btn btn-sm btn-primary"> 搜索</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>编号</th>
+                                                <th>标题</th>
+                                                <th>类型</th>
+                                                <th>来源</th>
+                                                <th>来源链接</th>
+                                                <th>创建日期</th>
+                                                <th>修改日期</th>
+                                                <th>是否锁定</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%if(data.list&&data.list.length>0){%>
+                                            <%data.list.forEach(function(i){%>
+                                            <tr>
+                                                <td><%=i.no%></td>
+                                                <td><%=i.title%></td>
+                                                <td><%=i.type%></td>
+                                                <td><%=i.source%></td>
+                                                <td><%=i.original_source%></td>
+                                                <td><%=i.create_date%></td>
+                                                <td><%=i.update_date%></td>
+                                                <td><%=i.is_blocked%></td>
+                                                <td>
+                                                    <a href="/content/add?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
+                                                    <a href="/content/del?id=<%=i._id%>"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                            <%})%>
+                                            <%}else{%>
+                                            <tr>
+                                                <td colspan="9" style="text-align:center;" id="noResult">
+                                                    <h5>暂无数据</h5>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                            <tr>
+                                                <td colspan="4" style="text-align:left;" id="paginationText">显示 1 到 10 项，共 <%=data.pagination.total%> 项</td>
+                                                <td colspan="4" style="text-align:right;">
+                                                    <ul class="pagination" id="pagination" style="margin:0 auto;" data-total="<%=data.pagination.total%>" data-size="<%=data.pagination.size%>" data-index="<%=data.pagination.index%>" data-url="/content?index=">
+                                                        <li class="paginate_button previous disabled" id="previous">
+                                                            <a href="javascript:void(0);">上一页</a>
+                                                        </li>
+                                                        <li class="paginate_button">
+                                                            <div style="float:left;">
+                                                                <select style="width:40px;height:28px;margin:0 auto;text-align:center;" id="jump">
+                                                                    <%for(var i=0;i
+                                                                    <data.pagination.pages;i++){%>
+                                                                        <option><%=(i+1)%></option>
+                                                                        <%}%>
+                                                                </select>
+                                                            </div>
+                                                        </li>
+                                                        <li class="paginate_button next" id="next">
+                                                            <a href="javascript:void(0);">下一页</a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%include ../shared/footer.html%>
+        </div>
+    </div>
+    <%include ../shared/script.html%>
+    <script type="text/javascript">
+        $(function () {
+            $.pagination.init();
+        });
+    </script>
+</body>
+</html>
