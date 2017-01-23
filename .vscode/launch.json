@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "启动程序",
-            "program": "${workspaceRoot}/orange.website/sys/bin/www",
+            "program": "${workspaceRoot}/src/orange.website/sys/bin/www",
             "cwd": "${workspaceRoot}"
         },
         {

@@ -13,8 +13,7 @@ router.get('/login', function(req, res, next) {
 	res.render('login/index');
 });
 router.post('/login', function(req, res, next) {
-	debugger;
-	var username = req.body.username;
+	var username = req.body.name;
 	var pwd = req.body.pwd;
 	sysUserService.login(username, pwd, function(err, user) {
 		if (err) {
