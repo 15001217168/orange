@@ -18,3 +18,8 @@ exports.register = function(name, pwd, callback) {
 
 	sysUser.save(callback);
 };
+exports.findById=function(id, callback){
+	SysUser.findById(id,function(err,user){
+		callback(err,user);
+	});
+};

@@ -6,6 +6,6 @@ var config = {
         db: 'orange',
         username: 'orange',
         password: '123456'
-    }
+    },
 };
 module.exports = config;
