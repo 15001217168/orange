@@ -2,6 +2,14 @@ var mongoose = require('mongoose'),
     schema = mongoose.Schema;
 
 var OauthClientSchema = new schema({
+    name: {
+        type: String,
+        default: ""
+    },
+    type: {
+        type: String,
+        default: ""
+    },
     app_id: {
         type: String,
         default: ""

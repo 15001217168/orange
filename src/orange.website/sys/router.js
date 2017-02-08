@@ -44,4 +44,10 @@ router.post('/reg', function (req, res, next) {
 		res.redirect("/login");
 	});
 });
+
+
+//应用
+router.get('/app', function (req, res, next) {
+	res.render('app/index');
+});
 module.exports = router;
