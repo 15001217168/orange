@@ -1,4 +1,4 @@
-var repository = require('../orange.repository/sys_repository');
+var repository = require('../orange.repository/oauth_repository');
 var SysUser = repository.SysUser;
 
 exports.login = function(loginname, pwd, callback) {

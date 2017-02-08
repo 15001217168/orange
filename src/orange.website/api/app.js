@@ -3,16 +3,11 @@ var express = require('express'),
 	favicon = require('serve-favicon'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
+	    session = require('express-session'),
 	bodyParser = require('body-parser'),
-	index = require('./routes/index'),
-	users = require('./routes/users'),
-	passport = require('passport'),
-	OAuthStrategy = require('passport-oauth').OAuthStrategy,
-	oauthServer = require('oauth2-server'),
-	oauthModel=require('./oauthmodel'),
 	router = require('./router'),
+	oauth2 = require('./oauth2'),
 	app = express();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,18 +22,11 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }));
 app.use(cookieParser());
+app.use(session({ secret: 'orange', resave: false, saveUninitialized: false, }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.oauth = oauthServer({
-	model: oauthModel, // See below for specification 
-	grants: ['password'],
-	debug: false
-});
-app.all('/oauth/token', app.oauth.grant());
-app.get('/', app.oauth.authorise(), function (req, res) {
-	res.send('Secret area');
-});
 
-app.use(app.oauth.errorHandler());
+app.get('/authorize', oauth2.authorization);
+app.post('/token', oauth2.token);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
