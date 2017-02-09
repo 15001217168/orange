@@ -7,6 +7,8 @@ var config = {
         username: 'orange',
         password: '123456'
     },
-    expire:7200//token过期时效，单位秒
+    expire:7200,//token过期时效，单位秒
+    page_size:20,
+    crypto_key:"orange123456",
 };
 module.exports = config;

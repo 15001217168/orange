@@ -3,10 +3,9 @@ var express = require('express'),
 	favicon = require('serve-favicon'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
-	    session = require('express-session'),
 	bodyParser = require('body-parser'),
 	router = require('./router'),
-	oauth2 = require('./oauth2'),
+	oauth2 = require('../../orange.middleware/oauth2'),
 	app = express();
 
 // view engine setup
@@ -22,11 +21,13 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }));
 app.use(cookieParser());
-app.use(session({ secret: 'orange', resave: false, saveUninitialized: false, }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/authorize', oauth2.authorization);
-app.post('/token', oauth2.token);
+app.post('/authorize', oauth2.access_token);
+app.post('*', oauth2.authorization);
+app.post('/api/test', function (req, res, next) {
+	res.send({ code: '0000', message: '接口测试成功', data: { test: "测试数据" } });
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -45,5 +46,4 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-
 module.exports = app;

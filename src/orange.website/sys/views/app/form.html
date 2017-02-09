@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <%include ../shared/header.html%>
+</head>
+
+<body>
+    <div id="wrapper">
+        <%include ../shared/nav.html%>
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                <%include ../shared/page_top.html%>
+                    <%include ../shared/header_title.html%>
+                        <div class="wrapper wrapper-content animated fadeInRight">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>
+                                                <%=title%>
+                                            </h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <form method="post" action="/app/save" class="form-horizontal">
+                                                <input type="hidden" id="id" name="id" value="<%=app.id%>" />
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">名称</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" id="name" name="name" value="<%=app.name%>" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">类型</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="hidden" name="type" id="type" value="<%=app.type%>" />
+                                                        <select class="form-control m-b" name="typeid" id="typeid">
+                                                               <option value="ios">苹果</option>
+                                                               <option value="android">安卓</option>
+                                                               <option value="web">网站</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="hr-line-dashed"></div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-4 col-sm-offset-2">
+                                                        <button class="btn btn-primary" type="submit">保存</button>
+                                                        <button class="btn btn-white" onclick="javascript: window.location.href = '/app'" type="button">取消</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%include ../shared/footer.html%>
+            </div>
+    </div>
+    <%include ../shared/script.html%>
+    <script src="/js/module/orange.app.js"></script>
+</body>
+</html>

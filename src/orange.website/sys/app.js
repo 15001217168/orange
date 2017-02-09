@@ -1,14 +1,10 @@
 var express = require('express'),
-    flash = require('express-flash'),
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    session = require('express-session'),
-    passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
-
+    auth = require('../../orange.middleware/auth'),
     router = require('./router'),
     app = express(),
 
@@ -28,12 +24,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cookieParser());
-app.use(session({ secret: 'orange', resave: false, saveUninitialized: false, }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('*', auth.permission);
 app.use('/', router);
 
 // catch 404 and forward to error handler
@@ -54,31 +46,5 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error/500');
 });
-
-passport.serializeUser(function (user, done) {
-    var item = {
-        id: user.id,
-        name: user.name,
-    };
-    done(null, item);
-});
-passport.deserializeUser(function (data, done) {
-    done(null, data);
-});
-
-passport.use('local', new LocalStrategy({
-    usernameField: 'name',
-    passwordField: 'pwd'
-}, function (username, password, done) {
-    sysUserService.login(username, password, function (err, user) {
-        if (err) {
-            return done(err);
-        }
-        if (!user) {
-            return done(null, false, { message: '该用户 ' + name + ' 不存在' });
-        }
-        return done(null, user);
-    });
-}));
 
 module.exports = app;

@@ -18,7 +18,7 @@
                                         <div class="ibox-title">
                                             <h5>应用列表</h5>
                                             <div class="ibox-tools">
-                                                <button type="button" onclick="javascript: window.location.href = '/app/add'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+                                                <button type="button" onclick="javascript: window.location.href = '/app/form'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
                                             </div>
                                         </div>
                                         <div class="ibox-content">
@@ -64,20 +64,20 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%if(data.list&&data.list.length>0){%>
-                                                            <%data.list.forEach(function(i){%>
+                                                        <%if(list.length>0){%>
+                                                            <%list.forEach(function(i){%>
                                                                 <tr>
                                                                     <td>
                                                                         <%=i.no%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=i.title%>
+                                                                        <%=i.name%>
                                                                     </td>
                                                                     <td>
                                                                         <%=i.type%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=i.source%>
+                                                                        <%=i.appid%>
                                                                     </td>
                                                                     <td>
                                                                         <%=i.create_date%>
@@ -89,7 +89,7 @@
                                                                         <%=i.is_blocked%>
                                                                     </td>
                                                                     <td>
-                                                                        <a href="/app/add?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
+                                                                        <a href="/app/form?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
                                                                         <a href="/app/del?id=<%=i._id%>"><i class="fa fa-trash-o"></i></a>
                                                                     </td>
                                                                 </tr>
@@ -106,10 +106,10 @@
                                                         <tr>
                                                             <tr>
                                                                 <td colspan="4" style="text-align:left;" id="paginationText">显示 1 到 10 项，共
-                                                                    <%=data.pagination.total%> 项</td>
+                                                                    <%=pagination.total%> 项</td>
                                                                 <td colspan="4" style="text-align:right;">
-                                                                    <ul class="pagination" id="pagination" style="margin:0 auto;" data-total="<%=data.pagination.total%>" data-size="<%=data.pagination.size%>"
-                                                                        data-index="<%=data.pagination.index%>" data-url="/content?index=">
+                                                                    <ul class="pagination" id="pagination" style="margin:0 auto;" data-total="<%=pagination.total%>" data-size="<%=pagination.size%>"
+                                                                        data-index="<%=pagination.index%>" data-url="/app?index=">
                                                                         <li class="paginate_button previous disabled" id="previous">
                                                                             <a href="javascript:void(0);">上一页</a>
                                                                         </li>
@@ -117,7 +117,7 @@
                                                                             <div style="float:left;">
                                                                                 <select style="width:40px;height:28px;margin:0 auto;text-align:center;" id="jump">
                                                                     <%for(var i=0;i
-                                                                    <data.pagination.pages;i++){%>
+                                                                    <pagination.pages;i++){%>
                                                                         <option><%=(i+1)%></option>
                                                                         <%}%>
                                                                 </select>
@@ -141,11 +141,6 @@
             </div>
     </div>
     <%include ../shared/script.html%>
-        <script type="text/javascript">
-                   uncti) {
-      $.pagination.init();
-        });
-        </script>
 </body>
 
 </html>
