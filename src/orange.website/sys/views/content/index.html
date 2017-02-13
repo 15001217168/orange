@@ -16,7 +16,7 @@
                             <div class="ibox-title">
                                 <h5>内容列表</h5>
                                 <div class="ibox-tools">
-                                    <button type="button" onclick="javascript: window.location.href = '/content/add'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+                                    <button type="button" onclick="javascript: window.location.href = '/content/form'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
                                 </div>
                             </div>
                             <div class="ibox-content">
@@ -63,8 +63,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%if(data.list&&data.list.length>0){%>
-                                            <%data.list.forEach(function(i){%>
+                                            <%if(list.length>0){%>
+                                            <%list.forEach(function(i){%>
                                             <tr>
                                                 <td><%=i.no%></td>
                                                 <td><%=i.title%></td>
@@ -75,7 +75,7 @@
                                                 <td><%=i.update_date%></td>
                                                 <td><%=i.is_blocked%></td>
                                                 <td>
-                                                    <a href="/content/add?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
+                                                    <a href="/content/form?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
                                                     <a href="/content/del?id=<%=i._id%>"><i class="fa fa-trash-o"></i></a>
                                                 </td>
                                             </tr>

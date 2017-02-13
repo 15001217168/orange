@@ -16,9 +16,9 @@
                                 <div class="col-lg-12">
                                     <div class="ibox float-e-margins">
                                         <div class="ibox-title">
-                                            <h5>类型列表</h5>
+                                            <h5>系统用户列表</h5>
                                             <div class="ibox-tools">
-                                                <button type="button" onclick="javascript: window.location.href = '/type/form'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+                                                <button type="button" onclick="javascript: window.location.href = '/user/form'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
                                             </div>
                                         </div>
                                         <div class="ibox-content">
@@ -29,7 +29,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>编号</th>
-                                                            <th>名称</th>
+                                                            <th>用户名</th>
                                                             <th>创建日期</th>
                                                             <th>操作</th>
                                                         </tr>
@@ -48,7 +48,7 @@
                                                                         <%=i.create_date%>
                                                                     </td>
                                                                     <td>
-                                                                        <a href="/type/form?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
+                                                                        <a href="/user/form?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
                                                                     </td>
                                                                 </tr>
                                                                 <%})%>
@@ -67,7 +67,7 @@
                                                                     <%=pagination.total%> 项</td>
                                                                 <td colspan="2" style="text-align:right;">
                                                                     <ul class="pagination" id="pagination" style="margin:0 auto;" data-total="<%=pagination.total%>" data-size="<%=pagination.size%>"
-                                                                        data-index="<%=pagination.index%>" data-url="/type?index=">
+                                                                        data-index="<%=pagination.index%>" data-url="/app?index=">
                                                                         <li class="paginate_button previous disabled" id="previous">
                                                                             <a href="javascript:void(0);">上一页</a>
                                                                         </li>

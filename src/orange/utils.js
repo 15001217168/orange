@@ -1,8 +1,17 @@
 
 //生成唯一标识码
-exports.createUniqueId = function(len) {
+exports.createUniqueId = function (len) {
   var buf = []
     , chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    , charlen = chars.length;
+  for (var i = 0; i < len; ++i) {
+    buf.push(chars[getRandomInt(0, charlen - 1)]);
+  }
+  return buf.join('');
+};
+exports.createRandomNumber = function (len) {
+  var buf = []
+    , chars = '0123456789'
     , charlen = chars.length;
   for (var i = 0; i < len; ++i) {
     buf.push(chars[getRandomInt(0, charlen - 1)]);

@@ -1,7 +1,10 @@
-var repository = require('../orange.repository/oauth_repository');
-var SysUser = repository.SysUser;
+var repository = require('../orange.repository/oauth_repository'),
+	config = require('../config'),
+	moment = require('moment'),
+	utils = require('../orange/utils'),
+	SysUser = repository.SysUser;
 
-exports.login = function(loginname, pwd, callback) {
+exports.login = function (loginname, pwd, callback) {
 	SysUser.findOne({
 		name: loginname,
 		pwd: pwd,
@@ -10,15 +13,15 @@ exports.login = function(loginname, pwd, callback) {
 	}, callback);
 };
 
-exports.register = function(name, pwd, callback) {
+exports.register = function (name, pwd, callback) {
 	var sysUser = new SysUser();
 	sysUser.name = name;
 	sysUser.pwd = pwd;
 
 	sysUser.save(callback);
 };
-exports.findById=function(id, callback){
-	SysUser.findById(id,function(err,user){
-		callback(err,user);
+exports.findById = function (id, callback) {
+	SysUser.findById(id, function (err, user) {
+		callback(err, user);
 	});
 };

@@ -1,40 +1,21 @@
-var repository = require('../orange.repository/oauth_repository'),
+var repository = require('../orange.repository/orange_repository'),
 	config = require('../config'),
 	moment = require('moment'),
 	utils = require('../orange/utils'),
-	OauthClient = repository.OauthClient;
+	OrangeType = repository.OrangeType;
 
-exports.getClientByAppId = function (appid, callback) {
-	OauthClient.findOne({
-		app_id: appid,
-		is_blocked: false,
-		is_deleted: false
-	}, function (err, doc) {
-		if (err) {
-			callback(err, null);
-		}
-		if (doc) {
-			callback(null, doc);
-		}
-		else {
-			callback(new Error("为查找到该客户端"), null);
-		}
-	});
-};
-exports.getClientById = function (id, callback) {
+exports.getTypeById = function (id, callback) {
 	var data = {
 		id: 0,
-		name: "",
-		type: ""
+		name: ""
 	};
 	if (id != 0) {
-		OauthClient.findById(id, function (err, doc) {
+		OrangeType.findById(id, function (err, doc) {
 			if (err) {
 				callback(err, data);
 			}
 			data.id = doc._id;
 			data.name = doc.name;
-			data.type = doc.type;
 			callback(null, data);
 		});
 	}
@@ -43,7 +24,7 @@ exports.getClientById = function (id, callback) {
 	}
 };
 
-exports.getClients = function (pageindex, key, callback) {
+exports.getTypes = function (pageindex, key, callback) {
 	var size = config.page_size,
 		start = (pageindex - 1) * size,
 		search = {},
@@ -58,7 +39,7 @@ exports.getClients = function (pageindex, key, callback) {
 	if (key) {
 		search.name = key;
 	}
-	OauthClient.find(search).skip(start).limit(size).exec(function (err, docs) {
+	OrangeType.find(search).skip(start).limit(size).exec(function (err, docs) {
 		if (err) {
 			callback(err, [], pagination);
 		}
@@ -69,14 +50,11 @@ exports.getClients = function (pageindex, key, callback) {
 				item._id = v._id;
 				item.no = start + i + 1;
 				item.name = v.name;
-				item.type = v.type;
-				item.appid = v.app_id;
-				item.app_secret=v.app_secret;
 				item.create_date = moment(v.create_date).format('YYYY- MM - DD HH:mm:ss');
 				return item;
 			});
 		}
-		OauthClient.find(search, function (err, doc) {
+		OrangeType.find(search, function (err, doc) {
 			if (err) {
 				callback(err, [], pagination);
 			}
@@ -90,23 +68,18 @@ exports.getClients = function (pageindex, key, callback) {
 	});
 };
 
-exports.saveClient = function (id, name, type, callback) {
-	var item = new OauthClient();
+exports.saveType = function (id, name, callback) {
+	var item = new OrangeType();
 	if (id != 0) {
-		OauthClient.findByIdAndUpdate(id, {
+		OrangeType.findByIdAndUpdate(id, {
 			update_date: new Date(),
 			name: name,
-			type: type,
 		}, function (err, doc) {
 			callback(err, doc);
 		});
 	}
 	else {
 		item.name = name;
-		item.type = type;
-		item.app_id = "or" + utils.createUniqueId(7);
-		item.app_secret = utils.createUniqueId(32);
-		item.aes_key = utils.createUniqueId(20);
 		item.save(function (err, doc) {
 			callback(err, doc);
 		});

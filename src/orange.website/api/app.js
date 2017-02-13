@@ -5,7 +5,6 @@ var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	router = require('./router'),
-	oauth2 = require('../../orange.middleware/oauth2'),
 	app = express();
 
 // view engine setup
@@ -23,11 +22,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/authorize', oauth2.access_token);
-app.post('*', oauth2.authorization);
-app.post('/api/test', function (req, res, next) {
-	res.send({ code: '0000', message: '接口测试成功', data: { test: "测试数据" } });
-});
+app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

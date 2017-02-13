@@ -19,7 +19,7 @@ var auth = {
                 return;
             }
             else {
-                res.render('login/index');
+                res.redirect('/login');
             }
         }
     },
