@@ -5,10 +5,22 @@ var express = require('express'),
     smsUtil = require('../../orange/sms/top_channel'),
     segment_utils = require('../../orange/segment/segment_utils'),
     sysUserService = require('../../orange.service/sys_user_service');
+
+/**
+ * @api {状态码} Code Code错误编码
+ * @apiName Code错误编码
+ * @apiGroup 1_Global
+ * @apiSuccess {String} code--0000 调用成功.
+ * @apiSuccess {String} code--9999 调用失败.
+ * @apiSuccess {String} code--9998 验证Token失败.
+ * @apiSuccess {String} code--9997 Token失效，请重新验证.
+ * @apiSuccess {String} code--8888 非空验证.
+ */
+
 /**
  * @api {post} /api/authorize 获取Token
  * @apiName authorize
- * @apiGroup OAuth
+ * @apiGroup 2_OAuth
  *
  * @apiParam {String} appid 客户端Appid.
  * @apiParam {String} timespan 时间戳.
@@ -48,7 +60,7 @@ router.post('*', oauth2.authorization);
 /**
  * @api {post} /api/send_sms_code 发送验证码
  * @apiName send_sms_code
- * @apiGroup Message
+ * @apiGroup 3_Message
  *
  * @apiParam {String} phone 手机号.
  * @apiParam {String} access_token Token.
@@ -80,7 +92,7 @@ router.post('*', oauth2.authorization);
 router.post('/api/send_sms_code', function(req, res, next) {
     var phone = req.body.phone;
     if (!phone) {
-        res.send({ code: '9999', message: '手机号不能为空', data: {} });
+        res.send({ code: '8888', message: '手机号不能为空', data: {} });
         return;
     }
     var code = util.createRandomNumber(6);
@@ -101,7 +113,7 @@ router.post('/api/send_sms_code', function(req, res, next) {
 /**
  * @api {post} /api/participle 解析内容并返回分词
  * @apiName participle
- * @apiGroup Content
+ * @apiGroup 4_Content
  *
  * @apiParam {String} content 内容.
  * @apiParam {String} access_token Token.
@@ -133,7 +145,7 @@ router.post('/api/send_sms_code', function(req, res, next) {
 router.post('/api/participle', function(req, res, next) {
     var content = req.body.content;
     if (!content) {
-        res.send({ code: '9999', message: '内容不能为空', data: {} });
+        res.send({ code: '8888', message: '内容不能为空', data: {} });
         return;
     }
     segment_utils.participle(content, function(result) {

@@ -9,12 +9,12 @@ var oauth2 = {
     authorization: function(req, res, next) {
         var access_token = req.body.access_token;
         if (!access_token) {
-            res.send({ code: '9999', message: 'access_token不能为空', data: {} });
+            res.send({ code: '8888', message: 'access_token不能为空', data: {} });
             return;
         }
         oauthTokenService.getToken(access_token, function(err, doc) {
             if (err) {
-                res.send({ code: '9999', message: '验证Token失败', data: {} });
+                res.send({ code: '9998', message: '验证Token失败', data: {} });
                 return;
             }
             if (doc) {
@@ -26,18 +26,18 @@ var oauth2 = {
                     var seconds = Math.round(dif / 1000);
 
                     if (seconds > config.expire) {
-                        res.send({ code: '9999', message: 'Token失效，请重新验证', data: {} });
+                        res.send({ code: '9997', message: 'Token失效，请重新验证', data: {} });
                         return;
                     } else {
                         next();
                         return;
                     }
                 } else {
-                    res.send({ code: '9999', message: '验证Token失败', data: {} });
+                    res.send({ code: '9998', message: '验证Token失败', data: {} });
                     return;
                 }
             } else {
-                res.send({ code: '9999', message: '验证Token失败', data: {} });
+                res.send({ code: '9998', message: '验证Token失败', data: {} });
                 return;
             }
         });
@@ -48,19 +48,19 @@ var oauth2 = {
             noncestr = req.body.noncestr,
             sign = req.body.sign;
         if (!appid) {
-            res.send({ code: '9999', message: 'appid不能为空', data: {} });
+            res.send({ code: '8888', message: 'appid不能为空', data: {} });
             return;
         }
         if (!timespan) {
-            res.send({ code: '9999', message: 'timespan不能为空', data: {} });
+            res.send({ code: '8888', message: 'timespan不能为空', data: {} });
             return;
         }
         if (!noncestr) {
-            res.send({ code: '9999', message: 'noncestr不能为空', data: {} });
+            res.send({ code: '8888', message: 'noncestr不能为空', data: {} });
             return;
         }
         if (!sign) {
-            res.send({ code: '9999', message: 'sign不能为空', data: {} });
+            res.send({ code: '8888', message: 'sign不能为空', data: {} });
             return;
         }
         oauthClientService.getClientByAppId(appid, function(err, client) {

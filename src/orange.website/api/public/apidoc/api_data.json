@@ -1,37 +1,10 @@
 [
   {
-    "type": "post",
-    "url": "/api/participle",
-    "title": "解析内容并返回分词",
-    "name": "participle",
-    "group": "Content",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "content",
-            "description": "<p>内容.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "请求示例:",
-          "content": "{\n  \"content\": '123456',\n  \"access_token\": '123456',\n}",
-          "type": "json"
-        }
-      ]
-    },
+    "type": "状态码",
+    "url": "Code",
+    "title": "Code错误编码",
+    "name": "Code____",
+    "group": "1_Global",
     "success": {
       "fields": {
         "Success 200": [
@@ -39,184 +12,50 @@
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "code",
-            "description": "<p>状态码.</p>"
+            "field": "code--0000",
+            "description": "<p>调用成功.</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "message",
-            "description": "<p>错误信息.</p>"
+            "field": "code--9999",
+            "description": "<p>调用失败.</p>"
           },
           {
             "group": "Success 200",
-            "type": "Object",
+            "type": "String",
             "optional": false,
-            "field": "data",
-            "description": "<p>数据.</p>"
+            "field": "code--9998",
+            "description": "<p>验证Token失败.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code--9997",
+            "description": "<p>Token失效，请重新验证.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code--8888",
+            "description": "<p>非空验证.</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'解析成功', \n data:{content:[\"a\",\"b\",\"c\"]} \n }",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "失败: ",
-          "content": "{ \n code:'9999', \n message:'解析失败', \n data:{} \n }",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "链接:",
-        "content": "http://192.168.1.89:8810/api/participle",
-        "type": "json"
       }
-    ],
-    "sampleRequest": [
-      {
-        "url": "http://192.168.1.89:8810/api/participle"
-      }
-    ],
+    },
     "version": "0.0.0",
     "filename": "api/router.js",
-    "groupTitle": "Content"
-  },
-  {
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "optional": false,
-            "field": "varname1",
-            "description": "<p>No type.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "varname2",
-            "description": "<p>With type.</p>"
-          }
-        ]
-      }
-    },
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "api/public/apidoc/main.js",
-    "group": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
-    "groupTitle": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
-    "name": ""
-  },
-  {
-    "type": "post",
-    "url": "/api/send_sms_code",
-    "title": "发送验证码",
-    "name": "send_sms_code",
-    "group": "Message",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "phone",
-            "description": "<p>手机号.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "请求示例:",
-          "content": "{\n  \"phone\": '123456',\n  \"access_token\": '123456',\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "code",
-            "description": "<p>状态码.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>错误信息.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "data",
-            "description": "<p>数据.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'发送验证码成功', \n data:{} \n }",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "失败: ",
-          "content": "{ \n code:'9999', \n message:'发送验证码失败', \n data:{} \n }",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "链接:",
-        "content": "http://192.168.1.89:8810/api/send_sms_code",
-        "type": "json"
-      }
-    ],
-    "sampleRequest": [
-      {
-        "url": "http://192.168.1.89:8810/api/send_sms_code"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "api/router.js",
-    "groupTitle": "Message"
+    "groupTitle": "1_Global"
   },
   {
     "type": "post",
     "url": "/api/authorize",
     "title": "获取Token",
     "name": "authorize",
-    "group": "OAuth",
+    "group": "2_OAuth",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -315,6 +154,218 @@
     ],
     "version": "0.0.0",
     "filename": "api/router.js",
-    "groupTitle": "OAuth"
+    "groupTitle": "2_OAuth"
+  },
+  {
+    "type": "post",
+    "url": "/api/send_sms_code",
+    "title": "发送验证码",
+    "name": "send_sms_code",
+    "group": "3_Message",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>手机号.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"phone\": '123456',\n  \"access_token\": '123456',\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'发送验证码成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'发送验证码失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "链接:",
+        "content": "http://192.168.1.89:8810/api/send_sms_code",
+        "type": "json"
+      }
+    ],
+    "sampleRequest": [
+      {
+        "url": "http://192.168.1.89:8810/api/send_sms_code"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "3_Message"
+  },
+  {
+    "type": "post",
+    "url": "/api/participle",
+    "title": "解析内容并返回分词",
+    "name": "participle",
+    "group": "4_Content",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "content",
+            "description": "<p>内容.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"content\": '123456',\n  \"access_token\": '123456',\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'解析成功', \n data:{content:[\"a\",\"b\",\"c\"]} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'解析失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "链接:",
+        "content": "http://192.168.1.89:8810/api/participle",
+        "type": "json"
+      }
+    ],
+    "sampleRequest": [
+      {
+        "url": "http://192.168.1.89:8810/api/participle"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "4_Content"
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "api/public/apidoc/main.js",
+    "group": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
+    "groupTitle": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
+    "name": ""
   }
 ]
