@@ -1,8 +1,5 @@
 {
     "name": "orange",
-    "version": "0.1.0",
     "description": "orange",
-    "template":{
-    "forceLanguage":"zh-cn"
-  }
+    "sampleUrl": "http://192.168.1.89:8810/"
 }

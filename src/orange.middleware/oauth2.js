@@ -1,18 +1,18 @@
-var crypto = require('crypto')
-    , oauthClientService = require('../orange.service/oauth_client_service')
-    , oauthTokenService = require('../orange.service/oauth_token_service')
-    , utils = require('../orange/utils'),
+var crypto = require('crypto'),
+    oauthClientService = require('../orange.service/oauth_client_service'),
+    oauthTokenService = require('../orange.service/oauth_token_service'),
+    utils = require('../orange/utils'),
     config = require('../config');
 
 
 var oauth2 = {
-    authorization: function (req, res, next) {
+    authorization: function(req, res, next) {
         var access_token = req.body.access_token;
         if (!access_token) {
             res.send({ code: '9999', message: 'access_token不能为空', data: {} });
             return;
         }
-        oauthTokenService.getToken(access_token, function (err, doc) {
+        oauthTokenService.getToken(access_token, function(err, doc) {
             if (err) {
                 res.send({ code: '9999', message: '验证Token失败', data: {} });
                 return;
@@ -28,13 +28,11 @@ var oauth2 = {
                     if (seconds > config.expire) {
                         res.send({ code: '9999', message: 'Token失效，请重新验证', data: {} });
                         return;
-                    }
-                    else {
+                    } else {
                         next();
                         return;
                     }
-                }
-                else {
+                } else {
                     res.send({ code: '9999', message: '验证Token失败', data: {} });
                     return;
                 }
@@ -44,7 +42,7 @@ var oauth2 = {
             }
         });
     },
-    access_token: function (req, res, next) {
+    access_token: function(req, res, next) {
         var appid = req.body.appid,
             timespan = req.body.timespan,
             noncestr = req.body.noncestr,
@@ -65,7 +63,7 @@ var oauth2 = {
             res.send({ code: '9999', message: 'sign不能为空', data: {} });
             return;
         }
-        oauthClientService.getClientByAppId(appid, function (err, client) {
+        oauthClientService.getClientByAppId(appid, function(err, client) {
             if (err) {
                 res.send({ code: '9999', message: '验证客户端失败', data: {} });
                 return;
@@ -81,13 +79,11 @@ var oauth2 = {
                     oauthTokenService.addToken(appid, access_token);
                     res.send({ code: '0000', message: '验证客户端成功', data: { access_token: access_token } });
                     return;
-                }
-                else {
+                } else {
                     res.send({ code: '9999', message: '签名验证失败', data: {} });
                     return;
                 }
-            }
-            else {
+            } else {
                 res.send({ code: '9999', message: '验证客户端失败', data: {} });
                 return;
             }
