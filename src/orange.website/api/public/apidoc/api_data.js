@@ -675,8 +675,8 @@ define({ "api": [
     "url": "",
     "version": "0.0.0",
     "filename": "api/public/apidoc/main.js",
-    "group": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
-    "groupTitle": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
+    "group": "F__WorkSpace_Coding_Net_orange_src_orange_website_api_public_apidoc_main_js",
+    "groupTitle": "F__WorkSpace_Coding_Net_orange_src_orange_website_api_public_apidoc_main_js",
     "name": ""
   }
 ] });

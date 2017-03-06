@@ -98,16 +98,12 @@ router.post('/api/send_sms_code', function(req, res, next) {
         return;
     }
     var code = util.createRandomNumber(6);
-    smsUtil.sendSms(code, phone, function(err, result) {
-        if (err) {
+    smsUtil.sendSms(code, phone, function(result) {
+        if (result.error == true) {
             res.send(resultMsg.fail('发送验证码失败'));
-            return;
-        }
-        if (result.code == '0000') {
-            res.send(resultMsg.success('发送验证码成功'));
             return;
         } else {
-            res.send(resultMsg.fail('发送验证码失败'));
+            res.send(resultMsg.success('发送验证码成功'));
             return;
         }
     });
@@ -158,9 +154,9 @@ router.post('/api/verify_sms_code', function(req, res, next) {
         res.send(resultMsg.required('短信验证码不能为空'));
         return;
     }
-    orange_sms_service.verifyCode(phone, code, function(err) {
-        if (err) {
-            res.send(resultMsg.fail(err.message));
+    orange_sms_service.verifyCode(phone, code, function(result) {
+        if (result.error == true) {
+            res.send(resultMsg.fail(result.message));
             return;
         } else {
             res.send(resultMsg.success('验证成功'));

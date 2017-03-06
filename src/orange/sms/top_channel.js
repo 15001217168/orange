@@ -5,6 +5,7 @@
 
 var orange_sms_service = require('../../orange.service/orange_sms_service'),
     log_sms_service = require('../../orange.service/log_sms_service'),
+    bizResultMsg = require('../result/result').BizResult,
     TopClient = require('./top_client').TopClient;
 
 var client = new TopClient({
@@ -23,22 +24,19 @@ exports.sendSms = function(code, phone, callback) {
         'sms_template_code': "SMS_45955007"
     };
     client.execute('alibaba.aliqin.fc.sms.num.send', request, function(err, response) {
+        log_sms_service.addSMSLog(phone, code, request, response, err);
         if (err) {
-            log_sms_service.addSMSLog(phone, code, request, response, err);
-            callback(err, { code: '9999', message: "发送失败", data: {} });
+            callback(bizResultMsg.error('发送失败!'));
         }
         if (response) {
             if (response.result.err_code == '0') {
                 orange_sms_service.saveSMS(phone, code);
-                log_sms_service.addSMSLog(phone, code, request, response, err);
-                callback(null, { code: '0000', message: "发送成功", data: {} });
+                callback(bizResultMsg.success('发送成功'));
             } else {
-                log_sms_service.addSMSLog(phone, code, request, response, err);
-                callback(null, { code: '9999', message: "发送失败", data: {} });
+                callback(bizResultMsg.error('发送失败!'));
             }
         } else {
-            log_sms_service.addSMSLog(phone, code, request, response, err);
-            callback(null, { code: '9999', message: "发送失败", data: {} });
+            callback(bizResultMsg.error('发送失败!'));
         }
     });
 };

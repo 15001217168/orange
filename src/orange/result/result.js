@@ -24,7 +24,7 @@ var BizResult = function(error, msg, data, pagination) {
     this.error = error || false;
     this.message = msg || "系统内部错误";
     this.data = data || {};
-    this.paginationpa = pagination || {
+    this.pagination = pagination || {
         index: 1,
         size: 12,
         pages: 0,
@@ -32,7 +32,7 @@ var BizResult = function(error, msg, data, pagination) {
     };
 };
 BizResult.success = function(msg, data, pagination) {
-    return new BizResult(false, msg, data, paginationpa);
+    return new BizResult(false, msg, data, pagination);
 };
 BizResult.error = function(msg) {
     return new BizResult(true, msg);

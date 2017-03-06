@@ -13,14 +13,14 @@ exports.getTypeById = function(id, callback) {
     if (id != 0) {
         OrangeType.findById(id, function(err, doc) {
             if (err) {
-                callback(err, data);
+                callback(bizResultMsg.success('获取数据成功', data));
             }
             data.id = doc._id;
             data.name = doc.name;
-            callback(null, data);
+            callback(bizResultMsg.success('获取数据成功', data));
         });
     } else {
-        callback(null, data);
+        callback(bizResultMsg.success('获取数据成功', data));
     }
 };
 
@@ -41,7 +41,7 @@ exports.getTypes = function(pageindex, key, callback) {
     }
     OrangeType.find(search).skip(start).limit(size).exec(function(err, docs) {
         if (err) {
-            callback(err, [], pagination);
+            callback(bizResultMsg.success('获取数据成功', [], pagination));
         }
 
         if (docs) {
@@ -56,13 +56,13 @@ exports.getTypes = function(pageindex, key, callback) {
         }
         OrangeType.find(search, function(err, doc) {
             if (err) {
-                callback(err, [], pagination);
+                callback(bizResultMsg.success('获取数据成功', [], pagination));
             }
             var totalCount = doc.length;
             pagination.pages = parseInt((totalCount + size - 1) / size);
             pagination.total = totalCount;
 
-            callback(null, list, pagination);
+            callback(bizResultMsg.success('获取数据成功', list, pagination));
         });
 
     });
@@ -75,12 +75,24 @@ exports.saveType = function(id, name, callback) {
             update_date: new Date(),
             name: name,
         }, function(err, doc) {
-            callback(err, doc);
+            if (err) {
+                callback(bizResultMsg.error('保存失败!'));
+            }
+            if (!doc) {
+                callback(bizResultMsg.error('保存失败!'));
+            }
+            callback(bizResultMsg.success('保存成功', doc));
         });
     } else {
         item.name = name;
         item.save(function(err, doc) {
-            callback(err, doc);
+            if (err) {
+                callback(bizResultMsg.error('保存失败!'));
+            }
+            if (!doc) {
+                callback(bizResultMsg.error('保存失败!'));
+            }
+            callback(bizResultMsg.success('保存成功', doc));
         });
     }
 };
