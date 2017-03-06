@@ -1,20 +1,20 @@
 var mongoose = require('mongoose'),
-	config = require('../config');
+    config = require('../config');
 
 mongoose.connect(config.db.url, {
-	server: {
-		poolSize: 20
-	}
+    server: {
+        poolSize: 20
+    }
 }, function(err) {
-	if (err) {
-		console.log('connect to ' + config.db.url + ' error: ' + err.message);
-	}
+    if (err) {
+        console.log('connect to ' + config.db.url + ' error: ' + err.message);
+    }
 });
 
 // models
-require('../orange.entity/oauth_client');
-require('../orange.entity/oauth_token');
-require('../orange.entity/oauth_user');
+require('../orange.entity/oauth/oauth_client');
+require('../orange.entity/oauth/oauth_token');
+require('../orange.entity/oauth/oauth_user');
 
 
 exports.OauthClient = mongoose.model('OauthClient');

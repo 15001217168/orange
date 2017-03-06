@@ -92,7 +92,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"appid\": '123456',\n  \"timespan\": '123456',\n  \"noncestr\": '123456',\n  \"sign\": '123456'\n}",
+          "content": "{\n  \"appid\": '123456',\n  \"timespan\": '123456',\n  \"noncestr\": '123456',\n  \"sign\": '123456\n}",
           "type": "json"
         }
       ]
@@ -158,6 +158,218 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/register",
+    "title": "注册",
+    "name": "register",
+    "group": "2_OAuth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "nick_name",
+            "description": "<p>昵称.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>手机号.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "pwd",
+            "description": "<p>密码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>验证码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"nick_name\": '123456',\n  \"phone\": '123456',\n  \"pwd\": '123456',\n  \"code\":'123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'注册成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'注册失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "链接:",
+        "content": "http://192.168.1.89:8810/api/register",
+        "type": "json"
+      }
+    ],
+    "sampleRequest": [
+      {
+        "url": "http://192.168.1.89:8810/api/register"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "2_OAuth"
+  },
+  {
+    "type": "post",
+    "url": "/api/register_verify",
+    "title": "注册验证",
+    "name": "register_verify",
+    "group": "2_OAuth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "nick_name",
+            "description": "<p>昵称.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>手机号.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"nick_name\": '123456',\n  \"phone\": '123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'验证成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'验证失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "链接:",
+        "content": "http://192.168.1.89:8810/api/register_verify",
+        "type": "json"
+      }
+    ],
+    "sampleRequest": [
+      {
+        "url": "http://192.168.1.89:8810/api/register_verify"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "2_OAuth"
+  },
+  {
+    "type": "post",
     "url": "/api/send_sms_code",
     "title": "发送验证码",
     "name": "send_sms_code",
@@ -184,7 +396,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"phone\": '123456',\n  \"access_token\": '123456',\n}",
+          "content": "{\n  \"phone\": '123456',\n  \"access_token\": '123456'\n}",
           "type": "json"
         }
       ]
@@ -250,6 +462,105 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/verify_sms_code",
+    "title": "验证码验证",
+    "name": "verify_sms_code",
+    "group": "3_Message",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>手机号.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>验证码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"phone\": '123456',\n  \"code\":'123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'验证成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'验证失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "链接:",
+        "content": "http://192.168.1.89:8810/api/verify_sms_code",
+        "type": "json"
+      }
+    ],
+    "sampleRequest": [
+      {
+        "url": "http://192.168.1.89:8810/api/verify_sms_code"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "3_Message"
+  },
+  {
+    "type": "post",
     "url": "/api/participle",
     "title": "解析内容并返回分词",
     "name": "participle",
@@ -276,7 +587,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"content\": '123456',\n  \"access_token\": '123456',\n}",
+          "content": "{\n  \"content\": '123456',\n  \"access_token\": '123456'\n}",
           "type": "json"
         }
       ]
