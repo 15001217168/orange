@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
-var OrangeContentSchema = new schema({
+var OrangeContentVersionSchema = new schema({
     title: {
         type: String,
         default: ""
@@ -55,8 +55,7 @@ var OrangeContentSchema = new schema({
     },
     user: {
         name: String,
-        id: String,
-        avatar: String
+        id: String
     },
     is_blocked: {
         type: Boolean,
@@ -75,4 +74,4 @@ var OrangeContentSchema = new schema({
         default: Date.now
     },
 });
-mongoose.model('OrangeContent', OrangeContentSchema);
+mongoose.model('OrangeContentVersion', OrangeContentVersionSchema);

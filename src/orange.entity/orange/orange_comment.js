@@ -1,29 +1,23 @@
 var mongoose = require('mongoose'),
     schema = mongoose.Schema;
 
-var OrangeTypeSchema = new schema({
-    name: {
+var OrangeCommentSchema = new schema({
+    content: {
+        id: String,
+        title: String,
+    },
+    comment: {
         type: String,
-        default: ""
+        default: ''
     },
-    img: {
-        type: String,
-        default: ""
+    mark: {
+        name: String,
+        id: String
     },
-    des: {
-        type: String,
-        default: ""
-    },
-    type: {
-
-    },
-    content_count: {
-        type: Number,
-        default: 0
-    },
-    focus_count: {
-        type: Number,
-        default: 0
+    user: {
+        name: String,
+        id: String,
+        avatar: String
     },
     is_blocked: {
         type: Boolean,
@@ -43,4 +37,4 @@ var OrangeTypeSchema = new schema({
     },
 });
 
-mongoose.model('OrangeType', OrangeTypeSchema);
+mongoose.model('OrangeComment', OrangeCommentSchema);
