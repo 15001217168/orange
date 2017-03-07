@@ -13,15 +13,14 @@ var oauth2 = {
             res.send(resultMsg.required('access_token不能为空'));
             return;
         }
-        oauthTokenService.getToken(access_token, function(err, doc) {
-            if (err) {
+        oauthTokenService.getToken(access_token, function(result) {
+            if (result.error == true) {
                 res.send(resultMsg.fail('9998', '验证Token失败'));
                 return;
-            }
-            if (doc) {
-                if (doc.token == access_token) {
+            } else {
+                if (result.data.token == access_token) {
                     var now = new Date();
-                    var expire = new Date(doc.expire_date);
+                    var expire = new Date(result.data.expire_date);
 
                     var dif = now.getTime() - expire.getTime();
                     var seconds = Math.round(dif / 1000);
@@ -30,6 +29,7 @@ var oauth2 = {
                         res.send(resultMsg.fail('9997', 'Token失效，请重新验证'));
                         return;
                     } else {
+                        res.app_id = result.data.app_id;
                         next();
                         return;
                     }
@@ -37,9 +37,6 @@ var oauth2 = {
                     res.send(resultMsg.fail('9998', '验证Token失败'));
                     return;
                 }
-            } else {
-                res.send(resultMsg.fail('9998', '验证Token失败'));
-                return;
             }
         });
     },
@@ -64,16 +61,15 @@ var oauth2 = {
             res.send(resultMsg.required('sign不能为空'));
             return;
         }
-        oauthClientService.getClientByAppId(appid, function(err, client) {
-            if (err) {
+        oauthClientService.getClientByAppId(appid, function(result) {
+            if (result.error == true) {
                 res.send(resultMsg.fail('验证客户端失败'));
                 return;
-            }
-            if (client) {
-                var str = appid + timespan + client.app_secret + noncestr;
+            } else {
+                var str = appid + timespan + result.data.app_secret + noncestr;
                 var sha256 = crypto.createHash("sha256");
                 sha256.update(str);
-                var mysign = sha256.digest('hex');
+                var mysign = sha256.digest('hex').toUpperCase();
 
                 if (mysign == sign) {
                     var access_token = utils.createUniqueId(32);
@@ -84,9 +80,6 @@ var oauth2 = {
                     res.send(resultMsg.fail('签名验证失败'));
                     return;
                 }
-            } else {
-                res.send(resultMsg.fail('验证客户端失败'));
-                return;
             }
         });
     },

@@ -36,13 +36,15 @@ exports.verifyCode = function(phone, code, callback) {
         }
         if (!res) {
             callback(bizResultMsg.error('还没有发送验证码!'));
-        }
-        var dif = new Date().getTime() - res.expire_date.getTime();
-        var seconds = Math.round(dif / 1000);
+        } else {
+            var dif = new Date().getTime() - res.expire_date.getTime();
+            var seconds = Math.round(dif / 1000);
 
-        if (seconds > config.verification_code_expire) {
-            callback(bizResultMsg.error('验证码失效!'));
+            if (seconds > config.verification_code_expire) {
+                callback(bizResultMsg.error('验证码失效!'));
+            } else {
+                callback(bizResultMsg.success('验证码验证成功!'));
+            }
         }
-        callback(bizResultMsg.success('验证码验证成功!'));
     });
 };

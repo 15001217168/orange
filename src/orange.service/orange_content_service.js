@@ -14,10 +14,11 @@ exports.getContentById = function(id, callback) {
         OrangeContent.findById(id, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.success('获取数据成功', data));
+            } else {
+                data.id = doc._id;
+                data.name = doc.name;
+                callback(bizResultMsg.success('获取数据成功', data));
             }
-            data.id = doc._id;
-            data.name = doc.name;
-            callback(bizResultMsg.success('获取数据成功', data));
         });
     } else {
         callback(bizResultMsg.success('获取数据成功', data));
@@ -80,8 +81,9 @@ exports.saveContent = function(id, name, callback) {
             }
             if (!doc) {
                 callback(bizResultMsg.error('保存失败!'));
+            } else {
+                callback(bizResultMsg.success('保存成功', doc));
             }
-            callback(bizResultMsg.success('保存成功', doc));
         });
     } else {
         item.name = name;
@@ -91,8 +93,9 @@ exports.saveContent = function(id, name, callback) {
             }
             if (!doc) {
                 callback(bizResultMsg.error('保存失败!'));
+            } else {
+                callback(bizResultMsg.success('保存成功', doc));
             }
-            callback(bizResultMsg.success('保存成功', doc));
         });
     }
 };

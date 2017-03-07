@@ -1,10 +1,17 @@
 define({ "api": [
   {
-    "type": "状态码",
-    "url": "Code",
-    "title": "Code错误编码",
-    "name": "Code____",
+    "type": "G",
+    "url": "全局信息",
+    "title": "",
+    "name": "____",
     "group": "1_Global",
+    "examples": [
+      {
+        "title": "接口地址:",
+        "content": "http://120.76.176.44:8810",
+        "type": "json"
+      }
+    ],
     "success": {
       "fields": {
         "Success 200": [
@@ -140,21 +147,106 @@ define({ "api": [
         }
       ]
     },
-    "examples": [
-      {
-        "title": "链接:",
-        "content": "http://192.168.1.89:8810/api/authorize",
-        "type": "json"
-      }
-    ],
-    "sampleRequest": [
-      {
-        "url": "http://192.168.1.89:8810/api/authorize"
-      }
-    ],
     "version": "0.0.0",
     "filename": "api/router.js",
-    "groupTitle": "2_OAuth"
+    "groupTitle": "2_OAuth",
+    "sampleRequest": [
+      {
+        "url": "http://120.76.176.44:8810/api/authorize"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/api/login",
+    "title": "登录",
+    "name": "login",
+    "group": "2_OAuth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>手机号.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "pwd",
+            "description": "<p>密码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"phone\": '123456',\n  \"pwd\": '123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'登录成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'登录失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "2_OAuth",
+    "sampleRequest": [
+      {
+        "url": "http://120.76.176.44:8810/api/login"
+      }
+    ]
   },
   {
     "type": "post",
@@ -253,21 +345,14 @@ define({ "api": [
         }
       ]
     },
-    "examples": [
-      {
-        "title": "链接:",
-        "content": "http://192.168.1.89:8810/api/register",
-        "type": "json"
-      }
-    ],
-    "sampleRequest": [
-      {
-        "url": "http://192.168.1.89:8810/api/register"
-      }
-    ],
     "version": "0.0.0",
     "filename": "api/router.js",
-    "groupTitle": "2_OAuth"
+    "groupTitle": "2_OAuth",
+    "sampleRequest": [
+      {
+        "url": "http://120.76.176.44:8810/api/register"
+      }
+    ]
   },
   {
     "type": "post",
@@ -352,21 +437,113 @@ define({ "api": [
         }
       ]
     },
-    "examples": [
-      {
-        "title": "链接:",
-        "content": "http://192.168.1.89:8810/api/register_verify",
-        "type": "json"
-      }
-    ],
-    "sampleRequest": [
-      {
-        "url": "http://192.168.1.89:8810/api/register_verify"
-      }
-    ],
     "version": "0.0.0",
     "filename": "api/router.js",
-    "groupTitle": "2_OAuth"
+    "groupTitle": "2_OAuth",
+    "sampleRequest": [
+      {
+        "url": "http://120.76.176.44:8810/api/register_verify"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/api/update_pwd",
+    "title": "修改密码",
+    "name": "update_pwd",
+    "group": "2_OAuth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>手机号.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "pwd",
+            "description": "<p>密码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>验证码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"phone\": '123456',\n  \"pwd\": '123456',\n  \"code\":'123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'修改成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'修改失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "2_OAuth",
+    "sampleRequest": [
+      {
+        "url": "http://120.76.176.44:8810/api/update_pwd"
+      }
+    ]
   },
   {
     "type": "post",
@@ -444,21 +621,14 @@ define({ "api": [
         }
       ]
     },
-    "examples": [
-      {
-        "title": "链接:",
-        "content": "http://192.168.1.89:8810/api/send_sms_code",
-        "type": "json"
-      }
-    ],
-    "sampleRequest": [
-      {
-        "url": "http://192.168.1.89:8810/api/send_sms_code"
-      }
-    ],
     "version": "0.0.0",
     "filename": "api/router.js",
-    "groupTitle": "3_Message"
+    "groupTitle": "3_Message",
+    "sampleRequest": [
+      {
+        "url": "http://120.76.176.44:8810/api/send_sms_code"
+      }
+    ]
   },
   {
     "type": "post",
@@ -543,21 +713,14 @@ define({ "api": [
         }
       ]
     },
-    "examples": [
-      {
-        "title": "链接:",
-        "content": "http://192.168.1.89:8810/api/verify_sms_code",
-        "type": "json"
-      }
-    ],
-    "sampleRequest": [
-      {
-        "url": "http://192.168.1.89:8810/api/verify_sms_code"
-      }
-    ],
     "version": "0.0.0",
     "filename": "api/router.js",
-    "groupTitle": "3_Message"
+    "groupTitle": "3_Message",
+    "sampleRequest": [
+      {
+        "url": "http://120.76.176.44:8810/api/verify_sms_code"
+      }
+    ]
   },
   {
     "type": "post",
@@ -635,21 +798,14 @@ define({ "api": [
         }
       ]
     },
-    "examples": [
-      {
-        "title": "链接:",
-        "content": "http://192.168.1.89:8810/api/participle",
-        "type": "json"
-      }
-    ],
-    "sampleRequest": [
-      {
-        "url": "http://192.168.1.89:8810/api/participle"
-      }
-    ],
     "version": "0.0.0",
     "filename": "api/router.js",
-    "groupTitle": "4_Content"
+    "groupTitle": "4_Content",
+    "sampleRequest": [
+      {
+        "url": "http://120.76.176.44:8810/api/participle"
+      }
+    ]
   },
   {
     "success": {
@@ -675,8 +831,8 @@ define({ "api": [
     "url": "",
     "version": "0.0.0",
     "filename": "api/public/apidoc/main.js",
-    "group": "F__WorkSpace_Coding_Net_orange_src_orange_website_api_public_apidoc_main_js",
-    "groupTitle": "F__WorkSpace_Coding_Net_orange_src_orange_website_api_public_apidoc_main_js",
+    "group": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
+    "groupTitle": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
     "name": ""
   }
 ] });

@@ -7,7 +7,7 @@ var config = {
         username: 'orange',
         password: '123456'
     },
-    token_expire: 7200, //token过期时效，单位秒
+    token_expire: 7200000000, //token过期时效，单位秒
     verification_code_expire: 1800, //验证码过期时效，单位秒
     page_size: 20,
     crypto_key: "orange123456",

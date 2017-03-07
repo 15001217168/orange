@@ -31,11 +31,12 @@ exports.getClientById = function(id, callback) {
         OauthClient.findById(id, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.success('操作成功', data));
+            } else {
+                data.id = doc._id;
+                data.name = doc.name;
+                data.type = doc.type;
+                callback(bizResultMsg.success('操作成功', data));
             }
-            data.id = doc._id;
-            data.name = doc.name;
-            data.type = doc.type;
-            callback(bizResultMsg.success('操作成功', data));
         });
     } else {
         callback(bizResultMsg.success('操作成功', data));

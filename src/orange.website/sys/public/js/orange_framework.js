@@ -1,6 +1,6 @@
-﻿(function ($) {
+﻿(function($) {
     $.date = {
-        convert: function (d) {
+        convert: function(d) {
             var date = new Date(d);
             var year = date.getFullYear();
             var month = date.getMonth() + 1;
@@ -11,7 +11,7 @@
             return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + second;
         }
     };
-    $.request = function (name) {
+    $.request = function(name) {
         var search = location.search.slice(1);
         var arr = search.split("&");
         for (var i = 0; i < arr.length; i++) {
@@ -26,7 +26,7 @@
         }
         return "";
     }
-    $.browser = function () {
+    $.browser = function() {
         var userAgent = navigator.userAgent;
         var isOpera = userAgent.indexOf("Opera") > -1;
         if (isOpera) {
@@ -49,6 +49,47 @@
             return "IE";
         };
     }
+    $.fn.formSerialize = function() {
+        var element = $(this);
+        var postdata = {};
+        var checkBox = [];
+        element.find('input,select,textarea').each(function(r) {
+            var $this = $(this);
+            var id = $this.attr('id');
+            var name = $this.attr("name");
+            var type = $this.attr('type');
+            switch (type) {
+                case "checkbox":
+                    if ($this.is(":checked")) {
+                        checkBox.push({ k: id, v: $this.val() });
+                    }
+                    break;
+                case "radio":
+                    if ($this.is(":checked")) {
+                        postdata[name] = $this.val();
+                    }
+                    break;
+                default:
+                    var value = $this.val() == "" ? "&nbsp;" : $this.val();
+                    if (!$.request("keyValue")) {
+                        value = value.replace(/&nbsp;/g, '');
+                    }
+                    postdata[id] = value;
+                    break;
+            }
+        });
+        if (checkBox.length == 1) {
+            postdata[checkBox[0].k] = checkBox[0].v;
+        }
+        if (checkBox.length > 1) {
+            var arrks = [];
+            $(checkBox).each(function() {
+                arrks.push(this.v);
+            });
+            postdata['mult'] = arrks.join(',');
+        }
+        return postdata;
+    };
     $.pagination = {
         index: 1,
         size: 10,
@@ -56,45 +97,45 @@
         pages: 0,
         url: '#',
         tag: $("#pagination"),
-        init: function () {
+        init: function() {
             this.index = this.tag.data("index");
             this.size = this.tag.data("size");
             this.total = this.tag.data("total");
             this.url = this.tag.data("url");
             this.pages = parseInt((this.total + this.size - 1) / this.size);
             this.changeState();
-            $("#previous").on("click", function () {
+            $("#previous").on("click", function() {
                 $.pagination.previous();
             });
-            $("#next").on("click", function () {
+            $("#next").on("click", function() {
                 $.pagination.next();
             });
-            $("#jump").on("click", function () {
+            $("#jump").on("click", function() {
                 var i = $(this).val();
                 $.pagination.jump(i);
             });
         },
-        next: function () {
+        next: function() {
             if (this.index < this.pages) {
                 var i = this.index + 1;
                 this.jump(i);
             }
             return false;
         },
-        previous: function () {
+        previous: function() {
             if (this.index > 1) {
                 var i = this.index - 1;
                 this.jump(i);
             }
             return false;
         },
-        jump: function (index) {
+        jump: function(index) {
             if (this.index != index) {
                 window.location.href = this.url + index;
             }
             return false;
         },
-        changeState: function () {
+        changeState: function() {
             var objsf = $("#dataTable tbody tr").first().find("td").first();
             var objlf = $("#dataTable tbody tr").last().find("td").first();
             var sf = 0;
@@ -123,7 +164,7 @@
             $("#previous").removeClass("disabled");
         }
     };
-    $(function () {
+    $(function() {
         $("#page-wrapper").css("min-hight", ($('body').height() - 40) + "px");
     });
 })(jQuery);

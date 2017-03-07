@@ -80,8 +80,9 @@ exports.saveType = function(id, name, callback) {
             }
             if (!doc) {
                 callback(bizResultMsg.error('保存失败!'));
+            } else {
+                callback(bizResultMsg.success('保存成功', doc));
             }
-            callback(bizResultMsg.success('保存成功', doc));
         });
     } else {
         item.name = name;
@@ -91,8 +92,9 @@ exports.saveType = function(id, name, callback) {
             }
             if (!doc) {
                 callback(bizResultMsg.error('保存失败!'));
+            } else {
+                callback(bizResultMsg.success('保存成功', doc));
             }
-            callback(bizResultMsg.success('保存成功', doc));
         });
     }
 };

@@ -9,14 +9,17 @@ var express = require('express'),
     orange_sms_service = require('../../orange.service/orange_sms_service');
 
 /**
- * @api {状态码} Code Code错误编码
- * @apiName Code错误编码
+ * @api {G} 全局信息
+ * @apiName 全局信息
  * @apiGroup 1_Global
+ * @apiExample  接口地址:
+ *  http://120.76.176.44:8810
  * @apiSuccess {String} code--0000 调用成功.
  * @apiSuccess {String} code--9999 调用失败.
  * @apiSuccess {String} code--9998 验证Token失败.
  * @apiSuccess {String} code--9997 Token失效，请重新验证.
  * @apiSuccess {String} code--8888 非空验证.
+ * @apiSampleRequest off
  */
 
 /**
@@ -44,8 +47,6 @@ var express = require('express'),
  *   message:'操作失败', 
  *   data:{} 
  *   } 
- * @apiExample  链接:
- *  http://192.168.1.89:8810/api/authorize
  * @apiParamExample {json} 请求示例:
  *     {
  *       "appid": '123456',
@@ -53,7 +54,6 @@ var express = require('express'),
  *       "noncestr": '123456',
  *       "sign": '123456
  *     }
- * @apiSampleRequest http://192.168.1.89:8810/api/authorize
  */
 router.post('/api/authorize', oauth2.access_token);
 
@@ -82,14 +82,11 @@ router.post('*', oauth2.authorization);
  *   message:'发送验证码失败', 
  *   data:{} 
  *   } 
- * @apiExample  链接:
- *  http://192.168.1.89:8810/api/send_sms_code
  * @apiParamExample {json} 请求示例:
  *     {
  *       "phone": '123456',
  *       "access_token": '123456'
  *     }
- * @apiSampleRequest http://192.168.1.89:8810/api/send_sms_code
  */
 router.post('/api/send_sms_code', function(req, res, next) {
     var phone = req.body.phone;
@@ -133,15 +130,12 @@ router.post('/api/send_sms_code', function(req, res, next) {
  *   message:'验证失败', 
  *   data:{} 
  *   } 
- * @apiExample  链接:
- *  http://192.168.1.89:8810/api/verify_sms_code
  * @apiParamExample {json} 请求示例:
  *     {
  *       "phone": '123456',
  *       "code":'123456',
  *       "access_token": '123456'
  *     }
- * @apiSampleRequest http://192.168.1.89:8810/api/verify_sms_code
  */
 router.post('/api/verify_sms_code', function(req, res, next) {
     var phone = req.body.phone,
@@ -189,15 +183,12 @@ router.post('/api/verify_sms_code', function(req, res, next) {
  *   message:'验证失败', 
  *   data:{} 
  *   } 
- * @apiExample  链接:
- *  http://192.168.1.89:8810/api/register_verify
  * @apiParamExample {json} 请求示例:
  *     {
  *       "nick_name": '123456',
  *       "phone": '123456',
  *       "access_token": '123456'
  *     }
- * @apiSampleRequest http://192.168.1.89:8810/api/register_verify
  */
 router.post('/api/register_verify', function(req, res, next) {
     var nick_name = req.body.nick_name,
@@ -210,12 +201,12 @@ router.post('/api/register_verify', function(req, res, next) {
         res.send(resultMsg.required('手机号不能为空'));
         return;
     }
-    oauth_user_service.registerVerify(nick_name, phone, '', '', function(res) {
-        if (res.error == true) {
-            res.send(resultMsg.fail(res.message));
+    oauth_user_service.registerVerify(nick_name, phone, '', '', function(result) {
+        if (result.error == true) {
+            res.send(resultMsg.fail(result.message));
             return;
         } else {
-            res.send(resultMsg.success(res.message));
+            res.send(resultMsg.success(result.message));
             return;
         }
     });
@@ -247,8 +238,6 @@ router.post('/api/register_verify', function(req, res, next) {
  *   message:'注册失败', 
  *   data:{} 
  *   } 
- * @apiExample  链接:
- *  http://192.168.1.89:8810/api/register
  * @apiParamExample {json} 请求示例:
  *     {
  *       "nick_name": '123456',
@@ -257,7 +246,6 @@ router.post('/api/register_verify', function(req, res, next) {
  *       "code":'123456',
  *       "access_token": '123456'
  *     }
- * @apiSampleRequest http://192.168.1.89:8810/api/register
  */
 router.post('/api/register', function(req, res, next) {
     var nick_name = req.body.nick_name,
@@ -280,12 +268,126 @@ router.post('/api/register', function(req, res, next) {
         res.send(resultMsg.required('短信验证码不能为空'));
         return;
     }
-    oauth_user_service.register(nick_name, phone, pwd, code, function(result) {
+    var appid = res.app_id;
+    oauth_user_service.register(nick_name, phone, pwd, code, appid, function(result) {
         if (result.error == true) {
             res.send(resultMsg.fail(result.message));
             return;
         } else {
             res.send(resultMsg.success(result.message));
+            return;
+        }
+    });
+});
+
+/**
+ * @api {post} /api/update_pwd 修改密码
+ * @apiName update_pwd
+ * @apiGroup 2_OAuth
+ *
+ * @apiParam {String} phone 手机号.
+ * @apiParam {String} pwd 密码.
+ * @apiParam {String} code 验证码.
+ * @apiParam {String} access_token Token.
+ *
+ * @apiSuccess {String} code 状态码.
+ * @apiSuccess {String} message 错误信息.
+ * @apiSuccess {Object} data 数据.
+ * @apiSuccessExample 成功: 
+ * { 
+ *  code:'0000', 
+ *  message:'修改成功', 
+ *  data:{} 
+ *  } 
+ *  @apiErrorExample 失败: 
+ *  { 
+ *   code:'9999', 
+ *   message:'修改失败', 
+ *   data:{} 
+ *   } 
+ * @apiParamExample {json} 请求示例:
+ *     {
+ *       "phone": '123456',
+ *       "pwd": '123456',
+ *       "code":'123456',
+ *       "access_token": '123456'
+ *     }
+ */
+router.post('/api/update_pwd', function(req, res, next) {
+    var phone = req.body.phone,
+        pwd = req.body.pwd,
+        code = req.body.code;
+    if (!phone) {
+        res.send(resultMsg.required('手机号不能为空'));
+        return;
+    }
+    if (!pwd) {
+        res.send(resultMsg.required('密码不能为空'));
+        return;
+    }
+    if (!code) {
+        res.send(resultMsg.required('短信验证码不能为空'));
+        return;
+    }
+    oauth_user_service.updatePwd(phone, pwd, code, function(result) {
+        if (result.error == true) {
+            res.send(resultMsg.fail(result.message));
+            return;
+        } else {
+            res.send(resultMsg.success(result.message));
+            return;
+        }
+    });
+});
+
+/**
+ * @api {post} /api/login 登录
+ * @apiName login
+ * @apiGroup 2_OAuth
+ *
+ * @apiParam {String} phone 手机号.
+ * @apiParam {String} pwd 密码.
+ * @apiParam {String} access_token Token.
+ *
+ * @apiSuccess {String} code 状态码.
+ * @apiSuccess {String} message 错误信息.
+ * @apiSuccess {Object} data 数据.
+ * @apiSuccessExample 成功: 
+ * { 
+ *  code:'0000', 
+ *  message:'登录成功', 
+ *  data:{} 
+ *  } 
+ *  @apiErrorExample 失败: 
+ *  { 
+ *   code:'9999', 
+ *   message:'登录失败', 
+ *   data:{} 
+ *   } 
+ * @apiParamExample {json} 请求示例:
+ *     {
+ *       "phone": '123456',
+ *       "pwd": '123456',
+ *       "access_token": '123456'
+ *     }
+ */
+router.post('/api/login', function(req, res, next) {
+    var phone = req.body.phone,
+        pwd = req.body.pwd;
+    if (!phone) {
+        res.send(resultMsg.required('手机号不能为空'));
+        return;
+    }
+    if (!pwd) {
+        res.send(resultMsg.required('密码不能为空'));
+        return;
+    }
+    oauth_user_service.login(phone, pwd, function(result) {
+        if (result.error == true) {
+            res.send(resultMsg.fail(result.message));
+            return;
+        } else {
+            res.send(resultMsg.success(result.message, result.data));
             return;
         }
     });
@@ -315,14 +417,11 @@ router.post('/api/register', function(req, res, next) {
  *   message:'解析失败', 
  *   data:{} 
  *   } 
- * @apiExample  链接:
- *  http://192.168.1.89:8810/api/participle
  * @apiParamExample {json} 请求示例:
  *     {
  *       "content": '123456',
  *       "access_token": '123456'
  *     }
- * @apiSampleRequest http://192.168.1.89:8810/api/participle
  */
 router.post('/api/participle', function(req, res, next) {
     var content = req.body.content;

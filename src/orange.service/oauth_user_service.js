@@ -22,9 +22,10 @@ var User = function(nick_name, phone, pwd, code) {
                 callback(false);
             }
             if (res) {
-                callback(true);
+                callback(true, res);
+            } else {
+                callback(false);
             }
-            callback(false);
         });
     }
     this.verifyPhone = function(callback) {
@@ -37,40 +38,58 @@ var User = function(nick_name, phone, pwd, code) {
                 callback(false);
             }
             if (res) {
-                callback(true);
+                callback(true, res);
+            } else {
+                callback(false);
             }
-            callback(false);
         });
     }
 };
 
 User.prototype.verify = function(callback) {
     var _self = this;
-    _self.verifyNickName(function(res) {
-        if (res == false) {
-            _self.verifyPhone(function(res) {
-                if (res == true) {
+    _self.verifyNickName(function(vn) {
+        if (vn == false) {
+            _self.verifyPhone(function(vp) {
+                if (vp == true) {
                     callback(bizResultMsg.error('手机号已经被注册!'));
+                } else {
+                    callback(bizResultMsg.success('验证通过'));
                 }
             });
         } else {
             callback(bizResultMsg.error('昵称已经被注册'));
         }
     });
-    callback(bizResultMsg.success('验证通过'));
+
 };
-exports.register = function(nick_name, phone, pwd, code, callback) {
+exports.login = function(phone, pwd, callback) {
+    var user = new User("", phone, pwd, "");
+    user.verifyPhone(function(res, doc) {
+        if (res == true) {
+            if (doc.pwd == pwd) {
+                callback(bizResultMsg.success('登录成功!', { userId: doc._id }));
+            } else {
+                callback(bizResultMsg.error('账户和密码不正确!'));
+            }
+        } else {
+            callback(bizResultMsg.error('不存在该用户,请进行注册!'));
+        }
+    });
+};
+exports.register = function(nick_name, phone, pwd, code, app_id, callback) {
     var user = new User(nick_name, phone, pwd, code);
     user.verify(function(res) {
         if (res.error == false) {
-            orange_sms_service.verifyCode(phone, code, function(err) {
-                if (err) {
+            orange_sms_service.verifyCode(phone, code, function(result) {
+                if (result.error) {
                     callback(bizResultMsg.error('短信验证码验证失败!'));
                 }
                 var item = new OauthUser();
                 item.phone = phone;
                 item.pwd = pwd;
                 item.nick_name = nick_name;
+                item.app_id = app_id;
 
                 item.save(function(err, res) {
                     if (err) {
@@ -84,6 +103,32 @@ exports.register = function(nick_name, phone, pwd, code, callback) {
             });
         } else {
             callback(res);
+        }
+    });
+};
+
+exports.updatePwd = function(phone, pwd, code, callback) {
+    var user = new User("", phone, pwd, code);
+    user.verifyPhone(function(res, doc) {
+        if (res == true) {
+            orange_sms_service.verifyCode(phone, code, function(result) {
+                if (result.error) {
+                    callback(bizResultMsg.error('短信验证码验证失败!'));
+                }
+                doc.pwd = pwd;
+                item.save(function(err, res) {
+                    if (err) {
+                        callback(bizResultMsg.error('修改失败!'));
+                    }
+                    if (!res) {
+                        callback(bizResultMsg.error('修改失败!'));
+                    } else {
+                        callback(bizResultMsg.success('修改成功'));
+                    }
+                });
+            });
+        } else {
+            callback(bizResultMsg.error('未找到该用户!'));
         }
     });
 };

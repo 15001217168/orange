@@ -18,6 +18,10 @@ var OauthUserSchema = new schema({
         type: Boolean,
         default: false
     },
+    app_id: {
+        type: String,
+        default: "",
+    },
     is_blocked: {
         type: Boolean,
         default: false

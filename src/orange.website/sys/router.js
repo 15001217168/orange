@@ -1,5 +1,4 @@
 var express = require('express'),
-    flash = require('connect-flash'),
     router = express.Router(),
     config = require('../../config'),
     crypto = require('crypto'),
@@ -24,8 +23,7 @@ router.post('/login', function(req, res, next) {
         pwd = req.body.pwd;
     sysUserService.login(name, pwd, function(result) {
         if (result.error == true) {
-            // req.flash('error', result.message);
-            //res.redirect('/login');
+            return next(result.message);
         }
         var account = {
             username: result.data.username

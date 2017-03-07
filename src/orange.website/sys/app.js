@@ -7,7 +7,6 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     auth = require('../../orange.middleware/auth'),
     router = require('./router'),
-    flash = require('connect-flash'),
     app = express(),
     sysUserService = require('../../orange.service/sys_user_service');
 
@@ -25,13 +24,20 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cookieParser());
-//app.use(session({ cookie: { maxAge: 60000 } }));
-//app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', auth.permission);
 app.use('/', router);
 
+//           
+app.use(function(message, req, res, next) {
+    if (message) {
+        res.send({ error: true, message: message });
+        return;
+    } else {
+        next();
+    }
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

@@ -18,6 +18,22 @@ exports.getToken = function(token, callback) {
         }
     });
 };
+exports.getAppIdByToken = function(token, callback) {
+    OauthToken.findOne({
+        token: token,
+        is_blocked: false,
+        is_deleted: false
+    }, function(err, doc) {
+        if (err) {
+            callback(bizResultMsg.error('获取AppId失败', { app_id: "" }));
+        }
+        if (doc) {
+            callback(bizResultMsg.success('获取Token成功', { app_id: doc.app_id }));
+        } else {
+            callback(bizResultMsg.error('获取AppId失败', { app_id: "" }));
+        }
+    });
+};
 exports.addToken = function(appid, token) {
     var item = new OauthToken();
     item.app_id = appid;
