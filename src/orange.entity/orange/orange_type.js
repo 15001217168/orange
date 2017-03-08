@@ -15,7 +15,8 @@ var OrangeTypeSchema = new schema({
         default: ""
     },
     type: {
-
+        id: String,
+        name: String
     },
     content_count: {
         type: Number,

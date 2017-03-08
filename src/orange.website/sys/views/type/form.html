@@ -24,18 +24,46 @@
                                             <form method="post" action="/type/save" class="form-horizontal">
                                                 <input type="hidden" id="id" name="id" value="<%=type.id%>" />
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">类型名称</label>
+                                                    <label class="col-sm-2 control-label">名称</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" id="name" name="name" value="<%=type.name%>" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">描述</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea id="des" name="des" class="form-control"><%=type.des%></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">类型</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control m-b" id="type">
+                                                            <option value="0000000">推荐</option>
+                                                             <option value="0000001">热门</option>
+                                                              <option value="0000002">城市</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">图标</label>
+                                                    <div class="col-sm-10">
+                                                        <label for="imgFile" class="btn btn-w-m btn-white" style="height: 120px;width: 120px; padding: 5px 5px;">
+                                                            <i class="fa fa-upload" style="display:block;font-size: 40px;line-height: 100px;"></i>
+                                                              <img alt="图标" id="imgType" src="/img/a1.jpg" style="width: 100%;height: 100%;display:none;" title="图标">
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="hr-line-dashed"></div>
                                                 <div class="form-group">
                                                     <div class="col-sm-4 col-sm-offset-2">
-                                                        <button class="btn btn-primary" type="submit">保存</button>
+                                                        <button class="btn btn-primary" type="button">保存</button>
                                                         <button class="btn btn-white" onclick="javascript: window.location.href = '/type'" type="button">取消</button>
                                                     </div>
                                                 </div>
+                                            </form>
+                                            <form method="POST" id="fileForm" action="/upload" enctype="multipart/form-data">
+                                                <input type="file" id="imgFile" name="imgFile" style="display: none">
                                             </form>
                                         </div>
                                     </div>
@@ -46,5 +74,20 @@
             </div>
     </div>
     <%include ../shared/script.html%>
+        <script src="/js/jquery.form.js"></script>
+        <script>
+            $(function() {
+                $('#imgFile').on('change', function() {
+                    $('#fileForm').ajaxSubmit(function(res) {
+                        if (res.error) {
+                            alert(res.message);
+                        } else {
+                            $('#imgType').attr('src', res.data.url).show().parent().find('i').hide();
+                        }
+                    });
+                });
+            });
+        </script>
 </body>
+
 </html>

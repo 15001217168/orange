@@ -30,6 +30,10 @@
                                                         <tr>
                                                             <th>编号</th>
                                                             <th>名称</th>
+                                                            <th>图标</th>
+                                                            <th>文章数</th>
+                                                            <th>关注数</th>
+                                                            <th>描述</th>
                                                             <th>创建日期</th>
                                                             <th>操作</th>
                                                         </tr>
@@ -43,6 +47,21 @@
                                                                     </td>
                                                                     <td>
                                                                         <%=i.name%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.type%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.img%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.content_count%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.focus_count%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.des%>
                                                                     </td>
                                                                     <td>
                                                                         <%=i.create_date%>
@@ -66,8 +85,7 @@
                                                                 <td colspan="2" style="text-align:left;" id="paginationText">显示 1 到 10 项，共
                                                                     <%=pagination.total%> 项</td>
                                                                 <td colspan="2" style="text-align:right;">
-                                                                    <ul class="pagination" id="pagination" style="margin:0 auto;" data-total="<%=pagination.total%>" data-size="<%=pagination.size%>"
-                                                                        data-index="<%=pagination.index%>" data-url="/type?index=">
+                                                                    <ul class="pagination" id="pagination" style="margin:0 auto;" data-total="<%=pagination.total%>" data-size="<%=pagination.size%>" data-index="<%=pagination.index%>" data-url="/type?index=">
                                                                         <li class="paginate_button previous disabled" id="previous">
                                                                             <a href="javascript:void(0);">上一页</a>
                                                                         </li>
@@ -84,7 +102,7 @@
                                                                         <li class="paginate_button next" id="next">
                                                                             <a href="javascript:void(0);">下一页</a>
                                                                         </li>
-                                                                        </ul>
+                                                                    </ul>
                                                                 </td>
                                                             </tr>
                                                     </tfoot>

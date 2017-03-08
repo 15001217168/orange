@@ -2,6 +2,8 @@ var express = require('express'),
     router = express.Router(),
     config = require('../../config'),
     crypto = require('crypto'),
+    multiparty = require('multiparty'),
+    fs = require('fs'),
     sysUserService = require('../../orange.service/sys_user_service'),
     oauthClientService = require('../../orange.service/oauth_client_service'),
     orangeTypeService = require('../../orange.service/orange_type_service'),
@@ -142,12 +144,16 @@ router.get('/type/form', function(req, res, next) {
 });
 router.post('/type/save', function(req, res, next) {
     var id = req.body.id || 0,
-        name = req.body.name;
-    orangeTypeService.saveType(id, name, function(result) {
+        name = req.body.name,
+        type = { id: req.body.typeid, name: req.body.typename },
+        des = req.body.des,
+        img = req.body.img;
+    orangeTypeService.saveType(id, name, type, des, img, function(result) {
         if (result.error == true) {
             return next(result.message);
+        } else {
+            res.redirect('/type');
         }
-        res.redirect('/type');
     });
 });
 
@@ -179,6 +185,30 @@ router.post('/content/save', function(req, res, next) {
             return next(result.message);
         }
         res.redirect('/content');
+    });
+});
+
+router.post('/upload', function(req, res, next) {
+    //生成multiparty对象，并配置上传目标路径
+    var form = new multiparty.Form({ uploadDir: config.upload_path });
+    //上传完成后处理
+    form.parse(req, function(err, fields, files) {
+        var result = {
+            error: true,
+            message: '上传图片失败！',
+            data: {}
+        };
+        if (err) {
+            result.message = err.message;
+        } else {
+            var file = files.imgFile[0];
+            var uploadedPath = file.path.replace(config.upload_path, '');
+            result.error = false;
+            result.message = '上传图片成功！';
+            result.data = { url: '/upload/' + uploadedPath };
+        }
+        res.send(result);
+        return;
     });
 });
 

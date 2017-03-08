@@ -8,7 +8,10 @@ var repository = require('../orange.repository/orange_repository'),
 exports.getTypeById = function(id, callback) {
     var data = {
         id: 0,
-        name: ""
+        name: "",
+        type: {},
+        des: "",
+        img: "",
     };
     if (id != 0) {
         OrangeType.findById(id, function(err, doc) {
@@ -17,6 +20,9 @@ exports.getTypeById = function(id, callback) {
             }
             data.id = doc._id;
             data.name = doc.name;
+            data.type = doc.type;
+            data.des = doc.des;
+            data.img = doc.img;
             callback(bizResultMsg.success('获取数据成功', data));
         });
     } else {
@@ -50,6 +56,11 @@ exports.getTypes = function(pageindex, key, callback) {
                 item._id = v._id;
                 item.no = start + i + 1;
                 item.name = v.name;
+                item.type = v.type.name;
+                item.content_count = v.content_count;
+                item.focus_count = v.focus_count;
+                item.des = v.des;
+                item.img = v.img;
                 item.create_date = moment(v.create_date).format('YYYY- MM - DD HH:mm:ss');
                 return item;
             });
@@ -68,12 +79,14 @@ exports.getTypes = function(pageindex, key, callback) {
     });
 };
 
-exports.saveType = function(id, name, callback) {
-    var item = new OrangeType();
+exports.saveType = function(id, name, type, des, img, callback) {
     if (id != 0) {
         OrangeType.findByIdAndUpdate(id, {
             update_date: new Date(),
             name: name,
+            type: type,
+            des: des,
+            img: img
         }, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败!'));
@@ -85,7 +98,11 @@ exports.saveType = function(id, name, callback) {
             }
         });
     } else {
+        var item = new OrangeType();
         item.name = name;
+        item.type = type;
+        item.des = des;
+        item.img = img;
         item.save(function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败!'));
