@@ -58,12 +58,13 @@ exports.getContents = function(pageindex, key, callback) {
         OrangeContent.find(search, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.success('获取数据成功', [], pagination));
-            }
-            var totalCount = doc.length;
-            pagination.pages = parseInt((totalCount + size - 1) / size);
-            pagination.total = totalCount;
+            } else {
+                var totalCount = doc.length;
+                pagination.pages = parseInt((totalCount + size - 1) / size);
+                pagination.total = totalCount;
 
-            callback(bizResultMsg.success('获取数据成功', list, pagination));
+                callback(bizResultMsg.success('获取数据成功', list, pagination));
+            }
         });
 
     });

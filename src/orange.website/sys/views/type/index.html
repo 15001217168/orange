@@ -3,6 +3,7 @@
 
 <head>
     <%include ../shared/header.html%>
+        <link href="/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,6 +31,7 @@
                                                         <tr>
                                                             <th>编号</th>
                                                             <th>名称</th>
+                                                            <th>类型</th>
                                                             <th>图标</th>
                                                             <th>文章数</th>
                                                             <th>关注数</th>
@@ -52,7 +54,9 @@
                                                                         <%=i.type%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=i.img%>
+                                                                        <label class="btn btn-white" style="height: 40px;width: 40px; padding: 5px 5px;">
+                                                              <img alt="图标" class="fancybox" data-fancybox-title="<%=i.name%>" src="<%=i.img%>" style="width: 100%;height: 100%;" title="点击查看图标">
+                                                        </label>
                                                                     </td>
                                                                     <td>
                                                                         <%=i.content_count%>
@@ -84,7 +88,7 @@
                                                             <tr>
                                                                 <td colspan="2" style="text-align:left;" id="paginationText">显示 1 到 10 项，共
                                                                     <%=pagination.total%> 项</td>
-                                                                <td colspan="2" style="text-align:right;">
+                                                                <td colspan="7" style="text-align:right;">
                                                                     <ul class="pagination" id="pagination" style="margin:0 auto;" data-total="<%=pagination.total%>" data-size="<%=pagination.size%>" data-index="<%=pagination.index%>" data-url="/type?index=">
                                                                         <li class="paginate_button previous disabled" id="previous">
                                                                             <a href="javascript:void(0);">上一页</a>
@@ -117,6 +121,15 @@
             </div>
     </div>
     <%include ../shared/script.html%>
+        <script src="/plugins/fancybox/jquery.fancybox.js"></script>
+        <script>
+            $(function() {
+                $('.fancybox').fancybox({
+                    openEffect: 'none',
+                    closeEffect: 'none'
+                });
+            });
+        </script>
 </body>
 
 </html>

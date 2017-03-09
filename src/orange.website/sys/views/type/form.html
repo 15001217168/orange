@@ -21,7 +21,7 @@
                                             </h5>
                                         </div>
                                         <div class="ibox-content">
-                                            <form method="post" action="/type/save" class="form-horizontal">
+                                            <form method="post" action="/type/save" id="formData" class="form-horizontal">
                                                 <input type="hidden" id="id" name="id" value="<%=type.id%>" />
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">名称</label>
@@ -38,11 +38,13 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">类型</label>
                                                     <div class="col-sm-10">
-                                                        <select class="form-control m-b" id="type">
-                                                            <option value="0000000">推荐</option>
+                                                        <select class="form-control m-b" id="selType">
+                                                            <option value="0000000" selected="selected">推荐</option>
                                                              <option value="0000001">热门</option>
                                                               <option value="0000002">城市</option>
                                                         </select>
+                                                        <input type="hidden" id="typeid" name="typeid" value="<%=type.type.id%>">
+                                                        <input type="hidden" id="typename" name="typename" value="<%=type.type.name%>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -52,12 +54,13 @@
                                                             <i class="fa fa-upload" style="display:block;font-size: 40px;line-height: 100px;"></i>
                                                               <img alt="图标" id="imgType" src="/img/a1.jpg" style="width: 100%;height: 100%;display:none;" title="图标">
                                                         </label>
+                                                        <input type="hidden" id="img" name="img" value="<%=type.img%>">
                                                     </div>
                                                 </div>
                                                 <div class="hr-line-dashed"></div>
                                                 <div class="form-group">
                                                     <div class="col-sm-4 col-sm-offset-2">
-                                                        <button class="btn btn-primary" type="button">保存</button>
+                                                        <button class="btn btn-primary" id="btnSave" type="button">保存</button>
                                                         <button class="btn btn-white" onclick="javascript: window.location.href = '/type'" type="button">取消</button>
                                                     </div>
                                                 </div>
@@ -77,15 +80,48 @@
         <script src="/js/jquery.form.js"></script>
         <script>
             $(function() {
-                $('#imgFile').on('change', function() {
-                    $('#fileForm').ajaxSubmit(function(res) {
-                        if (res.error) {
-                            alert(res.message);
-                        } else {
-                            $('#imgType').attr('src', res.data.url).show().parent().find('i').hide();
+                var Type = function() {
+                    this.save = function() {
+                            $('#formData').ajaxSubmit(function(res) {
+                                if (res.error) {
+                                    alert(res.message);
+                                } else {
+                                    window.location.href = '/type';
+                                }
+                            });
+                        },
+                        this.init = function() {
+                            var _selft = this;
+                            if ($('#typeid').val().length > 0) {
+                                $('#selType').val($('#typeid').val());
+                            } else {
+                                $('#typeid').val($('#selType option:selected').val());
+                                $('#typename').val($('#selType option:selected').text());
+                            }
+                            if ($('#img').val().length > 0) {
+                                $('#imgType').attr('src', $('#img').val()).show().parent().find('i').hide();
+                            }
+                            $('#selType').on('change', function() {
+                                $('#typeid').val($(this).val());
+                                $('#typename').val($('#selType option:selected').text());
+                            });
+                            $('#imgFile').on('change', function() {
+                                $('#fileForm').ajaxSubmit(function(res) {
+                                    if (res.error) {
+                                        alert(res.message);
+                                    } else {
+                                        $('#img').val(res.data.url);
+                                        $('#imgType').attr('src', res.data.url).show().parent().find('i').hide();
+                                    }
+                                });
+                            });
+                            $('#btnSave').off().on('click', function() {
+                                _selft.save();
+                            });
                         }
-                    });
-                });
+                };
+
+                new Type().init();
             });
         </script>
 </body>

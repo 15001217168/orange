@@ -1,5 +1,6 @@
 var express = require('express'),
     session = require('express-session'),
+    bizResultMsg = require('../../orange/result/result').BizResult,
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
@@ -32,7 +33,7 @@ app.use('/', router);
 //           
 app.use(function(message, req, res, next) {
     if (message) {
-        res.send({ error: true, message: message });
+        res.send(bizResultMsg.error(message));
         return;
     } else {
         next();

@@ -2,6 +2,7 @@ var express = require('express'),
     router = express.Router(),
     config = require('../../config'),
     crypto = require('crypto'),
+    bizResultMsg = require('../../orange/result/result').BizResult,
     multiparty = require('multiparty'),
     fs = require('fs'),
     sysUserService = require('../../orange.service/sys_user_service'),
@@ -36,7 +37,8 @@ router.post('/login', function(req, res, next) {
         ciphered += cipher.final('hex');
 
         res.cookie("orange_a", ciphered, { maxAge: config.cookie_expire, httpOnly: true });
-        res.redirect('/');
+        res.send(bizResultMsg.success('登录成功'));
+        return;
     });
 });
 router.get('/logout', function(req, res, next) {
@@ -152,7 +154,8 @@ router.post('/type/save', function(req, res, next) {
         if (result.error == true) {
             return next(result.message);
         } else {
-            res.redirect('/type');
+            res.send(bizResultMsg.success('保存成功'));
+            return;
         }
     });
 });
@@ -163,8 +166,9 @@ router.get('/content', function(req, res, next) {
     orangeContentService.getContents(page_index, "", function(result) {
         if (result.error == true) {
             return next(result.message);
+        } else {
+            res.render('content/index', { username: req.user.username, title: "内容列表", list: result.data, pagination: result.pagination });
         }
-        res.render('content/index', { username: req.user.username, title: "内容列表", list: result.data, pagination: result.pagination });
     });
 });
 router.get('/content/form', function(req, res, next) {
@@ -174,7 +178,7 @@ router.get('/content/form', function(req, res, next) {
         if (result.error == true) {
             return next(result.message);
         }
-        res.render('content/form', { username: req.user.username, title: title, content: result.title });
+        res.render('content/form', { username: req.user.username, title: title, content: result.data });
     });
 });
 router.post('/content/save', function(req, res, next) {

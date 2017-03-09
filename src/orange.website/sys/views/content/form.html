@@ -1,129 +1,73 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <%include ../shared/header.html%>
-    <link href="/js/plugins/wangEditor-2.1.20/dist/css/wangEditor.min.css" rel="stylesheet" />
+        <link href="/plugins/markdown/bootstrap-markdown.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <div id="wrapper">
         <%include ../shared/nav.html%>
-        <div id="page-wrapper" class="gray-bg dashbard-1">
-            <%include ../shared/page_top.html%>
-            <%include ../shared/header_title.html%>
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5><%=data.title%></h5>
-                            </div>
-                            <div class="ibox-content">
-                                <form method="post" action="/content/save" class="form-horizontal">
-                                    <input type="hidden" id="id" name="id" value="<%=(data.content?data.content._id:'')%>" />
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">标题</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" id="title" name="title" value="<%=(data.content?data.content.title:'')%>" class="form-control">
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                <%include ../shared/page_top.html%>
+                    <%include ../shared/header_title.html%>
+                        <div class="wrapper wrapper-content animated fadeInRight">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>
+                                                <%=title%>
+                                            </h5>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">副标题</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" id="sub_title" name="sub_title" value="<%=(data.content?data.content.sub_title:'')%>" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">描述</label>
-                                        <div class="col-sm-10">
-                                            <textarea class="form-control" id="description" name="description">
-                                                <%=(data.content?data.content.description:'')%>
-                                            </textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">作者</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" id="author" name="author" value="<%=(data.content?data.content.author:'')%>" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">来源</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" id="source" name="source" value="<%=(data.content?data.content.source:'')%>" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">来源链接</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" id="original_source" name="original_source" value="<%=(data.content?data.content.original_source:'')%>" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">类型</label>
-                                        <div class="col-sm-10">
-                                            <input type="hidden" name="typename" id="typename" />
-                                            <select class="form-control m-b" name="typeid" id="typeid">
-                                                <%data.types.forEach(function(i){%>
-                                                <%if(data.content!=null&&data.content.type_id==i._id){%>
-                                                <option value="<%=i._id%>" selected="selected"><%=i.name%></option>
-                                                <%}else{%>
-                                                <option value="<%=i._id%>"><%=i.name%></option>
-                                                <%}%>
-                                                <%})%>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">正文</label>
-                                        <div class="col-sm-10">
-                                            <textarea id="content" name="content" rows="20" class="form-control"><%=(data.content?data.content.content:'')%></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="hr-line-dashed"></div>
-                                    <div class="form-group">
-                                        <div class="col-sm-4 col-sm-offset-2">
-                                            <button class="btn btn-primary" type="submit">保存</button>
-                                            <button class="btn btn-white" onclick="javascript: window.location.href = '/content'" type="button">取消</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                        <div class="ibox-content">
+                                            <form method="post" action="/content/save" class="form-horizontal">
+                                                <input type="hidden" id="id" name="id" value="<%=content.id%>" />
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">标题</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" id="title" name="title" value="" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">正文</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea id="content" name="content" rows="20" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="hr-line-dashed"></div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-4 col-sm-offset-2">
+                                                        <button class="btn btn-primary" type="submit">保存</button>
+                                                        <button class="btn btn-white" onclick="javascript: window.location.href = '/content'" type="button">取消</button>
+                                                    </div>
+                                                </div>
+                                            </form>
 
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <%include ../shared/footer.html%>
             </div>
-            <%include ../shared/footer.html%>
-        </div>
     </div>
     <%include ../shared/script.html%>
 
-    <script src="/js/plugins/wangEditor-2.1.20/dist/js/wangEditor.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            var editor = new wangEditor('content');
-            // 上传图片
-            editor.config.uploadImgUrl = '/upload';
-
-            // 自定义上传事件
-            editor.config.uploadImgFns.onload = function (resultText, xhr) {
-                var originalName = editor.uploadImgOriginalName || '';
-                var result = JSON.parse(resultText);
-                // 如果 resultText 是图片的url地址，可以这样插入图片：
-                editor.command(null, 'insertHtml', '<img src="' + result.data.url + '" alt="' + originalName + '" style="max-width:100%;"/>');
-                // 如果不想要 img 的 max-width 样式，也可以这样插入：
-                // editor.command(null, 'InsertImage', resultText);
-            };
-            editor.create();
-
-            $("#btnSave").on("click", function () {
-
+        <script src="/plugins/markdown/bootstrap-markdown.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $("#content").markdown({
+                    autofocus: false,
+                    savable: false,
+                    fullscreen: true,
+                    onSave: function(e) {
+                        alert("Saving '" + e.getContent() + "'...")
+                    },
+                })
             });
-            $("#typename").val($("#typeid option:selected").text());
-            $("#typeid").off().on("change", function () {
-                $("#typename").val($("#typeid option:selected").text());
-            });
-        });
-    </script>
+        </script>
 </body>
+
 </html>
