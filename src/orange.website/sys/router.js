@@ -209,7 +209,7 @@ router.post('/upload', function(req, res, next) {
             var uploadedPath = file.path.replace(config.upload_path, '');
             result.error = false;
             result.message = '上传图片成功！';
-            result.data = { url: '/upload/' + uploadedPath };
+            result.data = { url: config.img_url + '/upload/' + uploadedPath };
         }
         res.send(result);
         return;

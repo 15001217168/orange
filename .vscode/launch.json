@@ -6,15 +6,23 @@
     "configurations": [{
             "type": "node",
             "request": "launch",
-            "name": "启动程序",
+            "name": "web",
+            "program": "${workspaceRoot}/src/orange.website/web/bin/www",
+            "cwd": "${workspaceRoot}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "sys",
             "program": "${workspaceRoot}/src/orange.website/sys/bin/www",
             "cwd": "${workspaceRoot}"
         },
         {
             "type": "node",
-            "request": "attach",
-            "name": "附加到进程",
-            "port": 5858
+            "request": "launch",
+            "name": "api",
+            "program": "${workspaceRoot}/src/orange.website/api/bin/www",
+            "cwd": "${workspaceRoot}"
         }
     ]
 }

@@ -9,9 +9,8 @@ Result.success = function(msg, data) {
     return new Result('0000', msg, data);
 };
 //失败
-Result.fail = function(code, msg) {
-    code = code || "9999";
-    return new Result(code, msg);
+Result.fail = function(msg) {
+    return new Result('9999', msg);
 };
 //非空
 Result.required = function(msg) {

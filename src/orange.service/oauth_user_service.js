@@ -116,7 +116,7 @@ exports.updatePwd = function(phone, pwd, code, callback) {
                     callback(bizResultMsg.error('短信验证码验证失败!'));
                 }
                 doc.pwd = pwd;
-                item.save(function(err, res) {
+                doc.save(function(err, res) {
                     if (err) {
                         callback(bizResultMsg.error('修改失败!'));
                     }

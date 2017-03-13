@@ -8,7 +8,7 @@
     "examples": [
       {
         "title": "接口地址:",
-        "content": "http://120.76.176.44:8810",
+        "content": "http://api.ohlion.com/",
         "type": "json"
       }
     ],
@@ -152,7 +152,7 @@
     "groupTitle": "2_OAuth",
     "sampleRequest": [
       {
-        "url": "http://120.76.176.44:8810/api/authorize"
+        "url": "http://api.ohlion.com/api/authorize"
       }
     ]
   },
@@ -244,7 +244,7 @@
     "groupTitle": "2_OAuth",
     "sampleRequest": [
       {
-        "url": "http://120.76.176.44:8810/api/login"
+        "url": "http://api.ohlion.com/api/login"
       }
     ]
   },
@@ -350,7 +350,7 @@
     "groupTitle": "2_OAuth",
     "sampleRequest": [
       {
-        "url": "http://120.76.176.44:8810/api/register"
+        "url": "http://api.ohlion.com/api/register"
       }
     ]
   },
@@ -442,7 +442,7 @@
     "groupTitle": "2_OAuth",
     "sampleRequest": [
       {
-        "url": "http://120.76.176.44:8810/api/register_verify"
+        "url": "http://api.ohlion.com/api/register_verify"
       }
     ]
   },
@@ -541,7 +541,7 @@
     "groupTitle": "2_OAuth",
     "sampleRequest": [
       {
-        "url": "http://120.76.176.44:8810/api/update_pwd"
+        "url": "http://api.ohlion.com/api/update_pwd"
       }
     ]
   },
@@ -626,7 +626,7 @@
     "groupTitle": "3_Message",
     "sampleRequest": [
       {
-        "url": "http://120.76.176.44:8810/api/send_sms_code"
+        "url": "http://api.ohlion.com/api/send_sms_code"
       }
     ]
   },
@@ -718,7 +718,7 @@
     "groupTitle": "3_Message",
     "sampleRequest": [
       {
-        "url": "http://120.76.176.44:8810/api/verify_sms_code"
+        "url": "http://api.ohlion.com/api/verify_sms_code"
       }
     ]
   },
@@ -803,7 +803,7 @@
     "groupTitle": "4_Content",
     "sampleRequest": [
       {
-        "url": "http://120.76.176.44:8810/api/participle"
+        "url": "http://api.ohlion.com/api/participle"
       }
     ]
   },

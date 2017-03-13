@@ -8,12 +8,16 @@ var express = require('express'),
     oauth_user_service = require('../../orange.service/oauth_user_service'),
     orange_sms_service = require('../../orange.service/orange_sms_service');
 
+
+router.get('/', function(req, res, next) {
+    res.redirect('/apidoc/index.html');
+});
 /**
  * @api {G} 全局信息
  * @apiName 全局信息
  * @apiGroup 1_Global
  * @apiExample  接口地址:
- *  http://120.76.176.44:8810
+ *  http://api.ohlion.com/
  * @apiSuccess {String} code--0000 调用成功.
  * @apiSuccess {String} code--9999 调用失败.
  * @apiSuccess {String} code--9998 验证Token失败.
