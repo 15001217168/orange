@@ -6,31 +6,15 @@ var OrangeContentSchema = new schema({
         type: String,
         default: ""
     },
-    sub_title: {
-        type: String,
-        default: ""
-    },
-    description: {
-        type: String,
-        default: ""
-    },
-    author: {
-        type: String,
-        default: ""
-    },
-    source: {
-        type: String,
-        default: ""
-    },
-    original_source: {
-        type: String,
-        default: ""
-    },
     img: {
         type: String,
         default: ""
     },
     content: {
+        type: String,
+        default: ""
+    },
+    markdown: {
         type: String,
         default: ""
     },

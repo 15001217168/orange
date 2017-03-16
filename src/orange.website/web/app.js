@@ -5,9 +5,13 @@ var express = require('express'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    auth = require('../../orange.middleware/auth'),
+    web_auth = require('../../orange.middleware/web_auth'),
     router = require('./router'),
+    config = require('./config'),
     app = express();
+
+
+global.web_config = config;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('*', auth.permission);
+app.use('*', web_auth.permission);
 app.use('/', router);
 
 // catch 404 and forward to error handler

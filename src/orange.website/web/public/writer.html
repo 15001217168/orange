@@ -50,15 +50,19 @@
                     <form class="note-form rich-text">
                         <input class="title mousetrap" name="note_title" value="无标题文章" type="text">
                         <div id="editormd" style="height: 700px;">
-                            <textarea style="display: none; height:700px;">开始快乐的写作吧！！！</textarea>
+                            <textarea style="display: none; height:700px;"></textarea>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <form method="POST" id="fileForm" action="/editor.md/upload" enctype="multipart/form-data">
+        <input type="file" id="imgUpload" name="imgUpload" style="display:none;" />
+    </form>
     <script src=" /js/jquery/jquery-2.1.1.min.js "></script>
     <script src="/js/plugins/editor.md/editormd.min.js "></script>
+    <script src="/js/jquery/jquery.form.js "></script>
     <script type="text/javascript ">
         $(function() {
             var editor = editormd("editormd ", {
@@ -67,11 +71,36 @@
                 path: "/js/plugins/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
                 watch: false,
                 toolbarIcons: function() {
-                    return ["undo", "redo", "|", "bold", "del", "italic", "quote", "hr", "|", "h1", "h2", "h3", "h4", "h5", "|", "list-ul", "list-ol", "link", "image", "code-block", "|", "watch", "preview", "fullscreen"]
+                    return ["undo", "redo", "|", "bold", "del", "italic", "quote", "hr", "|", "h1", "h2", "h3", "h4", "h5", "|", "list-ul", "list-ol", "link", "upload", "code-block", "|", "watch", "preview", "fullscreen", "|", "save"]
                 },
-                imageUpload: true,
-                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                imageUploadURL: "/editor.md/upload",
+                saveHTMLToTextarea: true,
+                toolbarIconTexts: {
+                    save: "保存" // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
+                },
+                onchange: function() {
+                    console.log("改变自动保存");
+                },
+                toolbarCustomIcons: {
+                    upload: '<label for="imgUpload" class="fa fa-picture-o" title="上传图片"></label>',
+                },
+                toolbarHandlers: {
+                    save: function(cm, icon, cursor, selection) {
+                        alert(editor.getMarkdown());
+                        alert(editor.getHTML());
+                    },
+                },
+                onload: function() {
+                    $('#imgUpload').on('change', function() {
+                        $('#fileForm').ajaxSubmit(function(res) {
+                            if (res.error) {
+                                alert(res.message);
+                            } else {
+                                var img = '![](' + res.data.url + '  "")';
+                                editor.cm.replaceSelection(img);
+                            }
+                        });
+                    });
+                }
             });
         });
     </script>

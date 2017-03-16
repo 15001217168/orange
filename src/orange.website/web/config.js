@@ -1,7 +1,7 @@
 var config = {
-    app_id: 'orKpudkFY',
-    app_secret: 'zaesatKS4KwljOLJj14TDNZDsl7fx4gX',
-    aes_key: 'xgBC4W2s5nclOYXkE2S8',
-    api_url: 'http://127.0.0.1:8810/'
+    app_id: 'orcvRydH9',
+    app_secret: 'BCiw80RkLJ89tPS57ePCpHmDEnc5zd5T',
+    aes_key: 'v28AcLk45K3m2ExI0fgr',
+    api_url: 'api.ohlion.com'
 };
 module.exports = config;

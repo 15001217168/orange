@@ -29,27 +29,86 @@
             <div class="js-sign-in-container">
                 <form id="formData">
                     <div class=" input-prepend restyle js-normal ">
-                        <input placeholder="昵称" id="phone" type="text ">
+                        <input placeholder="昵称" id="txt_nick_name" type="text ">
                         <i class="iconfont ic-user"></i>
                     </div>
                     <div class=" input-prepend restyle js-normal ">
-                        <input placeholder="手机号" id="phone" type="text ">
+                        <input placeholder="手机号" id="txt_phone" type="text ">
                         <i class="iconfont ic-phonenumber"></i>
                     </div>
                     <div class="input-prepend restyle no-radius security-up-code js-security-number">
-                        <input type="text" name="sms_code" id="sms_code" placeholder="手机验证码">
+                        <input type="text" id="txt_sms_code" placeholder="手机验证码">
                         <i class="iconfont ic-verify"></i>
                         <a class="btn-up-resend js-send-code-button" href="javascript:void(0);" id="origin_" style="display: none;">发送验证码</a><a class="btn-up-resend js-send-code-button" href="javascript:;">发送验证码</a>
                     </div>
                     <div class="input-prepend">
-                        <input placeholder="密码" id="pwd" type="password ">
+                        <input placeholder="密码" id="txt_pwd" type="password ">
                         <i class="iconfont ic-password "></i>
                     </div>
-                    <input value="注册" class="sign-in-button " type="button">
+                    <input value="注册" class="sign-in-button" id="btnRegister" type="button">
                 </form>
             </div>
         </div>
     </div>
+    <script src=" /js/jquery/jquery-2.1.1.min.js "></script>
+    <script type="text/javascript ">
+        $(function() {
+            var Register = function() {
+                this.nick_name = '';
+                this.phone = '';
+                this.sms_code = '';
+                this.pwd = '';
+
+                var setValue = function() {
+                    this.nick_name = $('#txt_nick_name').val();
+                    this.phone = $('#txt_phone').val();
+                    this.sms_code = $('#txt_sms_code').val();
+                    this.pwd = $('#txt_pwd').val();
+                };
+                var verify = function() {
+                    setValue();
+                    if (this.nick_name.length == 0) {
+                        alert('昵称不能为空');
+                        return false;
+                    }
+                    if (this.phone.length == 0) {
+                        alert('手机号不能为空');
+                        return false;
+                    }
+                    if (this.sms_code.length == 0) {
+                        alert('短信验证码不能为空');
+                        return false;
+                    }
+                    if (this.pwd.length == 0) {
+                        alert('密码不能为空');
+                        return false;
+                    }
+                    return true;
+                };
+
+                this.reg = function() {
+                    if (verify()) {
+                        var _self = this;
+                        $.post('/reg', {
+                            nick_name: _self.nick_name,
+                            phone: _self.phone,
+                            sms_code: _self.sms_code,
+                            pwd: _self.pwd
+                        }, function(result) {
+
+                        });
+                    }
+                };
+                this.init = function() {
+                    var _self = this;
+                    $('#btnRegister').off().on('click', function() {
+                        _self.reg();
+                    });
+                };
+            };
+            new Register().init();
+        });
+    </script>
 </body>
 
 </html>
