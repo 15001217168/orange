@@ -2,6 +2,7 @@ var express = require('express'),
     router = express.Router(),
     resultMsg = require('../../orange/result/result').Result,
     util = require('../../orange/utils'),
+    reg_verify = require('../../orange/reg_verify'),
     oauth2 = require('../../orange.middleware/oauth2'),
     smsUtil = require('../../orange/sms/top_channel'),
     segment_utils = require('../../orange/segment/segment_utils'),
@@ -61,7 +62,7 @@ router.get('/', function(req, res, next) {
  */
 router.post('/api/authorize', oauth2.access_token);
 
-router.post('*', oauth2.authorization);
+//router.post('*', oauth2.authorization);
 
 /**
  * @api {post} /api/send_sms_code 发送验证码
@@ -96,6 +97,10 @@ router.post('/api/send_sms_code', function(req, res, next) {
     var phone = req.body.phone;
     if (!phone) {
         res.send(resultMsg.required('手机号不能为空'));
+        return;
+    }
+    if (!reg_verify.verifyPhone(phone)) {
+        res.send(resultMsg.required('手机号格式不正确'));
         return;
     }
     var code = util.createRandomNumber(6);
@@ -148,8 +153,16 @@ router.post('/api/verify_sms_code', function(req, res, next) {
         res.send(resultMsg.required('手机号不能为空'));
         return;
     }
+    if (!reg_verify.verifyPhone(phone)) {
+        res.send(resultMsg.required('手机号格式不正确'));
+        return;
+    }
     if (!code) {
         res.send(resultMsg.required('短信验证码不能为空'));
+        return;
+    }
+    if (!reg_verify.verifySmsCode(code)) {
+        res.send(resultMsg.required('短信验证码为6位数字'));
         return;
     }
     orange_sms_service.verifyCode(phone, code, function(result) {
@@ -203,6 +216,10 @@ router.post('/api/register_verify', function(req, res, next) {
     }
     if (!phone) {
         res.send(resultMsg.required('手机号不能为空'));
+        return;
+    }
+    if (!reg_verify.verifyPhone(phone)) {
+        res.send(resultMsg.required('手机号格式不正确'));
         return;
     }
     oauth_user_service.registerVerify(nick_name, phone, '', '', function(result) {
@@ -264,12 +281,20 @@ router.post('/api/register', function(req, res, next) {
         res.send(resultMsg.required('手机号不能为空'));
         return;
     }
+    if (!reg_verify.verifyPhone(phone)) {
+        res.send(resultMsg.required('手机号格式不正确'));
+        return;
+    }
     if (!pwd) {
         res.send(resultMsg.required('密码不能为空'));
         return;
     }
     if (!code) {
         res.send(resultMsg.required('短信验证码不能为空'));
+        return;
+    }
+    if (!reg_verify.verifySmsCode(code)) {
+        res.send(resultMsg.required('短信验证码为6位数字'));
         return;
     }
     var appid = res.app_id;
@@ -325,12 +350,20 @@ router.post('/api/update_pwd', function(req, res, next) {
         res.send(resultMsg.required('手机号不能为空'));
         return;
     }
+    if (!reg_verify.verifyPhone(phone)) {
+        res.send(resultMsg.required('手机号格式不正确'));
+        return;
+    }
     if (!pwd) {
         res.send(resultMsg.required('密码不能为空'));
         return;
     }
     if (!code) {
         res.send(resultMsg.required('短信验证码不能为空'));
+        return;
+    }
+    if (!reg_verify.verifySmsCode(code)) {
+        res.send(resultMsg.required('短信验证码为6位数字'));
         return;
     }
     oauth_user_service.updatePwd(phone, pwd, code, function(result) {
@@ -380,6 +413,10 @@ router.post('/api/login', function(req, res, next) {
         pwd = req.body.pwd;
     if (!phone) {
         res.send(resultMsg.required('手机号不能为空'));
+        return;
+    }
+    if (!reg_verify.verifyPhone(phone)) {
+        res.send(resultMsg.required('手机号格式不正确'));
         return;
     }
     if (!pwd) {

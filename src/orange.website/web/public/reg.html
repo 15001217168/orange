@@ -39,10 +39,10 @@
                     <div class="input-prepend restyle no-radius security-up-code js-security-number">
                         <input type="text" id="txt_sms_code" placeholder="手机验证码">
                         <i class="iconfont ic-verify"></i>
-                        <a class="btn-up-resend js-send-code-button" href="javascript:void(0);" id="origin_" style="display: none;">发送验证码</a><a class="btn-up-resend js-send-code-button" href="javascript:;">发送验证码</a>
+                        <a class="btn-up-resend" href="javascript:void(0);" id="btnSendSms">发送验证码</a>
                     </div>
                     <div class="input-prepend">
-                        <input placeholder="密码" id="txt_pwd" type="password ">
+                        <input placeholder="密码" id="txt_pwd" type="password">
                         <i class="iconfont ic-password "></i>
                     </div>
                     <input value="注册" class="sign-in-button" id="btnRegister" type="button">
@@ -50,42 +50,88 @@
             </div>
         </div>
     </div>
-    <script src=" /js/jquery/jquery-2.1.1.min.js "></script>
-    <script type="text/javascript ">
+    <script src=" /js/jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript">
         $(function() {
             var Register = function() {
                 this.nick_name = '';
                 this.phone = '';
                 this.sms_code = '';
                 this.pwd = '';
-
+                var _self = this;
                 var setValue = function() {
-                    this.nick_name = $('#txt_nick_name').val();
-                    this.phone = $('#txt_phone').val();
-                    this.sms_code = $('#txt_sms_code').val();
-                    this.pwd = $('#txt_pwd').val();
+                    _self.nick_name = $('#txt_nick_name').val();
+                    _self.phone = $('#txt_phone').val();
+                    _self.sms_code = $('#txt_sms_code').val();
+                    _self.pwd = $('#txt_pwd').val();
                 };
                 var verify = function() {
                     setValue();
-                    if (this.nick_name.length == 0) {
+                    if (_self.nick_name.length == 0) {
                         alert('昵称不能为空');
                         return false;
                     }
-                    if (this.phone.length == 0) {
+                    if (_self.phone.length == 0) {
                         alert('手机号不能为空');
                         return false;
                     }
-                    if (this.sms_code.length == 0) {
+                    var reg = /^1[3|4|5|7|8][0-9]\d{8}$|^\d{8}$/;
+                    if (!reg.test(_self.phone)) {
+                        alert('手机号格式不正确');
+                        return false;
+                    }
+                    if (_self.sms_code.length == 0) {
                         alert('短信验证码不能为空');
                         return false;
                     }
-                    if (this.pwd.length == 0) {
+                    reg = /^\d{6}$/;
+                    if (!reg.test(_self.sms_code)) {
+                        alert('短信验证码为6位数字');
+                        return false;
+                    }
+                    if (_self.pwd.length == 0) {
                         alert('密码不能为空');
+                        return false;
+                    }
+                    reg = /^[A-Za-z0-9]{6,16}$/;
+                    if (!reg.test(_self.pwd)) {
+                        alert('密码为6-16位的字母数字组合');
                         return false;
                     }
                     return true;
                 };
-
+                this.sendSms = function() {
+                    setValue();
+                    var _self = this;
+                    if (_self.phone.length == 0) {
+                        alert('手机号不能为空');
+                        return false;
+                    }
+                    var reg = /^1[3|4|5|7|8][0-9]\d{8}$|^\d{8}$/;
+                    if (!reg.test(_self.phone)) {
+                        alert('手机号格式不正确');
+                        return false;
+                    }
+                    $.post('/send_sms', {
+                        phone: _self.phone,
+                    }, function(result) {
+                        if (result.error) {
+                            alert(result.message);
+                        } else {
+                            var countdown = 60;
+                            var timer = window.setInterval(function() {
+                                countdown--;
+                                $('#btnSendSms').off().attr('class', 'btn-up-sended').html(countdown)
+                                if (countdown == 0) {
+                                    window.clearInterval(timer);
+                                    $('#btnSendSms').attr('class', 'btn-up-resend').html('发送验证码').off().on(function() {
+                                        _self.sendSms();
+                                    });
+                                }
+                            }, 1000);
+                        }
+                    });
+                };
                 this.reg = function() {
                     if (verify()) {
                         var _self = this;
@@ -95,7 +141,11 @@
                             sms_code: _self.sms_code,
                             pwd: _self.pwd
                         }, function(result) {
-
+                            if (result.error) {
+                                alert(result.message);
+                            } else {
+                                alert(result.message);
+                            }
                         });
                     }
                 };
@@ -103,6 +153,9 @@
                     var _self = this;
                     $('#btnRegister').off().on('click', function() {
                         _self.reg();
+                    });
+                    $('#btnSendSms').off().on('click', function() {
+                        _self.sendSms();
                     });
                 };
             };

@@ -29,11 +29,11 @@
             <div class="js-sign-in-container">
                 <form id="formData">
                     <div class=" input-prepend restyle js-normal ">
-                        <input placeholder="手机号" id="phone" type="text ">
+                        <input placeholder="手机号" id="txt_phone" type="text">
                         <i class="iconfont ic-user"></i>
                     </div>
                     <div class="input-prepend">
-                        <input placeholder="密码" id="pwd" type="password ">
+                        <input placeholder="密码" id="txt_pwd" type="password">
                         <i class="iconfont ic-password "></i>
                     </div>
                     <div class="remember-btn ">
@@ -43,11 +43,64 @@
                     <div class="forget-btn ">
                         <a href=" ">找回密码?</a>
                     </div>
-                    <input value="登录 " class="sign-in-button " type="button">
+                    <input value="登录" id="btnLogin" class="sign-in-button" type="button">
                 </form>
             </div>
         </div>
     </div>
+    <script src=" /js/jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var Login = function() {
+                this.phone = '';
+                this.pwd = '';
+                var _self = this;
+                var setValue = function() {
+                    _self.phone = $('#txt_phone').val();
+                    _self.pwd = $('#txt_pwd').val();
+                };
+                var verify = function() {
+                    setValue();
+                    if (_self.phone.length == 0) {
+                        alert('手机号不能为空');
+                        return false;
+                    }
+                    var reg = /^1[3|4|5|7|8][0-9]\d{8}$|^\d{8}$/;
+                    if (!reg.test(_self.phone)) {
+                        alert('手机号格式不正确');
+                        return false;
+                    }
+                    if (_self.pwd.length == 0) {
+                        alert('密码不能为空');
+                        return false;
+                    }
+                    return true;
+                };
+                this.login = function() {
+                    if (verify()) {
+                        var _self = this;
+                        $.post('/login', {
+                            phone: _self.phone,
+                            pwd: _self.pwd
+                        }, function(result) {
+                            if (result.error) {
+                                alert(result.message);
+                            } else {
+                                alert(result.message);
+                            }
+                        });
+                    }
+                };
+                this.init = function() {
+                    var _self = this;
+                    $('#btnLogin').off().on('click', function() {
+                        _self.login();
+                    });
+                };
+            };
+            new Login().init();
+        });
+    </script>
 </body>
 
 </html>

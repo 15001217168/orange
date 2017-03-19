@@ -10,11 +10,12 @@ exports.getToken = function(token, callback) {
     }, function(err, doc) {
         if (err) {
             callback(bizResultMsg.error('获取Token失败'));
-        }
-        if (doc) {
-            callback(bizResultMsg.success('获取Token成功', doc));
         } else {
-            callback(bizResultMsg.error('获取Token失败'));
+            if (doc) {
+                callback(bizResultMsg.success('获取Token成功', doc));
+            } else {
+                callback(bizResultMsg.error('获取Token失败'));
+            }
         }
     });
 };

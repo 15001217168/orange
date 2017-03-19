@@ -1,12 +1,9 @@
 var crypto = require('crypto'),
-    unAuthUrl = ['/login.html', '/reg.html', '/', '/index.html'];
+    authUrl = ['writer.html'];
 var auth = {
     permission: function(req, res, next) {
         var url = req.baseUrl;
-        if (auth.isUnAuth(url)) {
-            next();
-            return "";
-        } else {
+        if (auth.isAuth(url)) {
             if (req.cookies["orange_w"]) {
                 var account = req.cookies["orange_w"];
                 var dcipher = crypto.createDecipher("aes192", global.web_config.aes_key);
@@ -17,13 +14,16 @@ var auth = {
                 return;
             } else {
                 res.redirect('/login.html');
-                2
+                return;
             }
+        } else {
+            next();
+            return;
         }
     },
-    isUnAuth: function(url) {
-        for (var i in unAuthUrl) {
-            if (unAuthUrl[i] == url) {
+    isAuth: function(url) {
+        for (var i in authUrl) {
+            if (authUrl[i] == url) {
                 return true;
             }
         }

@@ -13,11 +13,12 @@ exports.getClientByAppId = function(appid, callback) {
     }, function(err, doc) {
         if (err) {
             callback(bizResultMsg.error('系统内部异常'));
-        }
-        if (doc) {
-            callback(bizResultMsg.success('获取成功', doc));
         } else {
-            callback(bizResultMsg.error('未查找到该客户端'));
+            if (doc) {
+                callback(bizResultMsg.success('获取成功', doc));
+            } else {
+                callback(bizResultMsg.error('未查找到该客户端'));
+            }
         }
     });
 };
@@ -61,31 +62,30 @@ exports.getClients = function(pageindex, key, callback) {
     OauthClient.find(search).skip(start).limit(size).exec(function(err, docs) {
         if (err) {
             callback(bizResultMsg.success('操作成功', [], pagination));
-        }
-
-        if (docs) {
-            list = docs.map(function(v, i) {
-                var item = {};
-                item._id = v._id;
-                item.no = start + i + 1;
-                item.name = v.name;
-                item.type = v.type;
-                item.appid = v.app_id;
-                item.app_secret = v.app_secret;
-                item.create_date = moment(v.create_date).format('YYYY- MM - DD HH:mm:ss');
-                return item;
+        } else {
+            if (docs) {
+                list = docs.map(function(v, i) {
+                    var item = {};
+                    item._id = v._id;
+                    item.no = start + i + 1;
+                    item.name = v.name;
+                    item.type = v.type;
+                    item.appid = v.app_id;
+                    item.app_secret = v.app_secret;
+                    item.create_date = moment(v.create_date).format('YYYY- MM - DD HH:mm:ss');
+                    return item;
+                });
+            }
+            OauthClient.find(search, function(err, doc) {
+                if (err) {
+                    callback(bizResultMsg.success('操作成功', [], pagination));
+                }
+                var totalCount = doc.length;
+                pagination.pages = parseInt((totalCount + size - 1) / size);
+                pagination.total = totalCount;
+                callback(bizResultMsg.success('操作成功', list, pagination));
             });
         }
-        OauthClient.find(search, function(err, doc) {
-            if (err) {
-                callback(bizResultMsg.success('操作成功', [], pagination));
-            }
-            var totalCount = doc.length;
-            pagination.pages = parseInt((totalCount + size - 1) / size);
-            pagination.total = totalCount;
-            callback(bizResultMsg.success('操作成功', list, pagination));
-        });
-
     });
 };
 
@@ -99,11 +99,12 @@ exports.saveClient = function(id, name, type, callback) {
         }, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败'));
-            }
-            if (doc) {
-                callback(bizResultMsg.success('保存成功', doc));
             } else {
-                callback(bizResultMsg.error('保存失败'));
+                if (doc) {
+                    callback(bizResultMsg.success('保存成功', doc));
+                } else {
+                    callback(bizResultMsg.error('保存失败'));
+                }
             }
         });
     } else {
@@ -115,11 +116,12 @@ exports.saveClient = function(id, name, type, callback) {
         item.save(function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败'));
-            }
-            if (doc) {
-                callback(bizResultMsg.success('保存成功', doc));
             } else {
-                callback(bizResultMsg.error('保存失败'));
+                if (doc) {
+                    callback(bizResultMsg.success('保存成功', doc));
+                } else {
+                    callback(bizResultMsg.error('保存失败'));
+                }
             }
         });
     }

@@ -27,16 +27,17 @@ exports.sendSms = function(code, phone, callback) {
         log_sms_service.addSMSLog(phone, code, request, response, err);
         if (err) {
             callback(bizResultMsg.error('发送失败!'));
-        }
-        if (response) {
-            if (response.result.err_code == '0') {
-                orange_sms_service.saveSMS(phone, code);
-                callback(bizResultMsg.success('发送成功'));
+        } else {
+            if (response) {
+                if (response.result.err_code == '0') {
+                    orange_sms_service.saveSMS(phone, code);
+                    callback(bizResultMsg.success('发送成功'));
+                } else {
+                    callback(bizResultMsg.error('发送失败!'));
+                }
             } else {
                 callback(bizResultMsg.error('发送失败!'));
             }
-        } else {
-            callback(bizResultMsg.error('发送失败!'));
         }
     });
 };

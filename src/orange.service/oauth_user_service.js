@@ -20,11 +20,12 @@ var User = function(nick_name, phone, pwd, code) {
         }, function(err, res) {
             if (err) {
                 callback(false);
-            }
-            if (res) {
-                callback(true, res);
             } else {
-                callback(false);
+                if (res) {
+                    callback(true, res);
+                } else {
+                    callback(false);
+                }
             }
         });
     }
@@ -36,11 +37,12 @@ var User = function(nick_name, phone, pwd, code) {
         }, function(err, res) {
             if (err) {
                 callback(false);
-            }
-            if (res) {
-                callback(true, res);
             } else {
-                callback(false);
+                if (res) {
+                    callback(true, res);
+                } else {
+                    callback(false);
+                }
             }
         });
     }
@@ -68,7 +70,7 @@ exports.login = function(phone, pwd, callback) {
     user.verifyPhone(function(res, doc) {
         if (res == true) {
             if (doc.pwd == pwd) {
-                callback(bizResultMsg.success('登录成功!', { userId: doc._id }));
+                callback(bizResultMsg.success('登录成功!', { userid: doc._id }));
             } else {
                 callback(bizResultMsg.error('账户和密码不正确!'));
             }
@@ -84,22 +86,25 @@ exports.register = function(nick_name, phone, pwd, code, app_id, callback) {
             orange_sms_service.verifyCode(phone, code, function(result) {
                 if (result.error) {
                     callback(bizResultMsg.error('短信验证码验证失败!'));
-                }
-                var item = new OauthUser();
-                item.phone = phone;
-                item.pwd = pwd;
-                item.nick_name = nick_name;
-                item.app_id = app_id;
+                } else {
+                    var item = new OauthUser();
+                    item.phone = phone;
+                    item.pwd = pwd;
+                    item.nick_name = nick_name;
+                    item.app_id = app_id;
 
-                item.save(function(err, res) {
-                    if (err) {
-                        callback(bizResultMsg.error('注册失败!'));
-                    }
-                    if (!res) {
-                        callback(bizResultMsg.error('注册失败!'));
-                    }
-                    callback(bizResultMsg.success('注册成功'));
-                });
+                    item.save(function(err, res) {
+                        if (err) {
+                            callback(bizResultMsg.error('注册失败!'));
+                        } else {
+                            if (!res) {
+                                callback(bizResultMsg.error('注册失败!'));
+                            } else {
+                                callback(bizResultMsg.success('注册成功'));
+                            }
+                        }
+                    });
+                }
             });
         } else {
             callback(res);
@@ -114,18 +119,19 @@ exports.updatePwd = function(phone, pwd, code, callback) {
             orange_sms_service.verifyCode(phone, code, function(result) {
                 if (result.error) {
                     callback(bizResultMsg.error('短信验证码验证失败!'));
+                } else {
+                    doc.pwd = pwd;
+                    doc.save(function(err, res) {
+                        if (err) {
+                            callback(bizResultMsg.error('修改失败!'));
+                        }
+                        if (!res) {
+                            callback(bizResultMsg.error('修改失败!'));
+                        } else {
+                            callback(bizResultMsg.success('修改成功'));
+                        }
+                    });
                 }
-                doc.pwd = pwd;
-                doc.save(function(err, res) {
-                    if (err) {
-                        callback(bizResultMsg.error('修改失败!'));
-                    }
-                    if (!res) {
-                        callback(bizResultMsg.error('修改失败!'));
-                    } else {
-                        callback(bizResultMsg.success('修改成功'));
-                    }
-                });
             });
         } else {
             callback(bizResultMsg.error('未找到该用户!'));

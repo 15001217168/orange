@@ -106,6 +106,19 @@ form {
     line-height: 36px;
 }
 
+.sign .btn-up-sended {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 100px;
+    height: 36px;
+    font-size: 13px;
+    color: #fff;
+    background-color: #cccccc;
+    border-radius: 4px;
+    line-height: 36px;
+}
+
 .sign form .input-prepend i {
     position: absolute;
     top: 14px;
