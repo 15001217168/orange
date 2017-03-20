@@ -8307,14 +8307,14 @@ fieldset[disabled] .btn-success:hover {
 }
 
 .btn-delete {
-    border: 1px solid rgba(236, 97, 73, .7);
-    color: #ea6f5a!important
+    border: 1px solid #d0bfa1;
+    color: #d0bfa1!important
 }
 
 .btn-delete:focus,
 .btn-delete:hover {
-    border: 1px solid #ea6f5a;
-    color: #ea6f5a!important;
+    border: 1px solid #d0bfa1;
+    color: #d0bfa1!important;
     background-color: rgba(236, 97, 73, .05)
 }
 
@@ -8347,7 +8347,7 @@ fieldset[disabled] .btn-success:hover {
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:focus,
 .navbar-default .navbar-nav>.active>a:hover {
-    color: #ea6f5a;
+    color: #d0bfa1;
     background: none
 }
 
@@ -8510,7 +8510,7 @@ fieldset[disabled] .btn-success:hover {
 .badge {
     padding: 3px 6px;
     font-size: 13px!important;
-    background-color: #ea6f5a
+    background-color: #d0bfa1
 }
 
 .pagination {
@@ -8717,7 +8717,7 @@ textarea:-ms-input-placeholder {
 }
 
 .side-tool>ul .ic-mark-active {
-    color: #ea6f5a
+    color: #d0bfa1
 }
 
 .side-tool .popover-content {
@@ -9761,7 +9761,9 @@ nav .ic-write {
 nav .logo {
     float: left;
     height: 56px;
-    padding: 14px 25px 15px 20px
+    padding: 14px 25px 15px 20px;
+    font-size: 24px;
+    color: #d0bfa1
 }
 
 nav .logo img {
@@ -9855,7 +9857,7 @@ nav .notification .dropdown-menu a:hover {
 nav .notification .dropdown-menu i {
     margin-right: 15px;
     font-size: 22px;
-    color: #ea6f5a;
+    color: #d0bfa1;
     vertical-align: middle
 }
 
@@ -10212,7 +10214,7 @@ nav .user .dropdown-menu a:hover {
 nav .user .dropdown-menu i {
     margin-right: 15px;
     font-size: 18px;
-    color: #ea6f5a;
+    color: #d0bfa1;
     vertical-align: middle
 }
 
@@ -10229,7 +10231,7 @@ nav .write-btn {
     border-radius: 4px;
     font-size: 15px;
     color: #fff;
-    background-color: #ea6f5a
+    background-color: #d0bfa1
 }
 
 nav .write-btn:focus,
@@ -10244,10 +10246,10 @@ nav .sign-up {
     height: 38px;
     line-height: 24px;
     margin: 9px 5px 0 15px;
-    border: 1px solid rgba(236, 97, 73, .7);
+    border: 1px solid #d0bfa1;
     border-radius: 4px;
     font-size: 15px;
-    color: #ea6f5a;
+    color: #d0bfa1;
     background-color: transparent
 }
 
@@ -10974,7 +10976,7 @@ body.reader-night-mode .side-tool .popover .arrow:after {
 body.reader-night-mode .navbar-default .navbar-nav>.active>a,
 body.reader-night-mode .navbar-default .navbar-nav>.active>a:focus,
 body.reader-night-mode .navbar-default .navbar-nav>.active>a:hover {
-    color: #ea6f5a;
+    color: #d0bfa1;
     background: none
 }
 
@@ -11100,7 +11102,7 @@ body.reader-night-mode .note .post .comment-list .tool-group a:hover {
 }
 
 body.reader-night-mode .note .post .comment-list .tool-group a:hover .ic-zan {
-    color: #ea6f5a
+    color: #d0bfa1
 }
 
 body.reader-night-mode .note .post .comment-list .sub-tool-group a:hover,

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>登录 - 橙子</title>
+    <title>登录 - 坚果说</title>
     <link rel="stylesheet" href="/css/web.css">
     <link rel="stylesheet" href="/css/entry.css">
     <link rel="stylesheet" href="/css/sign.css">
@@ -16,14 +16,17 @@
 <body class="no-padding reader-black-font" lang="zh-CN">
     <div class="sign">
         <div class="logo">
-            <a href="#"><img src="/img/logo.png" alt="Logo"></a>
+            <a href="/">
+                <h1>坚果说</h1>
+
+            </a>
         </div>
         <div class="main">
             <h4 class="title">
                 <div class="normal-title">
-                    <a class="active" href="/login.html">登录</a>
+                    <a class="active" href="/login">登录</a>
                     <b>·</b>
-                    <a id="js-sign-up-btn" class="" href="/reg.html">注册</a>
+                    <a id="js-sign-up-btn" class="" href="/reg">注册</a>
                 </div>
             </h4>
             <div class="js-sign-in-container">
@@ -87,6 +90,7 @@
                                 alert(result.message);
                             } else {
                                 alert(result.message);
+                                window.location.href = '/';
                             }
                         });
                     }

@@ -70,12 +70,23 @@ exports.getContents = function(pageindex, key, callback) {
     });
 };
 
-exports.saveContent = function(id, name, callback) {
+exports.saveContent = function(contentid, title, content, markdown, userid, typeid, callback) {
     var item = new OrangeContent();
-    if (id != 0) {
-        OrangeContent.findByIdAndUpdate(id, {
+    if (contentid != 0) {
+        OrangeContent.findByIdAndUpdate(contentid, {
             update_date: new Date(),
-            name: name,
+            title: title,
+            content: content,
+            markdown: markdown,
+            type: {
+                id: typeid,
+                name: ""
+            },
+            user: {
+                id: userid,
+                name: "",
+                avatar: ""
+            }
         }, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败!'));
@@ -87,7 +98,18 @@ exports.saveContent = function(id, name, callback) {
             }
         });
     } else {
-        item.name = name;
+        item.title = title;
+        item.content = content;
+        item.markdown = markdown;
+        item.type = {
+            id: typeid,
+            name: ""
+        };
+        item.user = {
+            id: userid,
+            name: "",
+            avatar: ""
+        };
         item.save(function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败!'));

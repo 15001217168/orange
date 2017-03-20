@@ -12,6 +12,34 @@ var express = require('express'),
     crypto = require('crypto'),
     bizResult = require('../../orange/result/result').BizResult;
 
+//页面
+router.get('/', function(req, res, next) {
+    res.render('index', { user: req.user });
+});
+router.get('/reg', function(req, res, next) {
+    res.render('reg');
+});
+router.get('/login', function(req, res, next) {
+    res.render('login');
+});
+router.get('/sign_out', function(req, res, next) {
+    res.clearCookie("orange_w");
+    res.redirect('/');
+});
+
+router.get('/writer', function(req, res, next) {
+    res.render('writer');
+});
+router.get('/p', function(req, res, next) {
+    res.render('detail', { user: req.user });
+});
+router.get('/td', function(req, res, next) {
+    res.render('list', { user: req.user });
+});
+router.get('/t', function(req, res, next) {
+    res.render('types', { user: req.user });
+});
+
 var getToken = function(callback) {
     var appid = global.web_config.app_id,
         app_secret = global.web_config.app_secret,
@@ -50,10 +78,6 @@ router.post('*', function(req, res, next) {
     } else {
         next();
     }
-});
-//首页
-router.get('/', function(req, res, next) {
-    res.redirect('index.html');
 });
 //注册
 router.post('/reg', function(req, res, next) {
@@ -114,7 +138,10 @@ router.post('/login', function(req, res, next) {
             if (result.data.code == '0000') {
 
                 var account = {
-                    userid: result.data.data.userid
+                    userid: result.data.data.userid,
+                    phone: result.data.data.phone,
+                    nick_name: result.data.data.nick_name,
+                    avatar: result.data.data.avatar
                 };
                 var str = JSON.stringify(account),
                     cipher = crypto.createCipher("aes192", global.web_config.aes_key);
@@ -132,6 +159,26 @@ router.post('/login', function(req, res, next) {
     });
 });
 
+//保存内容
+router.post('/save_content', function(req, res, next) {
+    utils.httpPost('/api/save_content', {
+        phone: req.body.phone,
+        access_token: global.web_config.access_token
+    }, function(result) {
+        if (result.error) {
+            res.send(bizResult.error(result.message));
+            return;
+        } else {
+            if (result.data.code == '0000') {
+                res.send(bizResult.success(result.data.message));
+                return;
+            } else {
+                res.send(bizResult.error(result.data.message));
+                return;
+            }
+        }
+    });
+});
 
 router.post('/editor.md/upload', function(req, res, next) {
     //生成multiparty对象，并配置上传目标路径

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>写文章 - 坚果说</title>
+    <link rel="stylesheet" href="/css/writer/writer.css">
+    <link rel="stylesheet" href="/css/writer/base.css">
+    <link rel="stylesheet" href="/js/plugins/editor.md/css/editormd.min.css">
+</head>
+
+<body class="input zh cn win mozilla reader-day-mode reader-font2">
+    <div class="container-fluid">
+        <div class="stack expansion">
+            <div class="row-fluid normal-mode active">
+                <div class="span2 aside" style="height:700px;">
+                    <div class="home-wrap">
+                        <a href="/" class="go-home">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>回首页</span>
+                        </a>
+                    </div>
+                    <div class="new-notebook">
+                        <a href="javascript:void(0)" id="btnCreateContent" class="create-notebook win-text">
+                            <i class="fa fa-plus"></i> 新建文章
+                        </a>
+                    </div>
+                    <ul class="nav nav-list notebooks ui-sortable" id="ulContentList">
+                    </ul>
+                </div>
+                <div class="main">
+                    <form class="note-form rich-text">
+                        <input class="title mousetrap" id="txtTitle" placeholder="请填写文章标题" value="无标题文章" type="text">
+                        <div id="editormd" style="height: 700px;">
+                            <textarea style="display: none; height:700px;"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="POST" id="fileForm" action="/editor.md/upload" enctype="multipart/form-data">
+        <input type="file" id="imgUpload" name="imgUpload" style="display:none;" />
+    </form>
+    <script src=" /js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="/js/plugins/editor.md/editormd.min.js"></script>
+    <script src="/js/jquery/jquery.form.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var Writer = function() {
+                this.editor = null;
+                var _bindClick = function() {
+                    $('#ulContentList li').off().on('click', function() {
+                        $(this).addClass('active').siblings().removeClass('active');
+                        $('#txtTitle').val($(this).find('span').html());
+                    });
+                };
+                this.init = function() {
+                    var _self = this;
+                    _bindClick();
+                    $('#btnCreateContent').off().on('click', function() {
+                        $('#ulContentList li').removeClass('active');
+                        $('#ulContentList').append(' <li class="one-notebook item active"><a href="javascript:void(0)" class="notebook-name"><span>' + $('#txtTitle').val() + '</span></a></li>');
+                        _bindClick();
+                    });
+
+                    _self.editor = editormd("editormd ", {
+                        width: "100%",
+                        height: 700,
+                        path: "/js/plugins/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+                        watch: false,
+                        toolbarIcons: function() {
+                            return ["undo", "redo", "|", "bold", "del", "italic", "quote", "hr", "|", "h1", "h2", "h3", "h4", "h5", "|", "list-ul", "list-ol", "link", "upload", "code-block", "|", "watch", "preview", "fullscreen", "|", "save"]
+                        },
+                        saveHTMLToTextarea: true,
+                        toolbarIconTexts: {
+                            save: "保存" // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
+                        },
+                        onchange: function() {
+                            console.log("改变自动保存");
+                        },
+                        toolbarCustomIcons: {
+                            upload: '<label for="imgUpload" class="fa fa-picture-o" title="上传图片"></label>',
+                        },
+                        toolbarHandlers: {
+                            save: function(cm, icon, cursor, selection) {
+                                if ($('#txtTitle').val().length == 0) {
+                                    alert('标题不能为空');
+                                    return;
+                                }
+
+                                $('#ulContentList li').off().on('click', function() {
+                                    $(this).addClass('active').siblings().removeClass('active');
+
+                                });
+
+                                $('#txtTitle').val();
+                                //alert(_self.editor.getMarkdown());
+                                //alert(_self.editor.getHTML());
+                            },
+                        },
+                        onload: function() {
+                            $('#imgUpload').on('change', function() {
+                                $('#fileForm').ajaxSubmit(function(res) {
+                                    if (res.error) {
+                                        alert(res.message);
+                                    } else {
+                                        var img = '![](' + res.data.url + '  "")';
+                                        editor.cm.replaceSelection(img);
+                                    }
+                                });
+                            });
+                        }
+                    });
+                };
+            };
+
+            new Writer().init();
+        });
+    </script>
+</body>
+
+</html>

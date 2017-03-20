@@ -1,0 +1,118 @@
+<a class="logo" href="/">坚果说</a>
+<a class="btn write-btn" target="_blank" href="/writer">
+    <i class="iconfont ic-write"></i>写文章
+</a>
+<%if(user==""){%>
+    <a class="btn sign-up" href="/reg">注册</a>
+    <a class="btn log-in" href="/login">登录</a>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+        </div>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="#">
+                        <span class="menu-text">首页</span>
+                        <i class="iconfont ic-navigation-discover menu-icon"></i>
+                    </a>
+                </li>
+                <li class="">
+                    <a class="app-download-btn" href="#">
+                        <span class="menu-text">下载App</span>
+                        <i class="iconfont ic-navigation-download menu-icon"></i>
+                    </a>
+                </li>
+                <li class="search">
+                    <form target="_blank" action="/search" accept-charset="UTF-8" method="get">
+                        <input name="utf8" value="✓" type="hidden">
+                        <input name="q" id="q" placeholder="搜索" class="search-input" type="text">
+                        <a class="search-btn" href="javascript:void(null)">
+                            <i class="iconfont ic-search"></i>
+                        </a>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <%}else{%>
+        <div class="user" id="divUser">
+            <div>
+                <a class="avatar" href="#"><img src="<%=user.avatar%>" alt="120"></a>
+            </div>
+            <ul class="dropdown-menu" id="ulUserList">
+                <li>
+                    <a href="#">
+                        <i class="iconfont ic-navigation-profile"></i><span>我的主页</span>
+                    </a>
+                </li>
+                <li>
+                    <!-- TODO bookmarks_path -->
+                    <a href="#">
+                        <i class="iconfont ic-navigation-mark"></i><span>收藏的文章</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="iconfont ic-navigation-like"></i><span>喜欢的文章</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="iconfont ic-navigation-wallet"></i><span>我的钱包</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="iconfont ic-navigation-settings"></i><span>设置</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="iconfont ic-navigation-feedback"></i><span>帮助与反馈</span>
+                    </a>
+                </li>
+                <li>
+                    <a rel="nofollow" href="/sign_out">
+                        <i class="iconfont ic-navigation-signout"></i><span>退出</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="nav navbar-nav">
+                    <li class="">
+                        <a href="/">
+                            <span class="menu-text">发现</span>
+                            <i class="iconfont ic-navigation-discover menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/">
+                            <span class="menu-text">关注</span>
+                            <i class="iconfont ic-navigation-follow menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="notification v-notification-dropdown-menu ">
+                        <a class="notification-btn" href="/" data-hover="dropdown">
+                            <span class="menu-text">消息</span>
+                            <i class="iconfont ic-navigation-notification menu-icon"></i>
+                            <span class="badge"></span>
+                        </a>
+                    </li>
+                    <li class="search">
+                        <form target="_blank" action="/search" accept-charset="UTF-8" method="get">
+                            <input name="utf8" type="hidden" value="&#x2713;" />
+                            <input type="text" name="q" id="q" value="" placeholder="搜索" class="search-input" />
+                            <a class="search-btn" href="javascript:void(null)"><i class="iconfont ic-search"></i></a>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <%}%>

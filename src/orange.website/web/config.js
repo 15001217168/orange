@@ -6,6 +6,7 @@ var config = {
     //api_url: '127.0.0.1',
     api_port: 80,
     //api_port: 8810,
-    access_token: ''
+    access_token: '',
+    default_avatar: '/img/default/default_avatar.jpg'
 };
 module.exports = config;

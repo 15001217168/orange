@@ -158,6 +158,91 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/get_user_info",
+    "title": "获取用户信息",
+    "name": "get_user_info",
+    "group": "2_OAuth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userid",
+            "description": "<p>用户唯一标识.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"userid\": '123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:{         \n       phone:\"\",\n          nick_name: \"\",\n          avatar:\"\"\n         } \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'获取失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "2_OAuth",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/get_user_info"
+      }
+    ]
+  },
+  {
+    "type": "post",
     "url": "/api/login",
     "title": "登录",
     "name": "login",
@@ -225,7 +310,7 @@ define({ "api": [
       "examples": [
         {
           "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'登录成功', \n data:{} \n }",
+          "content": "{ \n code:'0000', \n message:'登录成功', \n data:{\n       userid:\"\",\n       phone:\"\",\n          nick_name: \"\",\n          avatar:\"\"\n      } \n }",
           "type": "json"
         }
       ]
@@ -804,6 +889,119 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://api.ohlion.com/api/participle"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/api/save_content",
+    "title": "保存内容",
+    "name": "save_content",
+    "group": "4_Content",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>标题.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "content",
+            "description": "<p>html内容.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "markdown",
+            "description": "<p>markdown内容.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userid",
+            "description": "<p>用户id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "typeid",
+            "description": "<p>分类id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"title\": '123456',\n  \"content\": '123456',\n  \"markdown\": '123456',\n  \"userid\": '123456',\n  \"typeid\": '123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'保存成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'保存失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/router.js",
+    "groupTitle": "4_Content",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/save_content"
       }
     ]
   },

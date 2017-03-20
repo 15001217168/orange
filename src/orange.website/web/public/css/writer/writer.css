@@ -269,8 +269,8 @@ ul.dropdown-menu img {
 .input .home-wrap .go-home {
     padding: 9px 0;
     font-size: 15px;
-    color: #ec7259;
-    border: 1px solid rgba(236, 114, 89, 0.7);
+    color: #d0bfa1;
+    border: 1px solid #d0bfa1;
     border-radius: 4px;
     display: block;
     transition: 0.1s ease;
@@ -281,7 +281,7 @@ ul.dropdown-menu img {
 }
 
 .input .home-wrap .go-home:hover {
-    border-color: #ec7259;
+    border-color: #d0bfa1;
     transition: 0.1s ease-in;
     -webkit-transition: 0.1s ease;
     -moz-transition: 0.1s ease;
@@ -692,7 +692,7 @@ ul.dropdown-menu img {
 .notebooks .active>.notebook-name,
 .notebooks .active>.notebook-name:hover {
     background-color: #646464;
-    border-left: 3px solid #ec7259
+    border-left: 3px solid #d0bfa1
 }
 
 .notebooks .active>.edit-notebook,
@@ -809,7 +809,7 @@ ul.dropdown-menu img {
 .middle .nav-list>.active:hover {
     background-color: #ececec;
     color: #eeeeee;
-    border-left: 5px solid #ec7259 !important
+    border-left: 5px solid #d0bfa1 !important
 }
 
 .middle .nav-list>.active>i,

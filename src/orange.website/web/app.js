@@ -10,7 +10,6 @@ var express = require('express'),
     config = require('./config'),
     app = express();
 
-
 global.web_config = config;
 
 // view engine setup
@@ -19,7 +18,7 @@ app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -36,14 +35,13 @@ app.use('/', router);
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
-    //res.redirect('404.html');
-    next();
+    res.render('404');
 });
 
 // error handler
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.redirect('500.html');
+    res.render('500');
 });
 
 module.exports = app;

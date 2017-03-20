@@ -7,7 +7,8 @@ var express = require('express'),
     smsUtil = require('../../orange/sms/top_channel'),
     segment_utils = require('../../orange/segment/segment_utils'),
     oauth_user_service = require('../../orange.service/oauth_user_service'),
-    orange_sms_service = require('../../orange.service/orange_sms_service');
+    orange_sms_service = require('../../orange.service/orange_sms_service'),
+    orange_content_service = require('../../orange.service/orange_content_service');
 
 
 router.get('/', function(req, res, next) {
@@ -393,7 +394,12 @@ router.post('/api/update_pwd', function(req, res, next) {
  * { 
  *  code:'0000', 
  *  message:'登录成功', 
- *  data:{} 
+ *  data:{
+ *        userid:"",
+ *        phone:"",
+          nick_name: "",
+          avatar:""
+ *       } 
  *  } 
  *  @apiErrorExample 失败: 
  *  { 
@@ -429,6 +435,119 @@ router.post('/api/login', function(req, res, next) {
             return;
         } else {
             res.send(resultMsg.success(result.message, result.data));
+            return;
+        }
+    });
+});
+
+/**
+ * @api {post} /api/get_user_info 获取用户信息
+ * @apiName get_user_info
+ * @apiGroup 2_OAuth
+ *
+ * @apiParam {String} userid 用户唯一标识.
+ * @apiParam {String} access_token Token.
+ *
+ * @apiSuccess {String} code 状态码.
+ * @apiSuccess {String} message 错误信息.
+ * @apiSuccess {Object} data 数据.
+ * @apiSuccessExample 成功: 
+ * { 
+ *  code:'0000', 
+ *  message:'获取成功', 
+ *  data:{         
+ *        phone:"",
+          nick_name: "",
+          avatar:""
+         } 
+ *  } 
+ *  @apiErrorExample 失败: 
+ *  { 
+ *   code:'9999', 
+ *   message:'获取失败', 
+ *   data:{} 
+ *   } 
+ * @apiParamExample {json} 请求示例:
+ *     {
+ *       "userid": '123456',
+ *       "access_token": '123456'
+ *     }
+ */
+router.post('/api/get_user_info', function(req, res, next) {
+    var userid = req.body.userid;
+    if (!userid) {
+        res.send(resultMsg.required('用户id不能为空'));
+        return;
+    }
+    oauth_user_service.getUserInfo(userid, function(result) {
+        if (result.error == true) {
+            res.send(resultMsg.fail(result.message));
+            return;
+        } else {
+            res.send(resultMsg.success(result.message, result.data));
+            return;
+        }
+    });
+});
+
+/**
+ * @api {post} /api/save_content 保存内容
+ * @apiName save_content
+ * @apiGroup 4_Content
+ *
+ * @apiParam {String} title 标题.
+ * @apiParam {String} content html内容.
+ * @apiParam {String} markdown markdown内容.
+ * @apiParam {String} userid 用户id.
+ * @apiParam {String} typeid 分类id.
+ * @apiParam {String} access_token Token.
+ *
+ * @apiSuccess {String} code 状态码.
+ * @apiSuccess {String} message 错误信息.
+ * @apiSuccess {Object} data 数据.
+ * @apiSuccessExample 成功: 
+ * { 
+ *  code:'0000', 
+ *  message:'保存成功', 
+ *  data:{} 
+ *  } 
+ *  @apiErrorExample 失败: 
+ *  { 
+ *   code:'9999', 
+ *   message:'保存失败', 
+ *   data:{} 
+ *   } 
+ * @apiParamExample {json} 请求示例:
+ *     {
+ *       "title": '123456',
+ *       "content": '123456',
+ *       "markdown": '123456',
+ *       "userid": '123456',
+ *       "typeid": '123456',
+ *       "access_token": '123456'
+ *     }
+ */
+router.post('/api/save_content', function(req, res, next) {
+    var contentid = req.body.contentid,
+        title = req.body.title,
+        content = req.body.content,
+        markdown = req.body.markdown,
+        userid = req.body.userid,
+        typeid = req.body.typeid;
+    if (!title) {
+        res.send(resultMsg.required('标题不能为空'));
+        return;
+    }
+    if (!content) {
+        res.send(resultMsg.required('内容不能为空'));
+        return;
+    }
+    orange_content_service.saveContent(contentid, title, content, markdown, userid, typeid, function(result) {
+        if (result.error == true) {
+            res.send(resultMsg.fail(result.message));
+            return;
+        } else {
+            res.send(resultMsg.success(result.message));
             return;
         }
     });

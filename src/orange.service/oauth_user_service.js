@@ -70,12 +70,34 @@ exports.login = function(phone, pwd, callback) {
     user.verifyPhone(function(res, doc) {
         if (res == true) {
             if (doc.pwd == pwd) {
-                callback(bizResultMsg.success('登录成功!', { userid: doc._id }));
+                callback(bizResultMsg.success('登录成功!', {
+                    userid: doc._id,
+                    phone: doc.phone,
+                    nick_name: doc.nick_name,
+                    avatar: doc.avatar
+                }));
             } else {
                 callback(bizResultMsg.error('账户和密码不正确!'));
             }
         } else {
             callback(bizResultMsg.error('不存在该用户,请进行注册!'));
+        }
+    });
+};
+exports.getUserInfo = function(userid, callback) {
+    OauthUser.findById(userid, function(err, doc) {
+        if (err) {
+            callback(bizResultMsg.error('未查找到用户信息!'));
+        } else {
+            if (doc) {
+                callback(bizResultMsg.success('获取用户信息成功!', {
+                    phone: doc.phone,
+                    nick_name: doc.nick_name,
+                    avatar: doc.avatar
+                }));
+            } else {
+                callback(bizResultMsg.error('未查找到用户信息!'));
+            }
         }
     });
 };
