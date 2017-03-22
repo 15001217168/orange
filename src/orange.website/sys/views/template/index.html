@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <%include ../shared/header.html%>
+        <link href="/css/plugins/switchery/switchery.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrapper">
+        <%include ../shared/nav.html%>
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                <%include ../shared/page_top.html%>
+                    <%include ../shared/header_title.html%>
+                        <div class="wrapper wrapper-content animated fadeInRight">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>模板列表</h5>
+                                            <div class="ibox-tools">
+                                                <button type="button" onclick="javascript: window.location.href = '/template/form'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+                                            </div>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped" id="dataTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>编号</th>
+                                                            <th>名称</th>
+                                                            <th>类型</th>
+                                                            <th>编码</th>
+                                                            <th>描述</th>
+                                                            <th>创建日期</th>
+                                                            <th>启用</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%if(list.length>0){%>
+                                                            <%list.forEach(function(i){%>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%=i.no%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.name%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.type%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.code%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.des%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=i.create_date%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="checkbox" class="js-switch" <%=(i.is_blocked==true? "checked": "")%> data-switchery="true" data-id="
+                                                                        <%=i._id%>" style="display: none;">
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="/template/form?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
+                                                                        <a href="/template/form?id=<%=i._id%>"><i class="fa fa-database"></i></a>&nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <%})%>
+                                                                    <%}else{%>
+                                                                        <tr>
+                                                                            <td colspan="8" style="text-align:center;" id="noResult">
+                                                                                <h5>暂无数据</h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <%}%>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <tr>
+                                                                <td colspan="2" style="text-align:left;" id="paginationText">显示 1 到 10 项，共
+                                                                    <%=pagination.total%> 项</td>
+                                                                <td colspan="7" style="text-align:right;">
+                                                                    <ul class="pagination" id="pagination" style="margin:0 auto;" data-total="<%=pagination.total%>" data-size="<%=pagination.size%>" data-index="<%=pagination.index%>" data-url="/template?index=">
+                                                                        <li class="paginate_button previous disabled" id="previous">
+                                                                            <a href="javascript:void(0);">上一页</a>
+                                                                        </li>
+                                                                        <li class="paginate_button">
+                                                                            <div style="float:left;">
+                                                                                <select style="width:40px;height:28px;margin:0 auto;text-align:center;" id="jump">
+                                                                    <%for(var i=0;i
+                                                                    <pagination.pages;i++){%>
+                                                                        <option><%=(i+1)%></option>
+                                                                        <%}%>
+                                                                </select>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="paginate_button next" id="next">
+                                                                            <a href="javascript:void(0);">下一页</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%include ../shared/footer.html%>
+            </div>
+    </div>
+    <%include ../shared/script.html%>
+        <script src="/plugins/switchery/switchery.js"></script>
+        <script>
+            $(function() {
+                $('.js-switch').each(function() {
+                    var switchery = new Switchery($(this)[0], {
+                        color: '#1AB394',
+                    });
+                    $(this).off().on('click', function() {
+                        console.log($(this)[0].checked);
+                    });
+                });
+            });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <%include ../shared/header.html%>
+</head>
+
+<body>
+    <div id="wrapper">
+        <%include ../shared/nav.html%>
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                <%include ../shared/page_top.html%>
+                    <%include ../shared/header_title.html%>
+                        <div class="wrapper wrapper-content animated fadeInRight">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>
+                                                <%=title%>
+                                            </h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <form method="post" action="/template/save" id="formData" class="form-horizontal">
+                                                <input type="hidden" id="id" name="id" value="<%=template.id%>" />
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">名称</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" id="name" name="name" value="<%=template.name%>" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">编码</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" id="code" name="code" value="<%=template.code%>" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">类型</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control m-b" id="selType">
+                                                            <option value="0000000" selected="selected">轮播大图</option>
+                                                             <option value="0000001">内容列表</option>
+                                                              <option value="0000002">分类列表</option>
+                                                        </select>
+                                                        <input type="hidden" id="typeid" name="typeid" value="<%=template.type.code%>">
+                                                        <input type="hidden" id="typename" name="typename" value="<%=template.type.name%>">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">描述</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea id="des" name="des" class="form-control"><%=template.des%></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="hr-line-dashed"></div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-4 col-sm-offset-2">
+                                                        <button class="btn btn-primary" id="btnSave" type="button">保存</button>
+                                                        <button class="btn btn-white" onclick="javascript: window.location.href = '/template'" type="button">取消</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%include ../shared/footer.html%>
+            </div>
+    </div>
+    <%include ../shared/script.html%>
+        <script src="/js/jquery.form.js"></script>
+        <script>
+            $(function() {
+                var Template = function() {
+                    this.save = function() {
+                            $('#formData').ajaxSubmit(function(res) {
+                                if (res.error) {
+                                    alert(res.message);
+                                } else {
+                                    window.location.href = '/template';
+                                }
+                            });
+                        },
+                        this.init = function() {
+                            var _selft = this;
+                            if ($('#typeid').val().length > 0) {
+                                $('#selType').val($('#typeid').val());
+                            } else {
+                                $('#typeid').val($('#selType option:selected').val());
+                                $('#typename').val($('#selType option:selected').text());
+                            }
+                            $('#selType').on('change', function() {
+                                $('#typeid').val($(this).val());
+                                $('#typename').val($('#selType option:selected').text());
+                            });
+                            $('#btnSave').off().on('click', function() {
+                                _selft.save();
+                            });
+                        }
+                };
+
+                new Template().init();
+            });
+        </script>
+</body>
+
+</html>

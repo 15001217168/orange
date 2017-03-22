@@ -8,7 +8,8 @@ var express = require('express'),
     sysUserService = require('../../orange.service/sys_user_service'),
     oauthClientService = require('../../orange.service/oauth_client_service'),
     orangeTypeService = require('../../orange.service/orange_type_service'),
-    orangeContentService = require('../../orange.service/orange_content_service');
+    orangeContentService = require('../../orange.service/orange_content_service'),
+    orangeTemplateService = require('../../orange.service/orange_template_service');
 
 //首页
 router.get('/', function(req, res, next) {
@@ -151,6 +152,42 @@ router.post('/type/save', function(req, res, next) {
         des = req.body.des,
         img = req.body.img;
     orangeTypeService.saveType(id, name, type, des, img, function(result) {
+        if (result.error == true) {
+            return next(result.message);
+        } else {
+            res.send(bizResultMsg.success('保存成功'));
+            return;
+        }
+    });
+});
+
+//模板
+router.get('/template', function(req, res, next) {
+    var page_index = req.query.index || 1;
+    orangeTemplateService.getTemplates(page_index, "", function(result) {
+        if (result.error == true) {
+            return next(result.message);
+        }
+        res.render('template/index', { username: req.user.username, title: "模板列表", list: result.data, pagination: result.pagination });
+    });
+});
+router.get('/template/form', function(req, res, next) {
+    var id = req.query.id || 0,
+        title = id == 0 ? "添加模板" : "修改模板";
+    orangeTemplateService.getTemplateById(id, function(result) {
+        if (result.error == true) {
+            return next(result.message);
+        }
+        res.render('template/form', { username: req.user.username, title: title, template: result.data });
+    });
+});
+router.post('/template/save', function(req, res, next) {
+    var id = req.body.id || 0,
+        name = req.body.name,
+        type = { code: req.body.typeid, name: req.body.typename },
+        des = req.body.des,
+        code = req.body.code;
+    orangeTemplateService.saveTemplate(id, name, type, des, code, function(result) {
         if (result.error == true) {
             return next(result.message);
         } else {

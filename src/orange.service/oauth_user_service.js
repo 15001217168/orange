@@ -93,10 +93,48 @@ exports.getUserInfo = function(userid, callback) {
                 callback(bizResultMsg.success('获取用户信息成功!', {
                     phone: doc.phone,
                     nick_name: doc.nick_name,
-                    avatar: doc.avatar
+                    avatar: doc.avatar,
+                    signature: doc.signature,
+                    city: doc.city,
+                    birthday: doc.birthday,
+                    gender: doc.gender
                 }));
             } else {
                 callback(bizResultMsg.error('未查找到用户信息!'));
+            }
+        }
+    });
+};
+exports.saveUserInfo = function(userid, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, callback) {
+    OauthUser.findByIdAndUpdate(userid, {
+        nick_name: nick_name,
+        avatar: avatar,
+        signature: signature,
+        city: {
+            code: city_code,
+            name: city_name
+        },
+        birthday: birthday,
+        gender: {
+            code: gender_code,
+            name: gender_name
+        }
+    }, function(err, doc) {
+        if (err) {
+            callback(bizResultMsg.error('修改用户信息失败!'));
+        } else {
+            if (doc) {
+                callback(bizResultMsg.success('修改用户信息成功!', {
+                    phone: doc.phone,
+                    nick_name: doc.nick_name,
+                    avatar: doc.avatar,
+                    signature: doc.signature,
+                    city: doc.city,
+                    birthday: doc.birthday,
+                    gender: doc.gender
+                }));
+            } else {
+                callback(bizResultMsg.error('修改用户信息失败!'));
             }
         }
     });

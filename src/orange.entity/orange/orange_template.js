@@ -1,42 +1,22 @@
 var mongoose = require('mongoose'),
     schema = mongoose.Schema;
 
-var OauthUserSchema = new schema({
-    phone: {
+var OrangeTemplateSchema = new schema({
+    name: {
         type: String,
         default: ""
     },
-    pwd: {
+    code: {
         type: String,
         default: ""
     },
-    nick_name: {
+    des: {
         type: String,
-        default: "",
+        default: ""
     },
-    avatar: {
-        type: Boolean,
-        default: false
-    },
-    signature: {
-        type: String,
-        default: '',
-    },
-    city: {
+    type: {
         code: "",
         name: ""
-    },
-    birthday: {
-        type: String,
-        default: "",
-    },
-    gender: {
-        code: "",
-        name: ""
-    },
-    app_id: {
-        type: String,
-        default: "",
     },
     is_blocked: {
         type: Boolean,
@@ -56,4 +36,4 @@ var OauthUserSchema = new schema({
     },
 });
 
-mongoose.model('OauthUser', OauthUserSchema);
+mongoose.model('OrangeTemplate', OrangeTemplateSchema);

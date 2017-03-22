@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 /**
  * @api {G} 全局信息
  * @apiName 全局信息
- * @apiGroup 1_Global
+ * @apiGroup Global
  * @apiExample  接口地址:
  *  http://api.ohlion.com/
  * @apiSuccess {String} code--0000 调用成功.
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 /**
  * @api {post} /api/authorize 获取Token
  * @apiName authorize
- * @apiGroup 2_OAuth
+ * @apiGroup API
  *
  * @apiParam {String} appid 客户端Appid.
  * @apiParam {String} timespan 时间戳.
@@ -68,7 +68,7 @@ router.post('/api/authorize', oauth2.access_token);
 /**
  * @api {post} /api/send_sms_code 发送验证码
  * @apiName send_sms_code
- * @apiGroup 3_Message
+ * @apiGroup API
  *
  * @apiParam {String} phone 手机号.
  * @apiParam {String} access_token Token.
@@ -119,7 +119,7 @@ router.post('/api/send_sms_code', function(req, res, next) {
 /**
  * @api {post} /api/verify_sms_code 验证码验证
  * @apiName verify_sms_code
- * @apiGroup 3_Message
+ * @apiGroup API
  *
  * @apiParam {String} phone 手机号.
  * @apiParam {String} code 验证码.
@@ -180,7 +180,7 @@ router.post('/api/verify_sms_code', function(req, res, next) {
 /**
  * @api {post} /api/register_verify 注册验证
  * @apiName register_verify
- * @apiGroup 2_OAuth
+ * @apiGroup API
  *
  * @apiParam {String} nick_name 昵称.
  * @apiParam {String} phone 手机号.
@@ -237,7 +237,7 @@ router.post('/api/register_verify', function(req, res, next) {
 /**
  * @api {post} /api/register 注册
  * @apiName register
- * @apiGroup 2_OAuth
+ * @apiGroup API
  *
  * @apiParam {String} nick_name 昵称.
  * @apiParam {String} phone 手机号.
@@ -313,7 +313,7 @@ router.post('/api/register', function(req, res, next) {
 /**
  * @api {post} /api/update_pwd 修改密码
  * @apiName update_pwd
- * @apiGroup 2_OAuth
+ * @apiGroup API
  *
  * @apiParam {String} phone 手机号.
  * @apiParam {String} pwd 密码.
@@ -381,7 +381,7 @@ router.post('/api/update_pwd', function(req, res, next) {
 /**
  * @api {post} /api/login 登录
  * @apiName login
- * @apiGroup 2_OAuth
+ * @apiGroup API
  *
  * @apiParam {String} phone 手机号.
  * @apiParam {String} pwd 密码.
@@ -443,7 +443,7 @@ router.post('/api/login', function(req, res, next) {
 /**
  * @api {post} /api/get_user_info 获取用户信息
  * @apiName get_user_info
- * @apiGroup 2_OAuth
+ * @apiGroup API
  *
  * @apiParam {String} userid 用户唯一标识.
  * @apiParam {String} access_token Token.
@@ -458,7 +458,17 @@ router.post('/api/login', function(req, res, next) {
  *  data:{         
  *        phone:"",
           nick_name: "",
-          avatar:""
+          avatar:"",
+          signature:"",
+          city:{
+              code:"",
+              name:""
+               },
+          birthday:"",
+          gender:{
+              code:"",
+              name:""
+               },
          } 
  *  } 
  *  @apiErrorExample 失败: 
@@ -491,9 +501,97 @@ router.post('/api/get_user_info', function(req, res, next) {
 });
 
 /**
+ * @api {post} /api/save_user_info 修改用户信息
+ * @apiName save_user_info
+ * @apiGroup API
+ *
+ * @apiParam {String} userid 用户唯一标识.
+ * @apiParam {String} nick_name 昵称.
+ * @apiParam {String} avatar 头像.
+ * @apiParam {String} signature 签名.
+ * @apiParam {String} city_code 城市编码.
+ * @apiParam {String} city_name 城市名称.
+ * @apiParam {String} birthday 生日.
+ * @apiParam {String} gender_code 性别编码.
+ * @apiParam {String} gender_name 性别名称.
+ * @apiParam {String} access_token Token.
+ *
+ * @apiSuccess {String} code 状态码.
+ * @apiSuccess {String} message 错误信息.
+ * @apiSuccess {Object} data 数据.
+ * @apiSuccessExample 成功: 
+ * { 
+ *  code:'0000', 
+ *  message:'修改成功', 
+ *  data:{         
+ *        phone:"",
+          nick_name: "",
+          avatar:"",
+          signature:"",
+          city:{
+              code:"",
+              name:""
+               },
+          birthday:"",
+          gender:{
+              code:"",
+              name:""
+               },
+         }
+ *  } 
+ *  @apiErrorExample 失败: 
+ *  { 
+ *   code:'9999', 
+ *   message:'修改失败', 
+ *   data:{} 
+ *   } 
+ * @apiParamExample {json} 请求示例:
+ *     {
+ *       "userid": '123456',
+ *       "nick_name": '123456',
+ *       "avatar": '123456',
+ *       "signature": '123456',
+ *       "city_code": '123456',
+ *       "city_name": '123456',
+ *       "birthday": '123456',
+ *       "gender_code": '123456',
+ *       "gender_name": '123456',
+ *       "access_token": '123456',
+ *     }
+ */
+router.post('/api/save_user_info', function(req, res, next) {
+    var userid = req.body.userid,
+        nick_name = req.body.nick_name,
+        avatar = req.body.avatar,
+        signature = req.body.signature,
+        city_code = req.body.city_code,
+        city_name = req.body.city_name,
+        birthday = req.body.birthday,
+        gender_code = req.body.gender_code,
+        gender_name = req.body.gender_name;
+    if (!userid) {
+        res.send(resultMsg.required('用户id不能为空'));
+        return;
+    }
+    if (!nick_name) {
+        res.send(resultMsg.required('昵称不能为空'));
+        return;
+    }
+    oauth_user_service.saveUserInfo(userid, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, function(result) {
+        if (result.error == true) {
+            res.send(resultMsg.fail(result.message));
+            return;
+        } else {
+            res.send(resultMsg.success(result.message, result.data));
+            return;
+        }
+    });
+});
+
+/**
  * @api {post} /api/save_content 保存内容
  * @apiName save_content
- * @apiGroup 4_Content
+ * @apiGroup API
  *
  * @apiParam {String} title 标题.
  * @apiParam {String} content html内容.
@@ -553,11 +651,50 @@ router.post('/api/save_content', function(req, res, next) {
     });
 });
 
+/**
+ * @api {post} /api/get_home_template 获取首页模块
+ * @apiName get_home_template
+ * @apiGroup API
+ *
+ * @apiParam {String} access_token Token.
+ *
+ * @apiSuccess {String} code 状态码.
+ * @apiSuccess {String} message 错误信息.
+ * @apiSuccess {Object} data 数据.
+ * @apiSuccessExample 成功: 
+ * { 
+ *  code:'0000', 
+ *  message:'获取成功', 
+ *  data:{} 
+ *  } 
+ *  @apiErrorExample 失败: 
+ *  { 
+ *   code:'9999', 
+ *   message:'获取失败', 
+ *   data:{} 
+ *   } 
+ * @apiParamExample {json} 请求示例:
+ *     {
+ *       "access_token": '123456'
+ *     }
+ */
+router.post('/api/get_home_template', function(req, res, next) {
+    orange_content_service.saveContent(contentid, title, content, markdown, userid, typeid, function(result) {
+        if (result.error == true) {
+            res.send(resultMsg.fail(result.message));
+            return;
+        } else {
+            res.send(resultMsg.success(result.message));
+            return;
+        }
+    });
+});
+
 
 /**
  * @api {post} /api/participle 解析内容并返回分词
  * @apiName participle
- * @apiGroup 4_Content
+ * @apiGroup API
  *
  * @apiParam {String} content 内容.
  * @apiParam {String} access_token Token.
