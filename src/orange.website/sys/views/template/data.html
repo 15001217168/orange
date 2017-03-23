@@ -3,7 +3,7 @@
 
 <head>
     <%include ../shared/header.html%>
-        <link href="/css/plugins/switchery/switchery.css" rel="stylesheet">
+        <link href="/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
 </head>
 
 <body>
@@ -13,13 +13,71 @@
                 <%include ../shared/page_top.html%>
                     <%include ../shared/header_title.html%>
                         <div class="wrapper wrapper-content animated fadeInRight">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="m-b-md">
+                                                <div class="ibox-tools">
+                                                    <button type="button" onclick="javascript: window.location.href = '/template/form?id=<%=template.id%>'" class="btn btn-primary btn-xs">&nbsp;&nbsp;编&nbsp;辑&nbsp;&nbsp;</button>
+                                                </div>
+                                                <h2>
+                                                    <%=template.name%>
+                                                </h2>
+                                            </div>
+                                            <dl class="dl-horizontal">
+                                                <dt>状态：</dt>
+                                                <dd><span class="label label-primary"><%=(template.is_blocked==true?"未启用":"启用")%></span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <dl class="dl-horizontal">
+
+                                                <dt>名称：</dt>
+                                                <dd>
+                                                    <%=template.name%>
+                                                </dd>
+                                                <dt>类型：</dt>
+                                                <dd>
+                                                    <%=template.type.name%>
+                                                        <input type="hidden" id="hidDataSearchType" value="<%=template.type.code%>">
+                                                </dd>
+                                                <dt>创建时间：</dt>
+                                                <dd>
+                                                    <%=template.create_date%>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-lg-7" id="cluster_info">
+                                            <dl class="dl-horizontal">
+
+                                                <dt>编码：</dt>
+                                                <dd>
+                                                    <%=template.code%>
+                                                </dd>
+                                                <dt>描述：</dt>
+                                                <dd>
+                                                    <%=template.des%>
+                                                </dd>
+                                                <dt>更新时间：</dt>
+                                                <dd>
+                                                    <%=template.update_date%>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="ibox float-e-margins">
                                         <div class="ibox-title">
-                                            <h5>模板列表</h5>
+                                            <h5>数据列表</h5>
                                             <div class="ibox-tools">
-                                                <button type="button" onclick="javascript: window.location.href = '/template/form'" class="btn btn-primary btn-xs">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#dataSearchModal">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
                                             </div>
                                         </div>
                                         <div class="ibox-content">
@@ -31,11 +89,8 @@
                                                         <tr>
                                                             <th>编号</th>
                                                             <th>名称</th>
-                                                            <th>类型</th>
-                                                            <th>编码</th>
-                                                            <th>描述</th>
+                                                            <th>图片</th>
                                                             <th>创建日期</th>
-                                                            <th>启用</th>
                                                             <th>操作</th>
                                                         </tr>
                                                     </thead>
@@ -50,20 +105,12 @@
                                                                         <%=i.name%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=i.type%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=i.code%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=i.des%>
+                                                                        <label class="btn btn-white" style="height: 40px;width: 40px; padding: 5px 5px;">
+                                                              <img alt="图标" class="fancybox" data-fancybox-title="<%=i.name%>" src="<%=i.img%>" style="width: 100%;height: 100%;" title="点击查看图标">
+                                                        </label>
                                                                     </td>
                                                                     <td>
                                                                         <%=i.create_date%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="checkbox" class="js-switch" <%=(i.is_blocked==true ? "": "checked")%> data-switchery="true" data-id="
-                                                                        <%=i._id%>" style="display: none;">
                                                                     </td>
                                                                     <td>
                                                                         <a href="/template/form?id=<%=i._id%>"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
@@ -73,7 +120,7 @@
                                                                 <%})%>
                                                                     <%}else{%>
                                                                         <tr>
-                                                                            <td colspan="8" style="text-align:center;" id="noResult">
+                                                                            <td colspan="5" style="text-align:center;" id="noResult">
                                                                                 <h5>暂无数据</h5>
                                                                             </td>
                                                                         </tr>
@@ -117,22 +164,34 @@
             </div>
     </div>
     <%include ../shared/script.html%>
-        <script src="/plugins/switchery/switchery.js"></script>
+        <script src="/plugins/fancybox/jquery.fancybox.js"></script>
         <script>
             $(function() {
-                $('.js-switch').each(function() {
-                    var switchery = new Switchery($(this)[0], {
-                        color: '#1AB394',
-                    });
-                    $(this)[0].onchange = function() {
-                        $.post('/template/switch', {
-                            id: $(this).data('id').trim(),
-                            is_blocked: !$(this)[0].checked,
-                        }, function(result) {
-
-                        });
-                    };
+                $('.fancybox').fancybox({
+                    openEffect: 'none',
+                    closeEffect: 'none'
                 });
+                var searchUrl = '';
+                switch ($('#hidDataSearchType').val()) {
+                    case '0000002':
+                        searchUrl = '/type/search';
+                        break;
+                    default:
+                        searchUrl = "/content/search";
+                        break;
+
+                }
+                $('#txtDataSearchModalKey').off().on('input paste', function() {
+                    $.post(searchUrl, {
+                        key: $(this).val()
+                    }, function(result) {
+
+                    });
+                });
+
+                $('#dataSearchModalBtnSearch')
+                $('#txtDataSearchModalBtnSave')
+
             });
         </script>
 </body>

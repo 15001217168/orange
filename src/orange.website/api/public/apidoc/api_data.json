@@ -90,7 +90,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/auth.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -168,7 +168,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/home.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -238,7 +238,7 @@
       "examples": [
         {
           "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'获取成功', \n data:{         \n       phone:\"\",\n          nick_name: \"\",\n          avatar:\"\",\n          signature:\"\",\n          city:{\n              code:\"\",\n              name:\"\"\n               },\n          birthday:\"\",\n          gender:{\n              code:\"\",\n              name:\"\"\n               },\n         } \n }",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:{         \n       phone:\"\",\n              nick_name: \"\",\n              avatar:\"\",\n              signature:\"\",\n              city:{\n                  code:\"\",\n                  name:\"\"\n                   },\n              birthday:\"\",\n              gender:{\n                  code:\"\",\n                  name:\"\"\n                   },\n             } \n }",
           "type": "json"
         }
       ]
@@ -253,7 +253,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/user.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -330,7 +330,7 @@
       "examples": [
         {
           "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'登录成功', \n data:{\n       userid:\"\",\n       phone:\"\",\n          nick_name: \"\",\n          avatar:\"\"\n      } \n }",
+          "content": "{ \n code:'0000', \n message:'登录成功', \n data:{\n       userid:\"\",\n       phone:\"\",\n              nick_name: \"\",\n              avatar:\"\"\n      } \n }",
           "type": "json"
         }
       ]
@@ -345,7 +345,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/user.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -430,7 +430,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/science.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -536,7 +536,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/user.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -628,7 +628,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/user.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -741,7 +741,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/content.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -867,7 +867,7 @@
       "examples": [
         {
           "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'修改成功', \n data:{         \n       phone:\"\",\n          nick_name: \"\",\n          avatar:\"\",\n          signature:\"\",\n          city:{\n              code:\"\",\n              name:\"\"\n               },\n          birthday:\"\",\n          gender:{\n              code:\"\",\n              name:\"\"\n               },\n         }\n }",
+          "content": "{ \n code:'0000', \n message:'修改成功', \n data:{         \n       phone:\"\",\n              nick_name: \"\",\n              avatar:\"\",\n              signature:\"\",\n              city:{\n                  code:\"\",\n                  name:\"\"\n                   },\n              birthday:\"\",\n              gender:{\n                  code:\"\",\n                  name:\"\"\n                   },\n             }\n }",
           "type": "json"
         }
       ]
@@ -882,7 +882,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/user.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -967,7 +967,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/sms.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -1066,7 +1066,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/user.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
@@ -1158,41 +1158,13 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/sms.js",
     "groupTitle": "API",
     "sampleRequest": [
       {
         "url": "http://api.ohlion.com/api/verify_sms_code"
       }
     ]
-  },
-  {
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "optional": false,
-            "field": "varname1",
-            "description": "<p>No type.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "varname2",
-            "description": "<p>With type.</p>"
-          }
-        ]
-      }
-    },
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "api/public/apidoc/main.js",
-    "group": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
-    "groupTitle": "D__My_orange_src_orange_website_api_public_apidoc_main_js",
-    "name": ""
   },
   {
     "type": "G",
@@ -1249,7 +1221,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "api/router.js",
+    "filename": "api/routers/gb.js",
     "groupTitle": "Global"
   }
 ]

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
     config = require('../config');
-
+mongoose.Promise = global.Promise;
 mongoose.connect(config.db.url, {
     server: {
         poolSize: 20

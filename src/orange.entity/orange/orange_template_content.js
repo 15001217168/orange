@@ -10,9 +10,11 @@ var OrangeTemplateContentSchema = new schema({
         type: Number,
         default: 0
     },
-    content_id: {
-        type: String,
-        default: ""
+    contents: {
+        id: "",
+        name: "",
+        img: "",
+        create_date: ""
     },
     is_blocked: {
         type: Boolean,
