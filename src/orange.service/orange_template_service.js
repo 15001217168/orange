@@ -91,7 +91,6 @@ exports.getTemplates = function(pageindex, key, callback) {
 exports.getTemplateContentsByTemplateId = function(templateid, pageindex, key, callback) {
     var size = config.page_size,
         start = (pageindex - 1) * size,
-        end = start + size,
         search = {},
         pagination = {
             index: pageindex,
@@ -104,26 +103,22 @@ exports.getTemplateContentsByTemplateId = function(templateid, pageindex, key, c
     if (key) {
         search.name = key;
     }
-    OrangeTemplateContent.findOne({ template_id: templateid }, function(err, doc) {
+    OrangeTemplateContent.find({ template_id: templateid }).skip(start).limit(size).exec(function(err, doc) {
         if (err) {
             callback(bizResultMsg.success('获取数据成功', [], pagination));
         } else {
             if (doc) {
-                var contents = doc.contents;
-                var couner = 0;
-                var list = contents.map(function(v, i) {
-                    if (i >= start && i <= end) {
-                        var item = {};
-                        item.id = v.id;
-                        item.no = start + i + 1;
-                        item.name = v.name;
-                        item.img = v.type.name;
-                        item.create_date = moment(v.create_date).format('YYYY- MM - DD HH:mm:ss');
-                        return item;
-                    }
+                var list = doc.map(function(v, i) {
+                    var item = {};
+                    item.id = v.id;
+                    item.no = start + i + 1;
+                    item.name = v.content_name;
+                    item.img = v.content_img;
+                    item.create_date = moment(v.create_date).format('YYYY- MM - DD HH:mm:ss');
+                    return item;
                 });
 
-                var totalCount = contents.length;
+                var totalCount = doc.length;
                 pagination.pages = parseInt((totalCount + size - 1) / size);
                 pagination.total = totalCount;
 

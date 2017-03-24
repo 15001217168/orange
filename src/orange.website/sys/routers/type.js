@@ -36,4 +36,11 @@ module.exports = function(router) {
             }
         });
     });
+
+    router.post('/type/search', function(req, res, next) {
+        var key = req.body.key;
+        orangeTypeService.searchTypes(key, function(result) {
+            res.send(bizResultMsg.success('获取成功', result.data));
+        });
+    });
 }

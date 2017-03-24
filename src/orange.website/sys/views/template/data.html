@@ -185,7 +185,13 @@
                     $.post(searchUrl, {
                         key: $(this).val()
                     }, function(result) {
-
+                        if (!result.error) {
+                            var html = [];
+                            $(result.data).each(function() {
+                                html.push('<option value="' + this.id + '">' + this.name + '</option>');
+                            });
+                            $('#selDataList').html(html.join(''));
+                        }
                     });
                 });
 

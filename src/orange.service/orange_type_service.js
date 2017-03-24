@@ -79,6 +79,31 @@ exports.getTypes = function(pageindex, key, callback) {
     });
 };
 
+exports.searchTypes = function(key, callback) {
+    var list = [],
+        search = {};
+    if (key) {
+        var pattern = new RegExp("^.*" + key + ".*$");
+        search.name = pattern;
+        OrangeType.find(search).exec(function(err, docs) {
+            if (err) {
+                callback(bizResultMsg.success('获取数据成功', list));
+            }
+            if (docs) {
+                list = docs.map(function(v, i) {
+                    var item = {};
+                    item._id = v._id;
+                    item.name = v.name;
+                    return item;
+                });
+            }
+            callback(bizResultMsg.success('获取数据成功', list));
+        });
+    } else {
+        callback(bizResultMsg.success('获取数据成功', list));
+    }
+};
+
 exports.saveType = function(id, name, type, des, img, callback) {
     if (id != 0) {
         OrangeType.findByIdAndUpdate(id, {
