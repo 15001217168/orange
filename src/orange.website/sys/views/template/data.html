@@ -173,6 +173,12 @@
                 });
                 var searchUrl = '';
                 switch ($('#hidDataSearchType').val()) {
+                    case '0000000':
+                        searchUrl = '/';
+                        break;
+                    case '0000001':
+                        searchUrl = '/';
+                        break;
                     case '0000002':
                         searchUrl = '/type/search';
                         break;

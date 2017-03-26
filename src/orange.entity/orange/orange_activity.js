@@ -1,8 +1,16 @@
 var mongoose = require('mongoose'),
     schema = mongoose.Schema;
 
-var OrangeTemplateContentSchema = new schema({
-    template_id: {
+var OrangeActivitySchema = new schema({
+    name: {
+        type: String,
+        default: ""
+    },
+    img: {
+        type: String,
+        default: ""
+    },
+    url: {
         type: String,
         default: ""
     },
@@ -31,4 +39,4 @@ var OrangeTemplateContentSchema = new schema({
     },
 });
 
-mongoose.model('OrangeTemplateContent', OrangeTemplateContentSchema);
+mongoose.model('OrangeActivity', OrangeActivitySchema);
