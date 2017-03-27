@@ -12,5 +12,7 @@ require("./routers/user")(router);
 require("./routers/content")(router);
 //科学
 require("./routers/science")(router);
+//上传
+require("./routers/up")(router);
 
 module.exports = router;
