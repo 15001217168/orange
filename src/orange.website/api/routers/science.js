@@ -152,4 +152,33 @@ module.exports = function(router) {
         res.send(resultMsg.success('获取城市成功', result));
         return;
     });
+    /**
+     * @api {post} /api/get_areas 获取城市和省份
+     * @apiName get_areas
+     * @apiGroup API
+     * @apiParam {String} access_token Token.
+     *
+     * @apiSuccess {String} code 状态码.
+     * @apiSuccess {String} message 错误信息.
+     * @apiSuccess {Object} data 数据.
+     * @apiSuccessExample 成功: 
+     * { 
+     *  code:'0000', 
+     *  message:'获取成功', 
+     *  data:{}
+     *  @apiErrorExample 失败: 
+     *  { 
+     *   code:'9999', 
+     *   message:'获取失败', 
+     *   data:{} 
+     *   } 
+     * @apiParamExample {json} 请求示例:
+     *     {
+     *       "access_token": '123456'
+     *     }
+     */
+    router.post('/api/get_areas', function(req, res, next) {
+        res.send(resultMsg.success('获取城市成功', { cities: cities.cities, provinces: provinces.provinces }));
+        return;
+    });
 };
