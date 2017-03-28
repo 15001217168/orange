@@ -100,6 +100,169 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/get_cites",
+    "title": "获取城市",
+    "name": "get_cites",
+    "group": "API",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:[{code:\"\",name:\"\"}]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'获取失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/routers/science.js",
+    "groupTitle": "API",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/get_cites"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/api/get_cites_by_province",
+    "title": "获取城市通过省份",
+    "name": "get_cites_by_province",
+    "group": "API",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "province_code",
+            "description": "<p>省份编码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:[{code:\"\",name:\"\"}]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'获取失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/routers/science.js",
+    "groupTitle": "API",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/get_cites_by_province"
+      }
+    ]
+  },
+  {
+    "type": "post",
     "url": "/api/get_home_template",
     "title": "获取首页模块",
     "name": "get_home_template",
@@ -173,6 +336,84 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://api.ohlion.com/api/get_home_template"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/api/get_provinces",
+    "title": "获取省份",
+    "name": "get_provinces",
+    "group": "API",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:[{code:\"\",name:\"\"}]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'获取失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/routers/science.js",
+    "groupTitle": "API",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/get_provinces"
       }
     ]
   },

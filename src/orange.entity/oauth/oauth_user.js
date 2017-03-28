@@ -34,6 +34,10 @@ var OauthUserSchema = new schema({
         code: "",
         name: ""
     },
+    is_hide_gender: {
+        type: Number,
+        default: 0
+    },
     app_id: {
         type: String,
         default: "",

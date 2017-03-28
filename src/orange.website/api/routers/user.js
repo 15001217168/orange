@@ -341,6 +341,7 @@ module.exports = function(router) {
      * @apiParam {String} birthday 生日.
      * @apiParam {String} gender_code 性别编码.
      * @apiParam {String} gender_name 性别名称.
+     * @apiParam {String} is_hide_gender 是否隐藏性别.
      * @apiParam {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
@@ -364,7 +365,8 @@ module.exports = function(router) {
                   code:"",
                   name:""
                    },
-             }
+             }，
+             is_hide_gender:''
      *  } 
      *  @apiErrorExample 失败: 
      *  { 
@@ -384,6 +386,7 @@ module.exports = function(router) {
      *       "gender_code": '123456',
      *       "gender_name": '123456',
      *       "access_token": '123456',
+     *       "is_hide_gender":'0 显示，1 隐藏',
      *     }
      */
     router.post('/api/save_user_info', function(req, res, next) {
@@ -395,7 +398,8 @@ module.exports = function(router) {
             city_name = req.body.city_name,
             birthday = req.body.birthday,
             gender_code = req.body.gender_code,
-            gender_name = req.body.gender_name;
+            gender_name = req.body.gender_name,
+            is_hide_gender = req.body.is_hide_gender;
         if (!userid) {
             res.send(resultMsg.required('用户id不能为空'));
             return;
@@ -404,7 +408,7 @@ module.exports = function(router) {
             res.send(resultMsg.required('昵称不能为空'));
             return;
         }
-        oauth_user_service.saveUserInfo(userid, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, function(result) {
+        oauth_user_service.saveUserInfo(userid, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, is_hide_gender, function(result) {
             if (result.error == true) {
                 res.send(resultMsg.fail(result.message));
                 return;
