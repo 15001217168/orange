@@ -105,7 +105,8 @@ exports.getUserInfo = function(userid, callback) {
         }
     });
 };
-exports.saveUserInfo = function(userid, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, is_hide_gender, callback) {
+exports.saveUserInfo = function(userid, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, is_hide_gender, is_hide_birthday,
+    callback) {
     OauthUser.findByIdAndUpdate(userid, {
         nick_name: nick_name,
         avatar: avatar,
@@ -119,7 +120,8 @@ exports.saveUserInfo = function(userid, nick_name, avatar, signature, city_code,
             code: gender_code,
             name: gender_name
         },
-        is_hide_gender: is_hide_gender || 0
+        is_hide_gender: is_hide_gender || 0,
+        is_hide_birthday: is_hide_birthday || 0
     }, function(err, doc) {
         if (err) {
             callback(bizResultMsg.error('修改用户信息失败!'));
@@ -139,7 +141,8 @@ exports.saveUserInfo = function(userid, nick_name, avatar, signature, city_code,
                         code: gender_code,
                         name: gender_name
                     },
-                    is_hide_gender: is_hide_gender || 0
+                    is_hide_gender: is_hide_gender || 0,
+                    is_hide_birthday: is_hide_birthday || 0,
                 }));
             } else {
                 callback(bizResultMsg.error('修改用户信息失败!'));

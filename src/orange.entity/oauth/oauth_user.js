@@ -38,6 +38,10 @@ var OauthUserSchema = new schema({
         type: Number,
         default: 0
     },
+    is_hide_birthday: {
+        type: Number,
+        default: 0
+    },
     app_id: {
         type: String,
         default: "",

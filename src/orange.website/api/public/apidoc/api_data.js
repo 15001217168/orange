@@ -1151,6 +1151,13 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "is_hide_birthday",
+            "description": "<p>是否隐藏生日.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "access_token",
             "description": "<p>Token.</p>"
           }
@@ -1159,7 +1166,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"userid\": '123456',\n  \"nick_name\": '123456',\n  \"avatar\": '123456',\n  \"signature\": '123456',\n  \"city_code\": '123456',\n  \"city_name\": '123456',\n  \"birthday\": '123456',\n  \"gender_code\": '123456',\n  \"gender_name\": '123456',\n  \"access_token\": '123456',\n  \"is_hide_gender\":'0 显示，1 隐藏',\n}",
+          "content": "{\n  \"userid\": '123456',\n  \"nick_name\": '123456',\n  \"avatar\": '123456',\n  \"signature\": '123456',\n  \"city_code\": '123456',\n  \"city_name\": '123456',\n  \"birthday\": '123456',\n  \"gender_code\": '123456',\n  \"gender_name\": '123456',\n  \"access_token\": '123456',\n  \"is_hide_gender\":'0 显示，1 隐藏',\n  \"is_hide_birthday\":'0 显示，1 隐藏',\n}",
           "type": "json"
         }
       ]
