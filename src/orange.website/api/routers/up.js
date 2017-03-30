@@ -50,7 +50,7 @@ module.exports = function(router) {
             }
         });
         //生成multiparty对象，并配置上传目标路径
-        var form = new multiparty.Form({ uploadDir: pathImg });
+        var form = new multiparty.Form({ uploadDir: pathImg.trim('\\') });
         //上传完成后处理
         form.parse(req, function(err, fields, files) {
             if (err) {
