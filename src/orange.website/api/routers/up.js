@@ -11,8 +11,8 @@ module.exports = function(router) {
      * @apiName upload_img
      * @apiGroup API
      *
-     * @apiParam {String} user_id 用户Id.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} user_id 用户Id.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -38,22 +38,23 @@ module.exports = function(router) {
      *     }
      */
     router.post('/api/upload_img', function(req, res, next) {
-        var userid = req.body.user_id;
+        var userid = req.headers.user_id;
         if (!userid) {
             res.send(resultMsg.required('用户Id不能为空'));
             return;
-        }
-
-        var pathImg = config.upload_path + '\\' + userid + '\\';
-        if (!fs.exists(pathImg)) {
-            fs.mkdir(pathImg);
-        }
+        };
+        var pathImg = config.upload_path + userid + '\\';
+        fs.exists(pathImg, function(exist) {
+            if (!exist) {
+                fs.mkdir(pathImg);
+            }
+        });
         //生成multiparty对象，并配置上传目标路径
         var form = new multiparty.Form({ uploadDir: pathImg });
         //上传完成后处理
         form.parse(req, function(err, fields, files) {
             if (err) {
-                res.send(bizResult.error('上传图片失败！'));
+                res.send(resultMsg.fail('上传图片失败！'));
                 return;
             } else {
                 if (files) {
@@ -61,9 +62,9 @@ module.exports = function(router) {
                     for (var i in files) { //用javascript的for/in循环遍历对象的属性 
                         file = files[i];
                     }
-                    if (file) {
-                        var uploadedPath = path.basename(file.path);
-                        res.send(bizResult.success('上传图片成功！', { url: config.img_url + '/upload/' + user_id + '/' + uploadedPath }));
+                    if (file && file.length > 0) {
+                        var uploadedPath = path.basename(file[0].path);
+                        res.send(resultMsg.success('上传图片成功！', { url: config.img_url + '/upload/' + userid + '/' + uploadedPath }));
                         return;
                     } else {
                         res.send(resultMsg.required('未接收到图片流'));

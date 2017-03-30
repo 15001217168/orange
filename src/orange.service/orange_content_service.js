@@ -87,7 +87,7 @@ exports.saveContent = function(contentid, title, content, markdown, userid, type
                 name: "",
                 avatar: ""
             }
-        }, function(err, doc) {
+        }, { new: true }, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败!'));
             }

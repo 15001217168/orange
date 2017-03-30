@@ -11,7 +11,7 @@ module.exports = function(router) {
      * @apiGroup API
      *
      * @apiParam {String} content 内容.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -51,7 +51,7 @@ module.exports = function(router) {
      * @apiName get_provinces
      * @apiGroup API
      *
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -82,7 +82,7 @@ module.exports = function(router) {
      * @apiName get_cites
      * @apiGroup API
      *
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -113,7 +113,7 @@ module.exports = function(router) {
      * @apiName get_cites_by_province
      * @apiGroup API
      * @apiParam {String} province_code 省份编码.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -156,7 +156,7 @@ module.exports = function(router) {
      * @api {post} /api/get_areas 获取城市和省份
      * @apiName get_areas
      * @apiGroup API
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.

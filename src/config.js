@@ -1,6 +1,6 @@
 var config = {
     db: {
-        url: 'mongodb://orange:123456@127.0.0.1:8090/orange',
+        url: 'mongodb://orange:123456@120.76.176.44:8090/orange',
         host: '127.0.0.1',
         port: '8090',
         db: 'orange',

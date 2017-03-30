@@ -15,8 +15,8 @@ var OauthUserSchema = new schema({
         default: "",
     },
     avatar: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: ""
     },
     signature: {
         type: String,

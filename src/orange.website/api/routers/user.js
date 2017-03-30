@@ -11,7 +11,7 @@ module.exports = function(router) {
      *
      * @apiParam {String} nick_name 昵称.
      * @apiParam {String} phone 手机号.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -70,7 +70,7 @@ module.exports = function(router) {
      * @apiParam {String} phone 手机号.
      * @apiParam {String} pwd 密码.
      * @apiParam {String} code 验证码.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -145,7 +145,7 @@ module.exports = function(router) {
      * @apiParam {String} phone 手机号.
      * @apiParam {String} pwd 密码.
      * @apiParam {String} code 验证码.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -212,7 +212,7 @@ module.exports = function(router) {
      *
      * @apiParam {String} phone 手机号.
      * @apiParam {String} pwd 密码.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -273,7 +273,7 @@ module.exports = function(router) {
      * @apiGroup API
      *
      * @apiParam {String} userid 用户唯一标识.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -284,19 +284,20 @@ module.exports = function(router) {
      *  message:'获取成功', 
      *  data:{         
      *        phone:"",
-              nick_name: "",
-              avatar:"",
-              signature:"",
-              city:{
-                  code:"",
-                  name:""
-                   },
-              birthday:"",
-              gender:{
-                  code:"",
-                  name:""
-                   },
-             } 
+     *        nick_name: "",
+     *        avatar:"",
+     *        signature:"",
+     *        city:{
+     *                 code:"",
+     *                 name:""
+     *              },
+     *        birthday:"",
+     *        gender:{
+     *                 code:"",
+     *                 name:""
+     *              },
+     *       is_hide_gender:'0 显示，1 隐藏',
+     *       is_hide_birthday:'0 显示，1 隐藏',
      *  } 
      *  @apiErrorExample 失败: 
      *  { 
@@ -344,7 +345,7 @@ module.exports = function(router) {
      * @apiParam {String} is_hide_gender 是否隐藏性别.
      * @apiParam {String} is_hide_birthday 是否隐藏生日.
      * 
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -359,16 +360,16 @@ module.exports = function(router) {
               avatar:"",
               signature:"",
               city:{
-                  code:"",
-                  name:""
+                        code:"",
+                        name:""
                    },
               birthday:"",
               gender:{
-                  code:"",
-                  name:""
+                        code:"",
+                        name:""
                    },
-             }，
-             is_hide_gender:''
+              is_hide_gender:"",
+              is_hide_birthday:""
      *  } 
      *  @apiErrorExample 失败: 
      *  { 

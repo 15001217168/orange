@@ -122,7 +122,7 @@ exports.saveUser = function(id, name, pwd, callback) {
             update_date: new Date(),
             name: name,
             pwd: md5.digest('hex'),
-        }, function(err, doc) {
+        }, { new: true }, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败!'));
             }

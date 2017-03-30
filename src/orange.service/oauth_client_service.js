@@ -96,7 +96,7 @@ exports.saveClient = function(id, name, type, callback) {
             update_date: new Date(),
             name: name,
             type: type,
-        }, function(err, doc) {
+        }, { new: true }, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败'));
             } else {

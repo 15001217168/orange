@@ -11,7 +11,7 @@ module.exports = function(router) {
      * @apiGroup API
      *
      * @apiParam {String} phone 手机号.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -63,7 +63,7 @@ module.exports = function(router) {
      *
      * @apiParam {String} phone 手机号.
      * @apiParam {String} code 验证码.
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.

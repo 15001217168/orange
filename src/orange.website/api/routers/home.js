@@ -10,7 +10,7 @@ module.exports = function(router) {
      * @apiName get_home_template
      * @apiGroup API
      *
-     * @apiParam {String} access_token Token.
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.

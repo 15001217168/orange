@@ -1,6 +1,7 @@
 var http = require('http'),
     querystring = require('querystring'),
-    bizResult = require('./result/result').BizResult;
+    bizResult = require('./result/result').BizResult,
+    crypto = require('crypto');
 //生成唯一标识码
 exports.createUniqueId = function(len) {
     var buf = [],
@@ -20,11 +21,20 @@ exports.createRandomNumber = function(len) {
     }
     return buf.join('');
 };
+exports.httpPost = function(path, data, callback) {
+    if (!global.web_config.access_token) {
+        _getToken(function() {
+            _httPost(path, data, callback);
+        });
+    } else {
+        _httPost(path, data, callback);
+    }
+}
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-exports.httpPost = function(path, data, callback) {
+var _httPost = function(path, data, callback) {
     var postData = querystring.stringify(data);
     var options = {
         hostname: global.web_config.api_url,
@@ -33,7 +43,8 @@ exports.httpPost = function(path, data, callback) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-            'Content-Length': postData.length
+            'Content-Length': postData.length,
+            'access_token': global.web_config.access_token
         }
     };
     var req = http.request(options, function(res) {
@@ -50,7 +61,18 @@ exports.httpPost = function(path, data, callback) {
             } catch (e) {
 
             }
-            callback(result);
+            if (result.error) {
+                callback(result);
+            } else {
+                //token失效
+                if (result.data.code == "9997") {
+                    _getToken(function() {
+                        _httPost(path, data, callback);
+                    });
+                } else {
+                    callback(result);
+                }
+            }
         });
     });
     req.on('error', function(e) {
@@ -60,4 +82,34 @@ exports.httpPost = function(path, data, callback) {
     // write data to request body
     req.write(postData);
     req.end();
+};
+var _getToken = function(callback) {
+    var appid = global.web_config.app_id,
+        app_secret = global.web_config.app_secret,
+        noncestr = exports.createUniqueId(16),
+        timespan = new Date().getTime();
+
+    var str = appid + timespan + app_secret + noncestr;
+    var sha256 = crypto.createHash("sha256");
+    sha256.update(str);
+    var sign = sha256.digest('hex').toUpperCase();
+
+    _httPost('/api/authorize', {
+        appid: appid,
+        timespan: timespan,
+        noncestr: noncestr,
+        sign: sign,
+    }, function(res) {
+        if (res.error) {
+            //请求失败
+        } else {
+            if (res.data.code == '0000') {
+                var access_token = res.data.data.access_token;
+                global.web_config.access_token = access_token;
+                callback();
+            } else {
+
+            }
+        }
+    });
 };

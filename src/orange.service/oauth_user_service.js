@@ -97,7 +97,9 @@ exports.getUserInfo = function(userid, callback) {
                     signature: doc.signature,
                     city: doc.city,
                     birthday: doc.birthday,
-                    gender: doc.gender
+                    gender: doc.gender,
+                    is_hide_birthday: doc.is_hide_birthday || 0,
+                    is_hide_gender: doc.is_hide_gender || 0
                 }));
             } else {
                 callback(bizResultMsg.error('未查找到用户信息!'));
@@ -122,27 +124,21 @@ exports.saveUserInfo = function(userid, nick_name, avatar, signature, city_code,
         },
         is_hide_gender: is_hide_gender || 0,
         is_hide_birthday: is_hide_birthday || 0
-    }, function(err, doc) {
+    }, { new: true }, function(err, doc) {
         if (err) {
             callback(bizResultMsg.error('修改用户信息失败!'));
         } else {
             if (doc) {
                 callback(bizResultMsg.success('修改用户信息成功!', {
                     phone: doc.phone,
-                    nick_name: nick_name,
-                    avatar: avatar,
-                    signature: signature,
-                    city: {
-                        code: city_code,
-                        name: city_name
-                    },
-                    birthday: birthday,
-                    gender: {
-                        code: gender_code,
-                        name: gender_name
-                    },
-                    is_hide_gender: is_hide_gender || 0,
-                    is_hide_birthday: is_hide_birthday || 0,
+                    nick_name: doc.nick_name,
+                    avatar: doc.avatar,
+                    signature: doc.signature,
+                    city: doc.city,
+                    birthday: doc.birthday,
+                    gender: doc.gender,
+                    is_hide_gender: doc.is_hide_gender || 0,
+                    is_hide_birthday: doc.is_hide_birthday || 0,
                 }));
             } else {
                 callback(bizResultMsg.error('修改用户信息失败!'));

@@ -18,7 +18,11 @@ Result.required = function(msg) {
 };
 //失效
 Result.invalid = function(msg) {
-    return new Result('7777', msg);
+    return new Result('9997', msg);
+};
+//
+Result.token_fail = function(msg) {
+    return new Result('9998', msg);
 };
 var BizResult = function(error, msg, data, pagination) {
     this.error = error || false;

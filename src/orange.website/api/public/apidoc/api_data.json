@@ -104,25 +104,18 @@
     "title": "获取城市和省份",
     "name": "get_areas",
     "group": "API",
-    "parameter": {
+    "header": {
       "fields": {
-        "Parameter": [
+        "Header": [
           {
-            "group": "Parameter",
+            "group": "Header",
             "type": "String",
             "optional": false,
             "field": "access_token",
             "description": "<p>Token.</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "请求示例:",
-          "content": "{\n  \"access_token\": '123456'\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -167,6 +160,15 @@
         }
       ]
     },
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "api/routers/science.js",
     "groupTitle": "API",
@@ -182,25 +184,18 @@
     "title": "获取城市",
     "name": "get_cites",
     "group": "API",
-    "parameter": {
+    "header": {
       "fields": {
-        "Parameter": [
+        "Header": [
           {
-            "group": "Parameter",
+            "group": "Header",
             "type": "String",
             "optional": false,
             "field": "access_token",
             "description": "<p>Token.</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "请求示例:",
-          "content": "{\n  \"access_token\": '123456'\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -245,6 +240,15 @@
         }
       ]
     },
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "api/routers/science.js",
     "groupTitle": "API",
@@ -269,13 +273,6 @@
             "optional": false,
             "field": "province_code",
             "description": "<p>省份编码.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -286,6 +283,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -345,25 +355,18 @@
     "title": "获取首页模块",
     "name": "get_home_template",
     "group": "API",
-    "parameter": {
+    "header": {
       "fields": {
-        "Parameter": [
+        "Header": [
           {
-            "group": "Parameter",
+            "group": "Header",
             "type": "String",
             "optional": false,
             "field": "access_token",
             "description": "<p>Token.</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "请求示例:",
-          "content": "{\n  \"access_token\": '123456'\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -408,6 +411,15 @@
         }
       ]
     },
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "api/routers/home.js",
     "groupTitle": "API",
@@ -423,25 +435,18 @@
     "title": "获取省份",
     "name": "get_provinces",
     "group": "API",
-    "parameter": {
+    "header": {
       "fields": {
-        "Parameter": [
+        "Header": [
           {
-            "group": "Parameter",
+            "group": "Header",
             "type": "String",
             "optional": false,
             "field": "access_token",
             "description": "<p>Token.</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "请求示例:",
-          "content": "{\n  \"access_token\": '123456'\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -486,6 +491,15 @@
         }
       ]
     },
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "api/routers/science.js",
     "groupTitle": "API",
@@ -510,13 +524,6 @@
             "optional": false,
             "field": "userid",
             "description": "<p>用户唯一标识.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -527,6 +534,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -557,7 +577,7 @@
       "examples": [
         {
           "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'获取成功', \n data:{         \n       phone:\"\",\n              nick_name: \"\",\n              avatar:\"\",\n              signature:\"\",\n              city:{\n                  code:\"\",\n                  name:\"\"\n                   },\n              birthday:\"\",\n              gender:{\n                  code:\"\",\n                  name:\"\"\n                   },\n             } \n }",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:{         \n       phone:\"\",\n       nick_name: \"\",\n       avatar:\"\",\n       signature:\"\",\n       city:{\n                code:\"\",\n                name:\"\"\n             },\n       birthday:\"\",\n       gender:{\n                code:\"\",\n                name:\"\"\n             },\n      is_hide_gender:'0 显示，1 隐藏',\n      is_hide_birthday:'0 显示，1 隐藏',\n }",
           "type": "json"
         }
       ]
@@ -602,13 +622,6 @@
             "optional": false,
             "field": "pwd",
             "description": "<p>密码.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -619,6 +632,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -687,13 +713,6 @@
             "optional": false,
             "field": "content",
             "description": "<p>内容.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -704,6 +723,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -793,13 +825,6 @@
             "optional": false,
             "field": "code",
             "description": "<p>验证码.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -810,6 +835,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -885,13 +923,6 @@
             "optional": false,
             "field": "phone",
             "description": "<p>手机号.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -902,6 +933,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -998,13 +1042,6 @@
             "optional": false,
             "field": "typeid",
             "description": "<p>分类id.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -1015,6 +1052,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -1153,13 +1203,6 @@
             "optional": false,
             "field": "is_hide_birthday",
             "description": "<p>是否隐藏生日.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -1170,6 +1213,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -1200,7 +1256,7 @@
       "examples": [
         {
           "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'修改成功', \n data:{         \n       phone:\"\",\n              nick_name: \"\",\n              avatar:\"\",\n              signature:\"\",\n              city:{\n                  code:\"\",\n                  name:\"\"\n                   },\n              birthday:\"\",\n              gender:{\n                  code:\"\",\n                  name:\"\"\n                   },\n             }，\n             is_hide_gender:''\n }",
+          "content": "{ \n code:'0000', \n message:'修改成功', \n data:{         \n       phone:\"\",\n              nick_name: \"\",\n              avatar:\"\",\n              signature:\"\",\n              city:{\n                        code:\"\",\n                        name:\"\"\n                   },\n              birthday:\"\",\n              gender:{\n                        code:\"\",\n                        name:\"\"\n                   },\n              is_hide_gender:\"\",\n              is_hide_birthday:\"\"\n }",
           "type": "json"
         }
       ]
@@ -1238,13 +1294,6 @@
             "optional": false,
             "field": "phone",
             "description": "<p>手机号.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -1255,6 +1304,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -1337,13 +1399,6 @@
             "optional": false,
             "field": "code",
             "description": "<p>验证码.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -1354,6 +1409,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {
@@ -1413,32 +1481,25 @@
     "title": "上传图片",
     "name": "upload_img",
     "group": "API",
-    "parameter": {
+    "header": {
       "fields": {
-        "Parameter": [
+        "Header": [
           {
-            "group": "Parameter",
+            "group": "Header",
             "type": "String",
             "optional": false,
             "field": "user_id",
             "description": "<p>用户Id.</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Header",
             "type": "String",
             "optional": false,
             "field": "access_token",
             "description": "<p>Token.</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "请求示例:",
-          "content": "{\n  \"user_id\": '123456',\n  \"access_token\": '123456'\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -1483,6 +1544,15 @@
         }
       ]
     },
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"user_id\": '123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "api/routers/up.js",
     "groupTitle": "API",
@@ -1514,13 +1584,6 @@
             "optional": false,
             "field": "code",
             "description": "<p>验证码.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "access_token",
-            "description": "<p>Token.</p>"
           }
         ]
       },
@@ -1531,6 +1594,19 @@
           "type": "json"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
     },
     "success": {
       "fields": {

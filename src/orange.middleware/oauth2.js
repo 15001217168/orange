@@ -8,14 +8,14 @@ var crypto = require('crypto'),
 
 var oauth2 = {
     authorization: function(req, res, next) {
-        var access_token = req.body.access_token;
+        var access_token = req.headers.access_token;
         if (!access_token) {
             res.send(resultMsg.required('access_token不能为空'));
             return;
         }
         oauthTokenService.getToken(access_token, function(result) {
             if (result.error == true) {
-                res.send(resultMsg.fail('9998', '验证Token失败'));
+                res.send(resultMsg.token_fail('验证Token失败'));
                 return;
             } else {
                 if (result.data.token == access_token) {
@@ -26,7 +26,7 @@ var oauth2 = {
                     var seconds = Math.round(dif / 1000);
 
                     if (seconds > config.token_expire) {
-                        res.send(resultMsg.fail('9997', 'Token失效，请重新验证'));
+                        res.send(resultMsg.invalid('Token失效，请重新验证'));
                         return;
                     } else {
                         res.app_id = result.data.app_id;
@@ -34,7 +34,7 @@ var oauth2 = {
                         return;
                     }
                 } else {
-                    res.send(resultMsg.fail('9998', '验证Token失败'));
+                    res.send(resultMsg.token_fail('验证Token失败'));
                     return;
                 }
             }

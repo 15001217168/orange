@@ -13,7 +13,8 @@ module.exports = function(router) {
      * @apiParam {String} markdown markdown内容.
      * @apiParam {String} userid 用户id.
      * @apiParam {String} typeid 分类id.
-     * @apiParam {String} access_token Token.
+     * 
+     * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.

@@ -8,7 +8,6 @@ module.exports = function(router) {
     router.post('/save_content', function(req, res, next) {
         utils.httpPost('/api/save_content', {
             phone: req.body.phone,
-            access_token: global.web_config.access_token
         }, function(result) {
             if (result.error) {
                 res.send(bizResult.error(result.message));

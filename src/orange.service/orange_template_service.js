@@ -133,7 +133,7 @@ exports.getTemplateContentsByTemplateId = function(templateid, pageindex, key, c
 exports.switch = function(id, is_blocked, callback) {
     OrangeTemplate.findByIdAndUpdate(id, {
         is_blocked: is_blocked,
-    }, function(err, doc) {
+    }, { new: true }, function(err, doc) {
         if (err) {
             callback(bizResultMsg.error('保存失败!'));
         } else {
@@ -153,7 +153,7 @@ exports.saveTemplate = function(id, name, type, des, code, callback) {
             type: type,
             des: des,
             code: code
-        }, function(err, doc) {
+        }, { new: true }, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败!'));
             } else {

@@ -1,6 +1,7 @@
 var bizResult = require('../../../orange/result/result').BizResult,
     utils = require('../../../orange/utils'),
-    crypto = require('crypto');
+    crypto = require('crypto'),
+    config = require('../../../config');
 
 module.exports = function(router) {
     router.get('/login', function(req, res, next) {
@@ -16,7 +17,6 @@ module.exports = function(router) {
         utils.httpPost('/api/login', {
             phone: req.body.phone,
             pwd: req.body.pwd,
-            access_token: global.web_config.access_token
         }, function(result) {
             if (result.error) {
                 res.send(bizResult.error(result.message));

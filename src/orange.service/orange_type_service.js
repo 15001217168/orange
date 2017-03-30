@@ -112,7 +112,7 @@ exports.saveType = function(id, name, type, des, img, callback) {
             type: type,
             des: des,
             img: img
-        }, function(err, doc) {
+        }, { new: true }, function(err, doc) {
             if (err) {
                 callback(bizResultMsg.error('保存失败!'));
             }
