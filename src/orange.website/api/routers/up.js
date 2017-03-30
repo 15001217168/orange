@@ -43,14 +43,14 @@ module.exports = function(router) {
             res.send(resultMsg.required('用户Id不能为空'));
             return;
         };
-        var pathImg = config.upload_path + userid + '\\';
+        var pathImg = config.upload_path + userid;
         fs.exists(pathImg, function(exist) {
             if (!exist) {
                 fs.mkdir(pathImg);
             }
         });
         //生成multiparty对象，并配置上传目标路径
-        var form = new multiparty.Form({ uploadDir: pathImg.trim('\\') });
+        var form = new multiparty.Form({ uploadDir: pathImg });
         //上传完成后处理
         form.parse(req, function(err, fields, files) {
             if (err) {
