@@ -17,7 +17,7 @@ module.exports = function(router) {
         utils.httpPost('/api/login', {
             phone: req.body.phone,
             pwd: req.body.pwd,
-        }, function(result) {
+        }, "", function(result) {
             if (result.error) {
                 res.send(bizResult.error(result.message));
                 return;
@@ -25,7 +25,7 @@ module.exports = function(router) {
                 if (result.data.code == '0000') {
 
                     var account = {
-                        userid: result.data.data.userid,
+                        user_token: result.data.data.user_token,
                         phone: result.data.data.phone,
                         nick_name: result.data.data.nick_name,
                         avatar: result.data.data.avatar

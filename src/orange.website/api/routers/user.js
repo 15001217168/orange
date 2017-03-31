@@ -222,7 +222,10 @@ module.exports = function(router) {
      *  code:'0000', 
      *  message:'登录成功', 
      *  data:{
-     *        userid:"",
+     *         user_token: {
+                                token: "",
+                                expire_date: ""
+                            },
      *        phone:"",
               nick_name: "",
               avatar:""
@@ -272,7 +275,7 @@ module.exports = function(router) {
      * @apiName get_user_info
      * @apiGroup API
      *
-     * @apiParam {String} userid 用户唯一标识.
+     * @apiHeader {String} user_token 用户Token.
      * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
@@ -307,17 +310,17 @@ module.exports = function(router) {
      *   } 
      * @apiParamExample {json} 请求示例:
      *     {
-     *       "userid": '123456',
+     *       "user_token": '123456',
      *       "access_token": '123456'
      *     }
      */
     router.post('/api/get_user_info', function(req, res, next) {
-        var userid = req.body.userid;
-        if (!userid) {
-            res.send(resultMsg.required('用户id不能为空'));
+        var user_token = req.headers.user_token;
+        if (!user_token) {
+            res.send(resultMsg.required('用户Token不能为空'));
             return;
         }
-        oauth_user_service.getUserInfo(userid, function(result) {
+        oauth_user_service.getUserInfo(user_token, function(result) {
             if (result.error == true) {
                 res.send(resultMsg.fail(result.message));
                 return;
@@ -333,7 +336,6 @@ module.exports = function(router) {
      * @apiName save_user_info
      * @apiGroup API
      *
-     * @apiParam {String} userid 用户唯一标识.
      * @apiParam {String} nick_name 昵称.
      * @apiParam {String} avatar 头像.
      * @apiParam {String} signature 签名.
@@ -346,6 +348,7 @@ module.exports = function(router) {
      * @apiParam {String} is_hide_birthday 是否隐藏生日.
      * 
      * @apiHeader {String} access_token Token.
+     * @apiHeader {String} user_token 用户Token.
      *
      * @apiSuccess {String} code 状态码.
      * @apiSuccess {String} message 错误信息.
@@ -379,7 +382,7 @@ module.exports = function(router) {
      *   } 
      * @apiParamExample {json} 请求示例:
      *     {
-     *       "userid": '123456',
+     *       "user_token": '123456',
      *       "nick_name": '123456',
      *       "avatar": '123456',
      *       "signature": '123456',
@@ -394,7 +397,7 @@ module.exports = function(router) {
      *     }
      */
     router.post('/api/save_user_info', function(req, res, next) {
-        var userid = req.body.userid,
+        var user_token = req.headers.user_token,
             nick_name = req.body.nick_name,
             avatar = req.body.avatar,
             signature = req.body.signature,
@@ -405,15 +408,15 @@ module.exports = function(router) {
             gender_name = req.body.gender_name,
             is_hide_gender = req.body.is_hide_gender,
             is_hide_birthday = req.body.is_hide_birthday;
-        if (!userid) {
-            res.send(resultMsg.required('用户id不能为空'));
+        if (!user_token) {
+            res.send(resultMsg.required('用户Token不能为空'));
             return;
         }
         if (!nick_name) {
             res.send(resultMsg.required('昵称不能为空'));
             return;
         }
-        oauth_user_service.saveUserInfo(userid, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, is_hide_gender, is_hide_birthday, function(result) {
+        oauth_user_service.saveUserInfo(user_token, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, is_hide_gender, is_hide_birthday, function(result) {
             if (result.error == true) {
                 res.send(resultMsg.fail(result.message));
                 return;

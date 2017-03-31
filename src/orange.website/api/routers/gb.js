@@ -9,5 +9,6 @@
  * @apiSuccess {String} code--9998 验证Token失败.
  * @apiSuccess {String} code--9997 Token失效，请重新验证.
  * @apiSuccess {String} code--8888 非空验证.
+ * @apiSuccess {String} code--7777 用户Token失效，请重新登录.
  * @apiSampleRequest off
  */

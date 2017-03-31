@@ -10,6 +10,10 @@ var OrangeContentSchema = new schema({
         type: String,
         default: ""
     },
+    des: {
+        type: String,
+        default: ""
+    },
     content: {
         type: String,
         default: ""
@@ -33,14 +37,13 @@ var OrangeContentSchema = new schema({
         name: String,
         id: String
     }],
-    type: {
-        name: String,
-        id: String
+    type_id: {
+        type: String,
+        default: "0000"
     },
-    user: {
-        name: String,
-        id: String,
-        avatar: String
+    user_id: {
+        type: String,
+        default: "0000"
     },
     is_blocked: {
         type: Boolean,

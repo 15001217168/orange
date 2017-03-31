@@ -11,7 +11,7 @@ module.exports = function(router) {
             phone: req.body.phone,
             pwd: req.body.pwd,
             code: req.body.sms_code,
-        }, function(result) {
+        }, "", function(result) {
             if (result.error) {
                 res.send(bizResult.error(result.message));
                 return;

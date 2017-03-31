@@ -46,6 +46,14 @@ var OauthUserSchema = new schema({
         type: String,
         default: "",
     },
+    expire_date: {
+        type: Date,
+        default: Date.now
+    },
+    user_token: {
+        type: String,
+        default: ""
+    },
     is_blocked: {
         type: Boolean,
         default: false

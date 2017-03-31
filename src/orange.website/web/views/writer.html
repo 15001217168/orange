@@ -51,11 +51,36 @@
     <script type="text/javascript">
         $(function() {
             var Writer = function() {
-                this.editor = null;
                 var _bindClick = function() {
                     $('#ulContentList li').off().on('click', function() {
                         $(this).addClass('active').siblings().removeClass('active');
                         $('#txtTitle').val($(this).find('span').html());
+                    });
+                };
+                var _editor = this.editor;
+                var _autoSave = function() {
+                    $.post('/save_content', {
+                        title: $('#txtTitle').val(),
+                        content: encodeURIComponent(_editor.getHTML()),
+                        markdown: encodeURIComponent(_editor.getMarkdown()),
+                        typeid: '0000'
+                    }, function(result) {
+                        if (result.error) {
+
+                        } else {
+
+                        }
+                    });
+
+                };
+                this.initData = function() {
+                    $.post('/get_user_contents', {
+                        page_index: 1,
+                        page_size: 12,
+                        key: "",
+                        typeid: ''
+                    }, function(result) {
+                        console.log(result);
                     });
                 };
                 this.init = function() {
@@ -66,8 +91,8 @@
                         $('#ulContentList').append(' <li class="one-notebook item active"><a href="javascript:void(0)" class="notebook-name"><span>' + $('#txtTitle').val() + '</span></a></li>');
                         _bindClick();
                     });
-
-                    _self.editor = editormd("editormd ", {
+                    _self.initData();
+                    _editor = editormd("editormd ", {
                         width: "100%",
                         height: 700,
                         path: "/js/plugins/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
@@ -93,11 +118,9 @@
                                 }
                                 $('#ulContentList li').off().on('click', function() {
                                     $(this).addClass('active').siblings().removeClass('active');
-
                                 });
-                                $('#txtTitle').val();
-                                //alert(_self.editor.getMarkdown());
-                                //alert(_self.editor.getHTML());
+                                //$('#txtTitle').val();
+                                _autoSave();
                             },
                         },
                         onload: function() {

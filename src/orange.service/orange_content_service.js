@@ -1,29 +1,14 @@
-var repository = require('../orange.repository/orange_repository'),
+var orange_repository = require('../orange.repository/orange_repository'),
+    oauth_repository = require('../orange.repository/oauth_repository'),
     bizResultMsg = require('../orange/result/result').BizResult,
     config = require('../config'),
     moment = require('moment'),
     utils = require('../orange/utils'),
-    OrangeContent = repository.OrangeContent;
-
-exports.getContentById = function(id, callback) {
-    var data = {
-        id: 0,
-        name: ""
-    };
-    if (id != 0) {
-        OrangeContent.findById(id, function(err, doc) {
-            if (err) {
-                callback(bizResultMsg.success('获取数据成功', data));
-            } else {
-                data.id = doc._id;
-                data.name = doc.name;
-                callback(bizResultMsg.success('获取数据成功', data));
-            }
-        });
-    } else {
-        callback(bizResultMsg.success('获取数据成功', data));
-    }
-};
+    OrangeContent = orange_repository.OrangeContent,
+    OrangeType = orange_repository.OrangeType,
+    OauthUser = oauth_repository.OauthUser,
+    cheerio = require('cheerio'),
+    OauthUserService = require('./oauth_user_service');
 
 exports.getContents = function(pageindex, key, callback) {
     var size = config.page_size,
@@ -69,56 +54,146 @@ exports.getContents = function(pageindex, key, callback) {
 
     });
 };
+//获取用户保存内容列表
+exports.getUserContentList = function(user_token, page_index, page_size, key, type_id, callback) {
+    var size = parseInt(page_size),
+        start = (page_index - 1) * size,
+        search = {},
+        pagination = {
+            index: page_index,
+            size: size,
+            pages: 0,
+            total: 0,
+        },
+        list = [];
 
-exports.saveContent = function(contentid, title, content, markdown, userid, typeid, callback) {
-    var item = new OrangeContent();
-    if (contentid != 0) {
-        OrangeContent.findByIdAndUpdate(contentid, {
-            update_date: new Date(),
-            title: title,
-            content: content,
-            markdown: markdown,
-            type: {
-                id: typeid,
-                name: ""
-            },
-            user: {
-                id: userid,
-                name: "",
-                avatar: ""
-            }
-        }, { new: true }, function(err, doc) {
+    if (key) {
+        var pattern = new RegExp("^.*" + key + ".*$");
+        search.title = pattern;
+    }
+    if (type_id) {
+        search.type_id = type_id;
+    }
+    OauthUserService.getUserIdByUserToken(user_token, function(user_id) {
+        search.user_id = user_id;
+        OrangeContent.find(search).skip(start).limit(size).exec(function(err, docs) {
             if (err) {
-                callback(bizResultMsg.error('保存失败!'));
-            }
-            if (!doc) {
-                callback(bizResultMsg.error('保存失败!'));
+                callback(bizResultMsg.success('获取数据成功', [], pagination));
             } else {
-                callback(bizResultMsg.success('保存成功', doc));
+                if (docs) {
+                    list = docs.map(function(v, i) {
+                        var item = {};
+                        item.id = v._id;
+                        item.title = v.title;
+                        return item;
+                    });
+                }
+                OrangeContent.find(search, function(err, doc) {
+                    if (err) {
+                        callback(bizResultMsg.success('获取数据成功', [], pagination));
+
+                    } else {
+                        var totalCount = doc.length;
+                        pagination.pages = parseInt((totalCount + size - 1) / size);
+                        pagination.total = totalCount;
+
+                        callback(bizResultMsg.success('获取数据成功', list, pagination));
+                    }
+                });
+            }
+        });
+    });
+};
+
+//获取用户内容
+exports.getUserContentDetailById = function(user_token, content_id, callback) {
+    if (content_id) {
+        OrangeContent.findById(content_id, function(err, doc) {
+            if (err) {
+                callback(bizResultMsg.error('为查找到指定Id的内容'));
+                return;
+            } else {
+                if (doc) {
+                    OauthUserService.getUserIdByUserToken(user_token, function(user_id) {
+                        if (user_id == doc.user_id) {
+                            var data = {};
+                            data.id = doc._id;
+                            data.title = doc.title;
+                            data.content = doc.content;
+                            data.markdown = doc.markdown;
+                            data.type_id = doc.type_id;
+                            callback(bizResultMsg.success('获取数据成功', data));
+                            return;
+                        } else {
+                            callback(bizResultMsg.error('该Id的内容为其他用户所有，您没有权限查看！'));
+                            return;
+                        }
+                    });
+
+                } else {
+                    callback(bizResultMsg.error('为查找到指定Id的内容'));
+                    return;
+                }
             }
         });
     } else {
-        item.title = title;
-        item.content = content;
-        item.markdown = markdown;
-        item.type = {
-            id: typeid,
-            name: ""
-        };
-        item.user = {
-            id: userid,
-            name: "",
-            avatar: ""
-        };
-        item.save(function(err, doc) {
-            if (err) {
-                callback(bizResultMsg.error('保存失败!'));
-            }
-            if (!doc) {
-                callback(bizResultMsg.error('保存失败!'));
-            } else {
-                callback(bizResultMsg.success('保存成功', doc));
-            }
-        });
+        callback(bizResultMsg.error('为查找到指定Id的内容'));
+        return;
     }
+};
+
+exports.saveContent = function(contentid, title, content, markdown, user_token, typeid, callback) {
+    var item = new OrangeContent(),
+        typeid = typeid || '0000',
+        user_id = '0000',
+        $ = cheerio.load(decodeURIComponent(content));
+
+    var img = $('img').first().attr("src") || "",
+        des = $('p').first().text();
+    OauthUser.findOne({ user_token: user_token }, function(err, doc) {
+        if (!err) {
+            user_id = doc._id;
+        }
+        if (contentid != 0) {
+            OrangeContent.findByIdAndUpdate(contentid, {
+                update_date: new Date(),
+                title: title,
+                img: img,
+                des: des,
+                content: content,
+                markdown: markdown,
+                type_id: typeid,
+                user_id: user_id,
+            }, { new: true }, function(err, doc) {
+                if (err) {
+                    callback(bizResultMsg.error('保存失败!'));
+                }
+                if (!doc) {
+                    callback(bizResultMsg.error('保存失败!'));
+                } else {
+                    callback(bizResultMsg.success('保存成功', doc));
+                }
+            });
+        } else {
+            item.title = title;
+            item.img = img;
+            item.des = des;
+            item.content = content;
+            item.markdown = markdown;
+            item.type_id = typeid;
+            item.user_id = user_id;
+            item.save(function(err, doc) {
+                if (err) {
+                    callback(bizResultMsg.error('保存失败!'));
+                }
+                if (!doc) {
+                    callback(bizResultMsg.error('保存失败!'));
+                } else {
+                    callback(bizResultMsg.success('保存成功', doc));
+                }
+            });
+        }
+
+    });
+
 };

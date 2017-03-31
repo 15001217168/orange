@@ -21,20 +21,20 @@ exports.createRandomNumber = function(len) {
     }
     return buf.join('');
 };
-exports.httpPost = function(path, data, callback) {
+exports.httpPost = function(path, data, user_token, callback) {
     if (!global.web_config.access_token) {
         _getToken(function() {
-            _httPost(path, data, callback);
+            _httPost(path, data, user_token, callback);
         });
     } else {
-        _httPost(path, data, callback);
+        _httPost(path, data, user_token, callback);
     }
 }
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-var _httPost = function(path, data, callback) {
+var _httPost = function(path, data, user_token, callback) {
     var postData = querystring.stringify(data);
     var options = {
         hostname: global.web_config.api_url,
@@ -43,10 +43,15 @@ var _httPost = function(path, data, callback) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-            'Content-Length': postData.length,
-            'access_token': global.web_config.access_token
+            'Content-Length': postData.length
         }
     };
+    if (global.web_config.access_token) {
+        options.headers.access_token = global.web_config.access_token;
+    }
+    if (user_token) {
+        options.headers.user_token = user_token;
+    }
     var req = http.request(options, function(res) {
         var buffers = [];
         res.on('data', function(chunk) {
@@ -99,7 +104,7 @@ var _getToken = function(callback) {
         timespan: timespan,
         noncestr: noncestr,
         sign: sign,
-    }, function(res) {
+    }, "", function(res) {
         if (res.error) {
             //请求失败
         } else {

@@ -1,5 +1,6 @@
 var repository = require('../orange.repository/oauth_repository'),
     bizResultMsg = require('../orange/result/result').BizResult,
+    config = require('../config'),
     OauthToken = repository.OauthToken;
 
 exports.getToken = function(token, callback) {
@@ -36,8 +37,11 @@ exports.getAppIdByToken = function(token, callback) {
     });
 };
 exports.addToken = function(appid, token) {
+    var now = new Date(),
+        expire_date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + config.token_expire, now.getMinutes(), now.getSeconds());
     var item = new OauthToken();
     item.app_id = appid;
     item.token = token;
+    item.expire_date = expire_date;
     item.save();
 };

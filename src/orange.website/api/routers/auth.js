@@ -37,5 +37,6 @@ module.exports = function(router) {
     router.post('/api/authorize', oauth2.access_token);
 
     router.post('*', oauth2.authorization);
+    router.post('*', oauth2.authorization_user);
 
 };

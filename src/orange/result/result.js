@@ -24,6 +24,9 @@ Result.invalid = function(msg) {
 Result.token_fail = function(msg) {
     return new Result('9998', msg);
 };
+Result.user_fail = function(msg) {
+    return new Result('7777', msg);
+};
 var BizResult = function(error, msg, data, pagination) {
     this.error = error || false;
     this.message = msg || "系统内部错误";

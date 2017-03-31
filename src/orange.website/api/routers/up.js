@@ -11,7 +11,7 @@ module.exports = function(router) {
      * @apiName upload_img
      * @apiGroup API
      *
-     * @apiHeader {String} user_id 用户Id.
+     * @apiHeader {String} user_token 用户Token.
      * @apiHeader {String} access_token Token.
      *
      * @apiSuccess {String} code 状态码.
@@ -33,48 +33,48 @@ module.exports = function(router) {
      *   } 
      * @apiParamExample {json} 请求示例:
      *     {
-     *       "user_id": '123456',
+     *       "user_token": '123456',
      *       "access_token": '123456'
      *     }
      */
     router.post('/api/upload_img', function(req, res, next) {
-        var userid = req.headers.user_id;
-        if (!userid) {
-            res.send(resultMsg.required('用户Id不能为空'));
+        var user_token = req.headers.user_token;
+        if (!user_token) {
+            res.send(resultMsg.required('用户Token不能为空'));
             return;
         };
-        var pathImg = config.upload_path + userid;
+        var pathImg = config.upload_path + user_token;
         fs.exists(pathImg, function(exist) {
             if (!exist) {
                 fs.mkdir(pathImg);
             }
-        });
-        //生成multiparty对象，并配置上传目标路径
-        var form = new multiparty.Form({ uploadDir: pathImg });
-        //上传完成后处理
-        form.parse(req, function(err, fields, files) {
-            if (err) {
-                res.send(resultMsg.fail('上传图片失败！'));
-                return;
-            } else {
-                if (files) {
-                    var file = null;
-                    for (var i in files) { //用javascript的for/in循环遍历对象的属性 
-                        file = files[i];
-                    }
-                    if (file && file.length > 0) {
-                        var uploadedPath = path.basename(file[0].path);
-                        res.send(resultMsg.success('上传图片成功！', { url: config.img_url + '/upload/' + userid + '/' + uploadedPath }));
-                        return;
+            //生成multiparty对象，并配置上传目标路径
+            var form = new multiparty.Form({ uploadDir: pathImg });
+            //上传完成后处理
+            form.parse(req, function(err, fields, files) {
+                if (err) {
+                    res.send(resultMsg.fail('上传图片失败！'));
+                    return;
+                } else {
+                    if (files) {
+                        var file = null;
+                        for (var i in files) { //用javascript的for/in循环遍历对象的属性 
+                            file = files[i];
+                        }
+                        if (file && file.length > 0) {
+                            var uploadedPath = path.basename(file[0].path);
+                            res.send(resultMsg.success('上传图片成功！', { url: config.img_url + '/upload/' + user_token + '/' + uploadedPath }));
+                            return;
+                        } else {
+                            res.send(resultMsg.required('未接收到图片流'));
+                            return;
+                        }
                     } else {
                         res.send(resultMsg.required('未接收到图片流'));
                         return;
                     }
-                } else {
-                    res.send(resultMsg.required('未接收到图片流'));
-                    return;
                 }
-            }
+            });
         });
     });
 };

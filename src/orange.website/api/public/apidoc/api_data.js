@@ -511,9 +511,9 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/api/get_user_info",
-    "title": "获取用户信息",
-    "name": "get_user_info",
+    "url": "/api/get_user_content_detail",
+    "title": "获取用户写作内容详情",
+    "name": "get_user_content_detail",
     "group": "API",
     "parameter": {
       "fields": {
@@ -522,15 +522,15 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "userid",
-            "description": "<p>用户唯一标识.</p>"
+            "field": "content_id",
+            "description": "<p>内容Id.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"userid\": '123456',\n  \"access_token\": '123456'\n}",
+          "content": "{\n  \"page_index\": '0',\n  \"page_size\": '20',\n  \"key\": '123456',\n  \"type_id\": '123456',\n  \"user_token\": '123456',\n  \"access_token\": '123456'\n}",
           "type": "json"
         }
       ]
@@ -538,6 +538,210 @@ define({ "api": [
     "header": {
       "fields": {
         "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "user_token",
+            "description": "<p>用户Token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'获取失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/routers/content.js",
+    "groupTitle": "API",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/get_user_content_detail"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/api/get_user_contents",
+    "title": "获取用户写作内容列表",
+    "name": "get_user_contents",
+    "group": "API",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "page_index",
+            "description": "<p>页码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "page_size",
+            "description": "<p>每页数量.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "key",
+            "description": "<p>查询值.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type_id",
+            "description": "<p>分类id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"page_index\": '0',\n  \"page_size\": '20',\n  \"key\": '123456',\n  \"type_id\": '123456',\n  \"user_token\": '123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "user_token",
+            "description": "<p>用户Token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'获取失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/routers/content.js",
+    "groupTitle": "API",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/get_user_contents"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/api/get_user_info",
+    "title": "获取用户信息",
+    "name": "get_user_info",
+    "group": "API",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "user_token",
+            "description": "<p>用户Token.</p>"
+          },
           {
             "group": "Header",
             "type": "String",
@@ -587,6 +791,15 @@ define({ "api": [
         {
           "title": "失败: ",
           "content": "{ \n code:'9999', \n message:'获取失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"user_token\": '123456',\n  \"access_token\": '123456'\n}",
           "type": "json"
         }
       ]
@@ -675,7 +888,7 @@ define({ "api": [
       "examples": [
         {
           "title": "成功: ",
-          "content": "{ \n code:'0000', \n message:'登录成功', \n data:{\n       userid:\"\",\n       phone:\"\",\n              nick_name: \"\",\n              avatar:\"\"\n      } \n }",
+          "content": "{ \n code:'0000', \n message:'登录成功', \n data:{\n        user_token: {\n                                token: \"\",\n                                expire_date: \"\"\n                            },\n       phone:\"\",\n              nick_name: \"\",\n              avatar:\"\"\n      } \n }",
           "type": "json"
         }
       ]
@@ -1012,6 +1225,13 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "content_id",
+            "description": "<p>文章id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "title",
             "description": "<p>标题.</p>"
           },
@@ -1033,14 +1253,7 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "userid",
-            "description": "<p>用户id.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "typeid",
+            "field": "type_id",
             "description": "<p>分类id.</p>"
           }
         ]
@@ -1048,7 +1261,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"title\": '123456',\n  \"content\": '123456',\n  \"markdown\": '123456',\n  \"userid\": '123456',\n  \"typeid\": '123456',\n  \"access_token\": '123456'\n}",
+          "content": "{\n  \"title\": '123456',\n  \"content\": '123456',\n  \"markdown\": '123456',\n  \"user_token\": '123456',\n  \"type_id\": '123456',\n  \"access_token\": '123456'\n}",
           "type": "json"
         }
       ]
@@ -1062,6 +1275,13 @@ define({ "api": [
             "optional": false,
             "field": "access_token",
             "description": "<p>Token.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "user_token",
+            "description": "<p>用户Token.</p>"
           }
         ]
       }
@@ -1127,13 +1347,6 @@ define({ "api": [
     "parameter": {
       "fields": {
         "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "userid",
-            "description": "<p>用户唯一标识.</p>"
-          },
           {
             "group": "Parameter",
             "type": "String",
@@ -1209,7 +1422,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"userid\": '123456',\n  \"nick_name\": '123456',\n  \"avatar\": '123456',\n  \"signature\": '123456',\n  \"city_code\": '123456',\n  \"city_name\": '123456',\n  \"birthday\": '123456',\n  \"gender_code\": '123456',\n  \"gender_name\": '123456',\n  \"access_token\": '123456',\n  \"is_hide_gender\":'0 显示，1 隐藏',\n  \"is_hide_birthday\":'0 显示，1 隐藏',\n}",
+          "content": "{\n  \"user_token\": '123456',\n  \"nick_name\": '123456',\n  \"avatar\": '123456',\n  \"signature\": '123456',\n  \"city_code\": '123456',\n  \"city_name\": '123456',\n  \"birthday\": '123456',\n  \"gender_code\": '123456',\n  \"gender_name\": '123456',\n  \"access_token\": '123456',\n  \"is_hide_gender\":'0 显示，1 隐藏',\n  \"is_hide_birthday\":'0 显示，1 隐藏',\n}",
           "type": "json"
         }
       ]
@@ -1223,6 +1436,13 @@ define({ "api": [
             "optional": false,
             "field": "access_token",
             "description": "<p>Token.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "user_token",
+            "description": "<p>用户Token.</p>"
           }
         ]
       }
@@ -1488,8 +1708,8 @@ define({ "api": [
             "group": "Header",
             "type": "String",
             "optional": false,
-            "field": "user_id",
-            "description": "<p>用户Id.</p>"
+            "field": "user_token",
+            "description": "<p>用户Token.</p>"
           },
           {
             "group": "Header",
@@ -1548,7 +1768,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"user_id\": '123456',\n  \"access_token\": '123456'\n}",
+          "content": "{\n  \"user_token\": '123456',\n  \"access_token\": '123456'\n}",
           "type": "json"
         }
       ]
@@ -1710,6 +1930,13 @@ define({ "api": [
             "optional": false,
             "field": "code--8888",
             "description": "<p>非空验证.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code--7777",
+            "description": "<p>用户Token失效，请重新登录.</p>"
           }
         ]
       }

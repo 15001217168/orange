@@ -2,6 +2,7 @@ var crypto = require('crypto'),
     resultMsg = require('../orange/result/result').Result,
     oauthClientService = require('../orange.service/oauth_client_service'),
     oauthTokenService = require('../orange.service/oauth_token_service'),
+    oauthUserService = require('../orange.service/oauth_user_service'),
     utils = require('../orange/utils'),
     config = require('../config');
 
@@ -23,9 +24,9 @@ var oauth2 = {
                     var expire = new Date(result.data.expire_date);
 
                     var dif = now.getTime() - expire.getTime();
-                    var seconds = Math.round(dif / 1000);
+                    //var seconds = Math.round(dif / 1000);
 
-                    if (seconds > config.token_expire) {
+                    if (dif >= 0) {
                         res.send(resultMsg.invalid('Token失效，请重新验证'));
                         return;
                     } else {
@@ -39,6 +40,39 @@ var oauth2 = {
                 }
             }
         });
+    },
+    authorization_user: function(req, res, next) {
+        var user_token = req.headers.user_token;
+        if (user_token) {
+            oauthUserService.getUserByUserToken(user_token, function(result) {
+                if (result.error == true) {
+                    res.send(resultMsg.user_fail('用户Token失效，请重新登录'));
+                    return;
+                } else {
+                    if (result.data.token == user_token) {
+                        var now = new Date();
+                        var expire = new Date(result.data.expire_date);
+
+                        var dif = now.getTime() - expire.getTime();
+                        // var seconds = Math.round(dif / 1000);
+
+                        if (dif >= 0) {
+                            res.send(resultMsg.user_fail('用户Token失效，请重新登录'));
+                            return;
+                        } else {
+                            next();
+                            return;
+                        }
+                    } else {
+                        res.send(resultMsg.token_fail('用户Token失效，请重新登录'));
+                        return;
+                    }
+                }
+            });
+        } else {
+            next();
+            return;
+        }
     },
     access_token: function(req, res, next) {
         var appid = req.body.appid,

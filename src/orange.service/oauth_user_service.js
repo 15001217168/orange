@@ -70,12 +70,29 @@ exports.login = function(phone, pwd, callback) {
     user.verifyPhone(function(res, doc) {
         if (res == true) {
             if (doc.pwd == pwd) {
-                callback(bizResultMsg.success('登录成功!', {
-                    userid: doc._id,
-                    phone: doc.phone,
-                    nick_name: doc.nick_name,
-                    avatar: doc.avatar
-                }));
+                var user_token = utils.createUniqueId(32),
+                    now = new Date(),
+                    expire_date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + config.user_token_expire, now.getMinutes(), now.getSeconds());
+                OauthUser.findByIdAndUpdate(doc._id, {
+                    user_token: user_token,
+                    expire_date: expire_date,
+                }, { new: true }, function(err, doc) {
+                    if (!err) {
+                        callback(bizResultMsg.success('登录成功!', {
+                            user_token: {
+                                token: user_token,
+                                expire_date: doc.expire_date
+                            },
+                            phone: doc.phone,
+                            nick_name: doc.nick_name,
+                            avatar: doc.avatar,
+
+                        }));
+                    } else {
+                        callback(bizResultMsg.error('系统内部异常,登录失败!'));
+                    }
+                });
+
             } else {
                 callback(bizResultMsg.error('账户和密码不正确!'));
             }
@@ -84,8 +101,8 @@ exports.login = function(phone, pwd, callback) {
         }
     });
 };
-exports.getUserInfo = function(userid, callback) {
-    OauthUser.findById(userid, function(err, doc) {
+exports.getUserInfo = function(user_token, callback) {
+    OauthUser.findOne({ user_token: user_token }, function(err, doc) {
         if (err) {
             callback(bizResultMsg.error('未查找到用户信息!'));
         } else {
@@ -107,9 +124,38 @@ exports.getUserInfo = function(userid, callback) {
         }
     });
 };
-exports.saveUserInfo = function(userid, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, is_hide_gender, is_hide_birthday,
+exports.getUserByUserToken = function(user_token, callback) {
+    OauthUser.findOne({ user_token: user_token }, function(err, doc) {
+        if (err) {
+            callback(bizResultMsg.error('未查找到用户信息!'));
+        } else {
+            if (doc) {
+                callback(bizResultMsg.success('获取用户信息成功!', {
+                    expire_date: doc.expire_date,
+                    token: doc.user_token
+                }));
+            } else {
+                callback(bizResultMsg.error('未查找到用户信息!'));
+            }
+        }
+    });
+};
+exports.getUserIdByUserToken = function(user_tokne, callback) {
+    OauthUser.findOne({ user_token: user_tokne }, function(err, doc) {
+        if (err) {
+            callback('0');
+        } else {
+            if (doc) {
+                callback(doc._id);
+            } else {
+                callback('0');
+            }
+        }
+    });
+};
+exports.saveUserInfo = function(user_token, nick_name, avatar, signature, city_code, city_name, birthday, gender_code, gender_name, is_hide_gender, is_hide_birthday,
     callback) {
-    OauthUser.findByIdAndUpdate(userid, {
+    OauthUser.findOneAndUpdate({ user_token: user_token }, {
         nick_name: nick_name,
         avatar: avatar,
         signature: signature,
