@@ -118,11 +118,11 @@ module.exports = function(router) {
 
 
     /**
-     * @api {post} /api/save_content 保存内容
-     * @apiName save_content
+     * @api {post} /api/save_user_content 保存用户写作内容
+     * @apiName save_user_content
      * @apiGroup API
      * 
-     * @apiParam {String} content_id 文章id.
+     * @apiParam {String} content_id 内容id.
      * @apiParam {String} title 标题.
      * @apiParam {String} content html内容.
      * @apiParam {String} markdown markdown内容.
@@ -148,6 +148,7 @@ module.exports = function(router) {
      *   } 
      * @apiParamExample {json} 请求示例:
      *     {
+     *       "content_id": '123456',
      *       "title": '123456',
      *       "content": '123456',
      *       "markdown": '123456',
@@ -156,8 +157,8 @@ module.exports = function(router) {
      *       "access_token": '123456'
      *     }
      */
-    router.post('/api/save_content', function(req, res, next) {
-        var contentid = req.body.content_id,
+    router.post('/api/save_user_content', function(req, res, next) {
+        var contentid = req.body.content_id || 0,
             title = req.body.title,
             content = req.body.content,
             markdown = req.body.markdown,
@@ -176,6 +177,59 @@ module.exports = function(router) {
             return;
         }
         orange_content_service.saveContent(contentid, title, content, markdown, user_token, typeid, function(result) {
+            if (result.error == true) {
+                res.send(resultMsg.fail(result.message));
+                return;
+            } else {
+                res.send(resultMsg.success(result.message, { content_id: result.data._id }));
+                return;
+            }
+        });
+    });
+    /**
+     * @api {post} /api/deleted_user_content 删除用户写作内容
+     * @apiName deleted_user_content
+     * @apiGroup API
+     * 
+     * @apiParam {String} content_id 内容id.
+     * 
+     * @apiHeader {String} access_token Token.
+     * @apiHeader {String} user_token 用户Token.
+     *
+     * @apiSuccess {String} code 状态码.
+     * @apiSuccess {String} message 错误信息.
+     * @apiSuccess {Object} data 数据.
+     * @apiSuccessExample 成功: 
+     * { 
+     *  code:'0000', 
+     *  message:'保存成功', 
+     *  data:{} 
+     *  } 
+     *  @apiErrorExample 失败: 
+     *  { 
+     *   code:'9999', 
+     *   message:'保存失败', 
+     *   data:{} 
+     *   } 
+     * @apiParamExample {json} 请求示例:
+     *     {
+     *       "user_token": '123456',
+     *       "content_id": '123456',
+     *       "access_token": '123456'
+     *     }
+     */
+    router.post('/api/deleted_user_content', function(req, res, next) {
+        var contentid = req.body.content_id,
+            user_token = req.headers.user_token;
+        if (!contentid) {
+            res.send(resultMsg.required('内容Id不能为空'));
+            return;
+        }
+        if (!user_token) {
+            res.send(resultMsg.required('用户Token不能为空'));
+            return;
+        }
+        orange_content_service.updateUserContentDeleted(user_token, contentid, function(result) {
             if (result.error == true) {
                 res.send(resultMsg.fail(result.message));
                 return;

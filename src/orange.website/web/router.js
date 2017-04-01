@@ -14,5 +14,7 @@ require('./routers/login')(router);
 require('./routers/writer')(router);
 //内容
 require('./routers/content')(router);
+//主题
+require('./routers/topic')(router);
 
 module.exports = router;

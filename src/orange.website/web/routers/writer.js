@@ -10,9 +10,10 @@ module.exports = function(router) {
         var title = req.body.title,
             content = req.body.content,
             markdown = req.body.markdown,
-            typeid = req.body.typeid;
-        utils.httpPost('/api/save_content', {
-            content_id: 0,
+            typeid = req.body.typeid,
+            content_id = req.body.content_id;
+        utils.httpPost('/api/save_user_content', {
+            content_id: content_id || 0,
             title: title,
             content: content,
             markdown: markdown,
@@ -23,7 +24,7 @@ module.exports = function(router) {
                 return;
             } else {
                 if (result.data.code == '0000') {
-                    res.send(bizResult.success(result.data.message));
+                    res.send(bizResult.success(result.data.message, result.data.data));
                     return;
                 } else {
                     res.send(bizResult.error(result.data.message));
@@ -61,7 +62,7 @@ module.exports = function(router) {
     //获取详情
     router.post('/get_user_content_detail', function(req, res, next) {
         var content_id = req.body.content_id;
-        utils.httpPost('/api/get_user_contents', {
+        utils.httpPost('/api/get_user_content_detail', {
             content_id: content_id
         }, req.user.user_token.token, function(result) {
             if (result.error) {
@@ -70,6 +71,26 @@ module.exports = function(router) {
             } else {
                 if (result.data.code == '0000') {
                     res.send(bizResult.success(result.data.message, result.data.data));
+                    return;
+                } else {
+                    res.send(bizResult.error(result.data.message));
+                    return;
+                }
+            }
+        });
+    });
+    //删除
+    router.post('/delete_content', function(req, res, next) {
+        var content_id = req.body.content_id;
+        utils.httpPost('/api/deleted_user_content', {
+            content_id: content_id
+        }, req.user.user_token.token, function(result) {
+            if (result.error) {
+                res.send(bizResult.error(result.message));
+                return;
+            } else {
+                if (result.data.code == '0000') {
+                    res.send(bizResult.success(result.data.message));
                     return;
                 } else {
                     res.send(bizResult.error(result.data.message));

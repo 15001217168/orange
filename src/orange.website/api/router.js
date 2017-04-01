@@ -10,6 +10,8 @@ require("./routers/sms")(router);
 require("./routers/user")(router);
 //内容
 require("./routers/content")(router);
+//主题
+require("./routers/topic")(router);
 //科学
 require("./routers/science")(router);
 //上传

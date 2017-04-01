@@ -81,7 +81,7 @@ exports.login = function(phone, pwd, callback) {
                         callback(bizResultMsg.success('登录成功!', {
                             user_token: {
                                 token: user_token,
-                                expire_date: doc.expire_date
+                                expire_date: new Date(doc.expire_date).getTime()
                             },
                             phone: doc.phone,
                             nick_name: doc.nick_name,

@@ -8,7 +8,4 @@ module.exports = function(router) {
     router.get('/td', function(req, res, next) {
         res.render('list', { user: req.user });
     });
-    router.get('/t', function(req, res, next) {
-        res.render('types', { user: req.user });
-    });
 };

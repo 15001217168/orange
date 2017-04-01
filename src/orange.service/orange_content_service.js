@@ -74,6 +74,7 @@ exports.getUserContentList = function(user_token, page_index, page_size, key, ty
     if (type_id) {
         search.type_id = type_id;
     }
+    search.is_deleted = false;
     OauthUserService.getUserIdByUserToken(user_token, function(user_id) {
         search.user_id = user_id;
         OrangeContent.find(search).skip(start).limit(size).exec(function(err, docs) {
@@ -142,6 +143,29 @@ exports.getUserContentDetailById = function(user_token, content_id, callback) {
     }
 };
 
+//用户内容删除
+exports.updateUserContentDeleted = function(user_token, content_id, callback) {
+    OauthUserService.getUserIdByUserToken(user_token, function(user_id) {
+        if (user_id != '0') {
+            OrangeContent.findByIdAndUpdate(content_id, {
+                update_date: new Date(),
+                is_deleted: true
+            }, { new: true }, function(err, doc) {
+                if (err) {
+                    callback(bizResultMsg.error('删除失败!'));
+                }
+                if (!doc) {
+                    callback(bizResultMsg.error('删除失败!'));
+                } else {
+                    callback(bizResultMsg.success('删除成功', doc));
+                }
+            });
+        } else {
+            callback(bizResultMsg.error('该Id的内容为其他用户所有，您没有权限删除！'));
+            return;
+        }
+    });
+};
 exports.saveContent = function(contentid, title, content, markdown, user_token, typeid, callback) {
     var item = new OrangeContent(),
         typeid = typeid || '0000',
@@ -152,48 +176,53 @@ exports.saveContent = function(contentid, title, content, markdown, user_token, 
         des = $('p').first().text();
     OauthUser.findOne({ user_token: user_token }, function(err, doc) {
         if (!err) {
-            user_id = doc._id;
-        }
-        if (contentid != 0) {
-            OrangeContent.findByIdAndUpdate(contentid, {
-                update_date: new Date(),
-                title: title,
-                img: img,
-                des: des,
-                content: content,
-                markdown: markdown,
-                type_id: typeid,
-                user_id: user_id,
-            }, { new: true }, function(err, doc) {
-                if (err) {
-                    callback(bizResultMsg.error('保存失败!'));
-                }
-                if (!doc) {
-                    callback(bizResultMsg.error('保存失败!'));
+            if (doc) {
+                user_id = doc._id;
+                if (contentid != 0) {
+                    OrangeContent.findByIdAndUpdate(contentid, {
+                        update_date: new Date(),
+                        title: title,
+                        img: img,
+                        des: des,
+                        content: content,
+                        markdown: markdown,
+                        type_id: typeid,
+                        user_id: user_id,
+                    }, { new: true }, function(err, doc) {
+                        if (err) {
+                            callback(bizResultMsg.error('保存失败!'));
+                        }
+                        if (!doc) {
+                            callback(bizResultMsg.error('保存失败!'));
+                        } else {
+                            callback(bizResultMsg.success('保存成功', doc));
+                        }
+                    });
                 } else {
-                    callback(bizResultMsg.success('保存成功', doc));
+                    item.title = title;
+                    item.img = img;
+                    item.des = des;
+                    item.content = content;
+                    item.markdown = markdown;
+                    item.type_id = typeid;
+                    item.user_id = user_id;
+                    item.save(function(err, doc) {
+                        if (err) {
+                            callback(bizResultMsg.error('保存失败!'));
+                        }
+                        if (!doc) {
+                            callback(bizResultMsg.error('保存失败!'));
+                        } else {
+                            callback(bizResultMsg.success('保存成功', doc));
+                        }
+                    });
                 }
-            });
+            } else {
+                callback(bizResultMsg.error('该Id的内容为其他用户所有，您没有权限修改！'));
+            }
         } else {
-            item.title = title;
-            item.img = img;
-            item.des = des;
-            item.content = content;
-            item.markdown = markdown;
-            item.type_id = typeid;
-            item.user_id = user_id;
-            item.save(function(err, doc) {
-                if (err) {
-                    callback(bizResultMsg.error('保存失败!'));
-                }
-                if (!doc) {
-                    callback(bizResultMsg.error('保存失败!'));
-                } else {
-                    callback(bizResultMsg.success('保存成功', doc));
-                }
-            });
+            callback(bizResultMsg.error('该Id的内容为其他用户所有，您没有权限修改！'));
         }
-
     });
 
 };
