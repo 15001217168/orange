@@ -7,7 +7,7 @@ module.exports = function(router) {
     });
 
     //获取主题列表
-    router.post('/get_user_contents', function(req, res, next) {
+    router.post('/get_topics', function(req, res, next) {
         var page_index = req.body.page_index,
             page_size = req.body.page_size,
             key = req.body.key,

@@ -15,7 +15,7 @@ module.exports = function(router) {
                 return next(result.message);
             }
             var account = {
-                username: result.data.username
+                username: result.data.username,
             };
             var str = JSON.stringify(account),
                 cipher = crypto.createCipher("aes192", config.crypto_key);

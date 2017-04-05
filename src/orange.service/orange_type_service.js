@@ -156,8 +156,8 @@ exports.saveType = function(id, name, type, des, img, callback) {
 -------------------start------------------
 */
 exports.getTopics = function(page_index, page_size, key, callback) {
-    var size = page_size,
-        start = (page_index - 1) * size,
+    var size = parseInt(page_size),
+        start = (parseInt(page_index) - 1) * size,
         search = {},
         pagination = {
             index: page_index,
@@ -174,31 +174,32 @@ exports.getTopics = function(page_index, page_size, key, callback) {
     OrangeType.find(search).skip(start).limit(size).exec(function(err, docs) {
         if (err) {
             callback(bizResultMsg.error('获取主题数据失败'));
-        }
-        if (docs) {
-            list = docs.map(function(v, i) {
-                var item = {};
-                item.id = v._id;
-                item.name = v.name;
-                item.content_count = v.content_count;
-                item.focus_count = v.focus_count;
-                item.des = v.des;
-                item.img = v.img;
-                item.create_date = moment(v.create_date).format('YYYY- MM - DD HH:mm:ss');
-                return item;
-            });
-            OrangeType.find(search, function(err, doc) {
-                if (err) {
-                    callback(bizResultMsg.error('获取主题数据失败'));
-                } else {
-                    var totalCount = doc.length;
-                    pagination.pages = parseInt((totalCount + size - 1) / size);
-                    pagination.total = totalCount;
-                    callback(bizResultMsg.success('获取数据成功', list, pagination));
-                }
-            });
         } else {
-            callback(bizResultMsg.error('获取主题数据失败'));
+            if (docs) {
+                list = docs.map(function(v, i) {
+                    var item = {};
+                    item.id = v._id;
+                    item.name = v.name;
+                    item.content_count = v.content_count;
+                    item.focus_count = v.focus_count;
+                    item.des = v.des;
+                    item.img = v.img;
+                    item.create_date = moment(v.create_date).format('YYYY- MM - DD HH:mm:ss');
+                    return item;
+                });
+                OrangeType.find(search, function(err, doc) {
+                    if (err) {
+                        callback(bizResultMsg.error('获取主题数据失败'));
+                    } else {
+                        var totalCount = doc.length;
+                        pagination.pages = parseInt((totalCount + size - 1) / size);
+                        pagination.total = totalCount;
+                        callback(bizResultMsg.success('获取数据成功', list, pagination));
+                    }
+                });
+            } else {
+                callback(bizResultMsg.error('获取主题数据失败'));
+            }
         }
     });
 };

@@ -27,7 +27,10 @@
     "urllib": "^2.20.0"
   },
   "devDependencies": {
+    "babel-loader": "^6.4.1",
+    "css-loader": "^0.28.0",
     "grunt": "^1.0.1",
-    "grunt-apidoc": "^0.11.0"
+    "grunt-apidoc": "^0.11.0",
+    "style-loader": "^0.16.1"
   }
 }

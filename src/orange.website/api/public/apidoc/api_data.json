@@ -100,6 +100,104 @@
   },
   {
     "type": "post",
+    "url": "/api/deleted_user_content",
+    "title": "删除用户写作内容",
+    "name": "deleted_user_content",
+    "group": "API",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "content_id",
+            "description": "<p>内容id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"user_token\": '123456',\n  \"content_id\": '123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "user_token",
+            "description": "<p>用户Token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'保存成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'保存失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/routers/content.js",
+    "groupTitle": "API",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/deleted_user_content"
+      }
+    ]
+  },
+  {
+    "type": "post",
     "url": "/api/get_areas",
     "title": "获取城市和省份",
     "name": "get_areas",
@@ -511,6 +609,111 @@
   },
   {
     "type": "post",
+    "url": "/api/get_topics",
+    "title": "获取主题列表",
+    "name": "get_topics",
+    "group": "API",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "page_index",
+            "description": "<p>页码.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "page_size",
+            "description": "<p>每页数量.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "key",
+            "description": "<p>查询值.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例:",
+          "content": "{\n  \"page_index\": '0',\n  \"page_size\": '20',\n  \"key\": '123456',\n  \"access_token\": '123456'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "access_token",
+            "description": "<p>Token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>错误信息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功: ",
+          "content": "{ \n code:'0000', \n message:'获取成功', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败: ",
+          "content": "{ \n code:'9999', \n message:'获取失败', \n data:{} \n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "api/routers/topic.js",
+    "groupTitle": "API",
+    "sampleRequest": [
+      {
+        "url": "http://api.ohlion.com/api/get_topics"
+      }
+    ]
+  },
+  {
+    "type": "post",
     "url": "/api/get_user_content_detail",
     "title": "获取用户写作内容详情",
     "name": "get_user_content_detail",
@@ -530,7 +733,7 @@
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"page_index\": '0',\n  \"page_size\": '20',\n  \"key\": '123456',\n  \"type_id\": '123456',\n  \"user_token\": '123456',\n  \"access_token\": '123456'\n}",
+          "content": "{\n  \"content_id\": '123456',\n  \"user_token\": '123456',\n  \"access_token\": '123456'\n}",
           "type": "json"
         }
       ]
@@ -1214,9 +1417,9 @@
   },
   {
     "type": "post",
-    "url": "/api/save_content",
-    "title": "保存内容",
-    "name": "save_content",
+    "url": "/api/save_user_content",
+    "title": "保存用户写作内容",
+    "name": "save_user_content",
     "group": "API",
     "parameter": {
       "fields": {
@@ -1226,7 +1429,7 @@
             "type": "String",
             "optional": false,
             "field": "content_id",
-            "description": "<p>文章id.</p>"
+            "description": "<p>内容id.</p>"
           },
           {
             "group": "Parameter",
@@ -1261,7 +1464,7 @@
       "examples": [
         {
           "title": "请求示例:",
-          "content": "{\n  \"title\": '123456',\n  \"content\": '123456',\n  \"markdown\": '123456',\n  \"user_token\": '123456',\n  \"type_id\": '123456',\n  \"access_token\": '123456'\n}",
+          "content": "{\n  \"content_id\": '123456',\n  \"title\": '123456',\n  \"content\": '123456',\n  \"markdown\": '123456',\n  \"user_token\": '123456',\n  \"type_id\": '123456',\n  \"access_token\": '123456'\n}",
           "type": "json"
         }
       ]
@@ -1334,7 +1537,7 @@
     "groupTitle": "API",
     "sampleRequest": [
       {
-        "url": "http://api.ohlion.com/api/save_content"
+        "url": "http://api.ohlion.com/api/save_user_content"
       }
     ]
   },
