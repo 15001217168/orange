@@ -16,5 +16,7 @@ require('./routers/writer')(router);
 require('./routers/content')(router);
 //主题
 require('./routers/topic')(router);
+//上传
+require('./routers/up')(router);
 
 module.exports = router;

@@ -8,9 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>坚果说</title>
-    <link rel="stylesheet" media="all" href="/css/web.css">
-    <link rel="stylesheet" media="all" href="/css/entry.css">
-    <link rel="stylesheet" media="all" href="/css/base.css">
+    <script src="/dist/index.bundle.js"></script>
 </head>
 
 <body class="reader-black-font" lang="zh-CN">
@@ -99,28 +97,6 @@
             </div>
         </footer>
         <%include shared/script.html%>
-            <script>
-                var d = 0.1;
-                var maxN = 10;
-                var minN = 0;
-                var i = 1;
-                var compute = function(min, max) {
-                    ++i;
-                    console.log(i);
-                    var n = (max - min) / 2 + min;
-                    var f = (n * n - maxN).toFixed(1);
-                    if (f < d) {
-                        compute(n, max);
-                    } else if (f > d) {
-                        compute(min, n);
-                    } else {
-
-                        console.log(n);
-                        return;
-                    }
-                }
-                compute(minN, maxN);
-            </script>
 </body>
 
 </html>
