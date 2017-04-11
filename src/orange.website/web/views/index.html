@@ -8,10 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>坚果说</title>
-    <script src="/dist/index.bundle.js"></script>
 </head>
 
 <body class="reader-black-font" lang="zh-CN">
+    <div class="sk-three-bounce" id="loading">
+        <div class="sk-child sk-bounce1"></div>
+        <div class="sk-child sk-bounce2"></div>
+        <div class="sk-child sk-bounce3"></div>
+    </div>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="width-limit">
             <%include shared/user.html%>
@@ -36,40 +40,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="list-container">
-                    <!-- 文章列表模块 -->
-                    <ul class="note-list">
-                        <li class="have-img">
-                            <a class="wrap-img" href="#" target="_blank">
-                                <img src="img/aaa.jpg">
-                            </a>
-                            <div class="content">
-                                <div class="author">
-                                    <a class="avatar" target="_blank" href="#">
-                                        <img src="img/aa.jpg" alt="96">
-                                    </a>
-                                    <div class="name">
-                                        <a class="blue-link" target="_blank" href="#">joanren</a>
-                                        <span class="time" data-shared-at="2017-02-03T08:08:25+08:00">4 小时前</span>
-                                    </div>
-                                </div>
-                                <a class="title" target="_blank" href="/p">假期结束 祝你快乐</a>
-                                <p class="abstract">
-                                    岁末，各类横飞的红包雨之中，收到一个创业者的短信： “今天走着走着，突然想到创业就像一场高考。一个你不经历一次，你都会觉得自己人生不完整的一次经历。一个你不经历一次，你就无法...
-                                </p>
-                                <div class="meta">
-                                    <a class="collection-tag" target="_blank" href="#">散文</a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-read"></i> 1865
-                                    </a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-comments"></i> 5
-                                    </a> <span><i class="iconfont ic-list-like"></i> 33</span>
-                                    <span><i class="iconfont ic-list-money"></i> 10</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                <div id="content-list-container">
                 </div>
             </div>
         </div>
@@ -97,6 +68,7 @@
             </div>
         </footer>
         <%include shared/script.html%>
+            <script src="/dist/index.bundle.js"></script>
 </body>
 
 </html>
