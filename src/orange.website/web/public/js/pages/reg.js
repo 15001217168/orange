@@ -1,6 +1,5 @@
-require('../../css/web.css');
-require('../../css/entry.css');
-require('../../css/sign.css');
+import '../../css/entry.css';
+import '../../css/sign.css';
 $(function() {
     var Register = function() {
         this.nick_name = '';

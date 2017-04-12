@@ -1,5 +1,3 @@
-require('../../css/base.css');
-require('../../css/web.css');
-require('../../css/entry.css');
-require('../pages/core.js');
-require('../jsx/home.jsx');
+import '../../css/base.css';
+import '../../css/entry.css';
+import '../jsx/home.jsx';

@@ -1,10 +1,13 @@
-    require('../../js/plugins/loading/style.css');
-    //var $ = require('../jquery/jquery-2.1.1.min.js');
-    $(function() {
-        $('#divUser').hover(function() {
-            $('#ulUserList').show();
-        }, function() {
-            $('#ulUserList').hide();
-        });
-        $('#loading').hide();
-    });
+       import '../../css/web.css';
+       import '../../js/plugins/loading/style.css';
+       (function($) {
+           $('#loading').show();
+       }($));
+       $(function() {
+           $('#divUser').hover(function() {
+               $('#ulUserList').show();
+           }, function() {
+               $('#ulUserList').hide();
+           });
+           $('#loading').hide();
+       });

@@ -1,5 +1,4 @@
 var  ContentList= require('../components/content.jsx');
-var HomeTopicList=require('../components/topic.jsx').HomeTopicList;
 var data = [
     {
         id: '1',
@@ -35,18 +34,5 @@ var data = [
     }
 ];
 
-var toplistData=[
-{
-        id: '1',
-        name: '测试数据',
-        img:'/img/aaa.jpg',
-    },
-    {
-        id: '2',
-        name: '测试数据',
-        img:'/img/aaa.jpg',
-    }
-];
 
 ReactDOM.render(<ContentList url='#' data={data}/>,document.getElementById('content-list-container'));
-ReactDOM.render(<HomeTopicList url='#' data={toplistData}/>,document.getElementById('topic-list-container'));

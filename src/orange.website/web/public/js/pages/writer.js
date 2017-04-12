@@ -1,8 +1,8 @@
-require('../../css/writer/writer.css');
-require('../../css/writer/base.css');
-require('../../font-awesome/fonts/fontawesome-webfont.woff');
-require('../../font-awesome/fonts/fontawesome-webfont.eot');
-require('../../font-awesome/fonts/fontawesome-webfont.svg');
+import '../../css/writer/writer.css';
+import '../../css/writer/base.css';
+import '../../font-awesome/fonts/fontawesome-webfont.woff';
+import '../../font-awesome/fonts/fontawesome-webfont.eot';
+import '../../font-awesome/fonts/fontawesome-webfont.svg';
 $(function() {
     var Writer = function() {
         var _bindClick = function() {

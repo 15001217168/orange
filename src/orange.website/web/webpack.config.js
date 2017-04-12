@@ -6,7 +6,8 @@ module.exports = { //注意这里是exports不是export
         writer: "./public/js/pages/writer.js",
         topic: "./public/js/pages/topic.js",
         login: "./public/js/pages/login.js",
-        reg: "./public/js/pages/reg.js"
+        reg: "./public/js/pages/reg.js",
+        list: "./public/js/pages/list.js"
     }, //唯一入口文件，就像Java中的main方法
     output: { //输出目录
         path: __dirname + "/public/dist", //打包后的js文件存放的地方

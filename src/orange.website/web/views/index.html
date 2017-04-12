@@ -8,10 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>坚果说</title>
+    <%include shared/head_script.html%>
 </head>
 
 <body class="reader-black-font" lang="zh-CN">
-    <div class="sk-three-bounce" id="loading">
+    <div class="sk-three-bounce" id="loading" style="display:none;">
         <div class="sk-child sk-bounce1"></div>
         <div class="sk-child sk-bounce2"></div>
         <div class="sk-child sk-bounce3"></div>
@@ -25,19 +26,7 @@
         <div class="row">
             <div class="col-xs-16 main">
                 <div class="recommend-collection">
-                    <div class="top-line">
-                        <div class="row">
-                            <a class="col-xs-4 col-lg-3 back-drop" target="_blank" href="/td">
-                                <img src="img/a.jpg" alt="195">
-                                <div class="name">漫画·手绘</div>
-                                <div class="mask"></div>
-                            </a>
-                            <a class="col-xs-4 col-lg-3" target="_blank" href="/t">
-                                <div class="more-hot-collection">更多热门专题
-                                    <i class="iconfont ic-link"></i>
-                                </div>
-                            </a>
-                        </div>
+                    <div class="top-line" id="topic-list-container">
                     </div>
                 </div>
                 <div id="content-list-container">
