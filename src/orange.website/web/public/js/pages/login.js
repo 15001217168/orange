@@ -50,4 +50,5 @@ $(function() {
         };
     };
     new Login().init();
+    var name="afa";
 });
