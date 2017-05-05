@@ -7,311 +7,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>橙子</title>
-    <link rel="stylesheet" media="all" href="/css/web.css">
-    <link rel="stylesheet" media="all" href="/css/entry.css">
+    <title>坚果说</title>
+    <%include shared/head_script.html%>
 </head>
 
 <body class="reader-black-font" lang="zh-CN">
-    <!-- 全局顶部导航栏 -->
+    <div class="sk-three-bounce" id="loading" style="display:none;">
+        <div class="sk-child sk-bounce1"></div>
+        <div class="sk-child sk-bounce2"></div>
+        <div class="sk-child sk-bounce3"></div>
+    </div>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="width-limit">
-            <!-- 左上方 Logo -->
-            <a class="logo" href="#"><img src="img/logo.png" alt="Logo"></a>
-            <!-- 右上角 -->
-            <!-- 未登录显示登录/注册/写文章 -->
-            <a class="btn write-btn" target="_blank" href="/writer.html">
-                <i class="iconfont ic-write"></i>写文章
-            </a> <a class="btn sign-up" href="/reg.html">注册</a>
-            <a class="btn log-in" href="/login.html">登录</a>
-            <!-- 如果用户登录，显示下拉菜单 -->
-            <div class="style-mode">
-                <a class="style-mode-btn">
-                    <i class="iconfont ic-navigation-mode"></i>
-                </a>
-                <div class="popover-modal" style="left: 0px; display: none;">
-                    <div class="meta"><i class="iconfont ic-navigation-night">
-                        </i>
-                        <span>夜间模式</span>
-                    </div>
-                    <div class="switch day-night-group">
-                        <a class="switch-btn">开</a>
-                        <a class="switch-btn active">关</a>
-                    </div>
-                    <hr>
-                    <div class="switch font-family-group">
-                        <a class="switch-btn font-song">宋体</a>
-                        <a class="switch-btn font-hei active">黑体</a>
-                    </div>
-                    <div class="switch">
-                        <a class="switch-btn active">简</a>
-                        <a class="switch-btn">繁</a>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="menu">
-                    <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a href="#">
-                                <span class="menu-text">首页</span>
-                                <i class="iconfont ic-navigation-discover menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="app-download-btn" href="#">
-                                <span class="menu-text">下载App</span>
-                                <i class="iconfont ic-navigation-download menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="search">
-                            <form target="_blank" action="/search" accept-charset="UTF-8" method="get">
-                                <input name="utf8" value="✓" type="hidden">
-                                <input name="q" id="q" placeholder="搜索" class="search-input" type="text">
-                                <a class="search-btn" href="javascript:void(null)">
-                                    <i class="iconfont ic-search"></i>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <%include shared/user.html%>
         </div>
     </nav>
     <div class="container index">
         <div class="row">
             <div class="col-xs-16 main">
-                <!-- Banner -->
-                <div id="indexCarousel" class="carousel slide">
-                    <ol class="carousel-indicators">
-                        <li data-target="#indexCarousel" data-slide-to="0" class=""></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="item">
-                            <a href="#"><img src="img/5c66048b39090e1ca0fdf6e000c33e6e4eecc554.png"></a>
-                        </div>
-                    </div>
-                    <a class="left carousel-control">
-                        <i class="iconfont ic-previous-s"></i>
-                    </a>
-                    <a class="right carousel-control">
-                        <i class="iconfont ic-next-s"></i>
-                    </a>
-                </div>
-                <!-- Banner -->
                 <div class="recommend-collection">
-                    <div class="top-line">
-                        <div class="row">
-                            <a class="col-xs-4 col-lg-3 back-drop" target="_blank" href="#">
-                                <img src="img/a.jpg" alt="195">
-                                <div class="name">漫画·手绘</div>
-                                <div class="mask"></div>
-                            </a>
-                            <a class="col-xs-4 col-lg-3 back-drop" target="_blank" href="#">
-                                <img src="img/20100120161805563.jpg" alt="195">
-                                <div class="name">短篇小说</div>
-                                <div class="mask"></div>
-                            </a>
-                            <a class="col-xs-4 col-lg-3 back-drop" target="_blank" href="#">
-                                <img src="img/6608733_091515549000_2.jpg" alt="195">
-                                <div class="name">大学生活</div>
-                                <div class="mask"></div>
-                            </a>
-                            <a class="col-xs-4 col-lg-3 back-drop" target="_blank" href="#">
-                                <img src="img/1239240801.jpg" alt="195">
-                                <div class="name">散文</div>
-                                <div class="mask"></div>
-                            </a>
-                            <a class="col-xs-4 col-lg-3 back-drop" target="_blank" href="#">
-                                <img src="img/234819-140PFUH940_.jpg" alt="195">
-                                <div class="name">法律</div>
-                                <div class="mask"></div>
-                            </a>
-                            <a class="col-xs-4 col-lg-3 back-drop" target="_blank" href="#">
-                                <img src="img/1.jpg" alt="195">
-                                <div class="name">摄影</div>
-                                <div class="mask"></div>
-                            </a>
-                            <a class="col-xs-4 col-lg-3 back-drop" target="_blank" href="#">
-                                <img src="img/man-hands-reading-boy-large.jpg" alt="195">
-                                <div class="name">时事热闻</div>
-                                <div class="mask"></div>
-                            </a>
-                            <a class="col-xs-4 col-lg-3" target="_blank" href="#">
-                                <div class="more-hot-collection">更多热门专题
-                                    <i class="iconfont ic-link"></i>
-                                </div>
-                            </a>
-                        </div>
+                    <div class="top-line" id="topic-list-container">
                     </div>
                 </div>
-                <div id="list-container">
-                    <!-- 文章列表模块 -->
-                    <ul class="note-list">
-                        <li class="have-img">
-                            <a class="wrap-img" href="#" target="_blank">
-                                <img src="img/4008256-be47a490a8ad0416.jpg">
-                            </a>
-                            <div class="content">
-                                <div class="author">
-                                    <a class="avatar" target="_blank" href="#">
-                                        <img src="img/24bf3b691f72.JPG" alt="96">
-                                    </a>
-                                    <div class="name">
-                                        <a class="blue-link" target="_blank" href="#">joanren</a>
-                                        <span class="time" data-shared-at="2017-02-03T08:08:25+08:00">4 小时前</span>
-                                    </div>
-                                </div>
-                                <a class="title" target="_blank" href="#">假期结束 祝你快乐</a>
-                                <p class="abstract">
-                                    岁末，各类横飞的红包雨之中，收到一个创业者的短信： “今天走着走着，突然想到创业就像一场高考。一个你不经历一次，你都会觉得自己人生不完整的一次经历。一个你不经历一次，你就无法...
-                                </p>
-                                <div class="meta">
-                                    <a class="collection-tag" target="_blank" href="#">散文</a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-read"></i> 1865
-                                    </a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-comments"></i> 5
-                                    </a> <span><i class="iconfont ic-list-like"></i> 33</span>
-                                    <span><i class="iconfont ic-list-money"></i> 10</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="have-img">
-                            <a class="wrap-img" href="#" target="_blank">
-                                <img src="img/4008256-be47a490a8ad0416.jpg">
-                            </a>
-                            <div class="content">
-                                <div class="author">
-                                    <a class="avatar" target="_blank" href="#">
-                                        <img src="img/24bf3b691f72.JPG" alt="96">
-                                    </a>
-                                    <div class="name">
-                                        <a class="blue-link" target="_blank" href="#">joanren</a>
-                                        <span class="time" data-shared-at="2017-02-03T08:08:25+08:00">4 小时前</span>
-                                    </div>
-                                </div>
-                                <a class="title" target="_blank" href="#">假期结束 祝你快乐</a>
-                                <p class="abstract">
-                                    岁末，各类横飞的红包雨之中，收到一个创业者的短信： “今天走着走着，突然想到创业就像一场高考。一个你不经历一次，你都会觉得自己人生不完整的一次经历。一个你不经历一次，你就无法...
-                                </p>
-                                <div class="meta">
-                                    <a class="collection-tag" target="_blank" href="#">散文</a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-read"></i> 1865
-                                    </a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-comments"></i> 5
-                                    </a> <span><i class="iconfont ic-list-like"></i> 33</span>
-                                    <span><i class="iconfont ic-list-money"></i> 10</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="have-img">
-                            <a class="wrap-img" href="#" target="_blank">
-                                <img src="img/4008256-be47a490a8ad0416.jpg">
-                            </a>
-                            <div class="content">
-                                <div class="author">
-                                    <a class="avatar" target="_blank" href="#">
-                                        <img src="img/24bf3b691f72.JPG" alt="96">
-                                    </a>
-                                    <div class="name">
-                                        <a class="blue-link" target="_blank" href="#">joanren</a>
-                                        <span class="time" data-shared-at="2017-02-03T08:08:25+08:00">4 小时前</span>
-                                    </div>
-                                </div>
-                                <a class="title" target="_blank" href="#">假期结束 祝你快乐</a>
-                                <p class="abstract">
-                                    岁末，各类横飞的红包雨之中，收到一个创业者的短信： “今天走着走着，突然想到创业就像一场高考。一个你不经历一次，你都会觉得自己人生不完整的一次经历。一个你不经历一次，你就无法...
-                                </p>
-                                <div class="meta">
-                                    <a class="collection-tag" target="_blank" href="#">散文</a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-read"></i> 1865
-                                    </a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-comments"></i> 5
-                                    </a> <span><i class="iconfont ic-list-like"></i> 33</span>
-                                    <span><i class="iconfont ic-list-money"></i> 10</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="have-img">
-                            <a class="wrap-img" href="#" target="_blank">
-                                <img src="img/4008256-be47a490a8ad0416.jpg">
-                            </a>
-                            <div class="content">
-                                <div class="author">
-                                    <a class="avatar" target="_blank" href="#">
-                                        <img src="img/24bf3b691f72.JPG" alt="96">
-                                    </a>
-                                    <div class="name">
-                                        <a class="blue-link" target="_blank" href="#">joanren</a>
-                                        <span class="time" data-shared-at="2017-02-03T08:08:25+08:00">4 小时前</span>
-                                    </div>
-                                </div>
-                                <a class="title" target="_blank" href="#">假期结束 祝你快乐</a>
-                                <p class="abstract">
-                                    岁末，各类横飞的红包雨之中，收到一个创业者的短信： “今天走着走着，突然想到创业就像一场高考。一个你不经历一次，你都会觉得自己人生不完整的一次经历。一个你不经历一次，你就无法...
-                                </p>
-                                <div class="meta">
-                                    <a class="collection-tag" target="_blank" href="#">散文</a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-read"></i> 1865
-                                    </a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-comments"></i> 5
-                                    </a> <span><i class="iconfont ic-list-like"></i> 33</span>
-                                    <span><i class="iconfont ic-list-money"></i> 10</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="have-img">
-                            <a class="wrap-img" href="#" target="_blank">
-                                <img src="img/4008256-be47a490a8ad0416.jpg">
-                            </a>
-                            <div class="content">
-                                <div class="author">
-                                    <a class="avatar" target="_blank" href="#">
-                                        <img src="img/24bf3b691f72.JPG" alt="96">
-                                    </a>
-                                    <div class="name">
-                                        <a class="blue-link" target="_blank" href="#">joanren</a>
-                                        <span class="time" data-shared-at="2017-02-03T08:08:25+08:00">4 小时前</span>
-                                    </div>
-                                </div>
-                                <a class="title" target="_blank" href="#">假期结束 祝你快乐</a>
-                                <p class="abstract">
-                                    岁末，各类横飞的红包雨之中，收到一个创业者的短信： “今天走着走着，突然想到创业就像一场高考。一个你不经历一次，你都会觉得自己人生不完整的一次经历。一个你不经历一次，你就无法...
-                                </p>
-                                <div class="meta">
-                                    <a class="collection-tag" target="_blank" href="#">散文</a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-read"></i> 1865
-                                    </a>
-                                    <a target="_blank" href="#">
-                                        <i class="iconfont ic-list-comments"></i> 5
-                                    </a> <span><i class="iconfont ic-list-like"></i> 33</span>
-                                    <span><i class="iconfont ic-list-money"></i> 10</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                <div id="content-list-container">
+                    页面找不到了
                 </div>
             </div>
         </div>
         <div class="side-tool">
             <ul>
-                <li class="back-top hide"><a href="#"><i class="iconfont ic-backtop"></i></a></li>
+                <li class="back-top"><a href="#"><i class="iconfont ic-backtop"></i></a></li>
             </ul>
         </div>
         <footer class="container">
@@ -327,11 +52,12 @@
                     <em> · </em>
                     <a href="#">合作伙伴</a>
                     <div class="icp">
-                        ©2017-2020 简书 / 沪ICP备11018329号-5 <a target="_blank" href="#">沪公网安备31010602000064号</a>
+                        ©2017-2020 橙子 / 京ICP备xxxxxxx号-x
                     </div>
                 </div>
             </div>
         </footer>
+        <%include shared/script.html%>
 </body>
 
 </html>

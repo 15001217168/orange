@@ -68,6 +68,37 @@ class TopicList extends React.Component
 }
 module.exports.TopicList = TopicList;
 
+class TopicHead extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+    }
+    render() {
+        return (
+            <div>
+                <a className="avatar-collection" href="/">
+                    <img src={this.props.data.img}></img>
+                </a>
+                <a className="btn btn-success follow">
+                    <i className="iconfont ic-follow"></i>
+                    <span>关注</span>
+                </a>
+                <div className="btn btn-hollow js-contribute-button">
+                    投稿
+                </div>
+                <div className="title">
+                    <a className="name" href="/">{this.props.data.name}</a>
+                </div>
+                <div className="info">
+                    收录了{this.props.data.content_count}篇文章 · {this.props.data.favourite_count}人关注 · {this.props.data.word_count}字
+                </div>
+            </div>
+        );
+    }
+}
+module.exports.TopicHead = TopicHead;
+
 class HomeTopic extends React.Component
 {
     constructor(props)
